@@ -1,0 +1,1 @@
+ADDITIONAL_APPS = rest_framework,backendmodel.organizations,backendmodel.core,backendmodel.account,rest_framework_jwt
