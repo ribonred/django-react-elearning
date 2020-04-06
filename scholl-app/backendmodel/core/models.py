@@ -11,7 +11,6 @@ def usermanagerprofile(instance, filename):
     return '{0}_manager_profile_pic/{1}'.format(instance.username, filename)
 
 
-
 class BaseTimeStampModel(models.Model):
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
@@ -50,6 +49,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     objects = AppUserManager()
+
+    def fullname(self):
+        return f'{self.nama_depan} {self.nama_belakang}'
 
     def __str__(self):
         return self.email
