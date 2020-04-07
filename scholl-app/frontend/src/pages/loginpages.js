@@ -1,10 +1,6 @@
 import React from 'react';
 import LoginView from '../component/login'
 import axios from 'axios'
-// import { useHistory } from "react-router-dom";
-// import { Route } from "react-router-dom";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-
 
 class LoginPage extends React.Component {
     state = {

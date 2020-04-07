@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import LoginPage from './pages/loginpages'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -17,7 +16,7 @@ export default class App extends Component {
       <Router>
         <Switch>
           <Route exact path='/' component={LoginPage} />
-          <Route path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/dashboard' component={Dashboard} />
         </Switch>
       </Router>
     )
