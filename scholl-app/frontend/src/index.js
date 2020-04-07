@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import 'semantic-ui/dist/semantic.min.css';
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <React.StrictMode>
