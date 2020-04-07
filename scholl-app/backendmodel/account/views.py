@@ -6,11 +6,14 @@ from rest_framework.response import Response
 from .serializer import ApiUser
 from backendmodel.core.models import User
 from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 class ApiUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = ApiUser
+    permission_classes = [AllowAny]
 
     def post(self, request, format=None):
         serializer = ApiUser(data=request.data)
