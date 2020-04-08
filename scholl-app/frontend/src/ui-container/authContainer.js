@@ -4,7 +4,7 @@ import { Row, Layout, Divider,Col } from 'antd';
 const styles = {
   container:{
     flex:1,
-    backgroundColor:'aqua',
+    backgroundImage: "url('https://bnn.go.id/konten/unggahan/2019/03/bnn-featured-1600x900.jpg')"
   },
   divider: {
     color: '#333', 

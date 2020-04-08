@@ -2,14 +2,9 @@ import axios from 'axios';
 import Helper from './helper';
 
 let baseUrl = 'http://127.0.0.1:8000';
-let preemptiveResponsesHandler = response => response;
 
 export function openInNewWindow(path) {
   window.open(`${baseUrl}${path}`, '_blank');
-}
-
-export function setPreemptiveFunctionHandler(handler) {
-  preemptiveResponsesHandler = handler;
 }
 
 // Only works for one layer
