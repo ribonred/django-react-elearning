@@ -1,19 +1,46 @@
 import React from 'react'
 import { Row, Layout, Divider,Col } from 'antd';
 
+const styles = {
+  container:{
+    flex:1,
+    backgroundColor:'aqua',
+  },
+  divider: {
+    color: '#333', 
+    fontWeight: 'normal'
+  },
+  innerLayout: {
+    padding: '15px',
+  },
+  contentLayout: {
+    padding: '10px',
+  } ,
+  header: {
+    borderRadius:'5px',
+    fontWeight:'bold',
+    fontSize:'20px',
+    color:'white',
+    paddingBottom:'10px',
+    backgroundColor:'#1892EA',
+  }
+}
+
 const AuthContainer = (props) => {
     return (
-    <div style={{flex:1, backgroundColor:'aqua'}}>
-      <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>
+    <div style={styles.container}>
+      <Divider orientation="left" style={styles.divider}>
       </Divider>
-      <Row gutter={[100,500]} justify="center" align="middle">
+      <Row gutter={[100,600]} justify="center" align="middle">
         <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
-          <Layout style={{padding:'15px'}}>
+          <Layout style={styles.innerLayout}>
             <Layout.Header
-              style={{borderRadius:'5px',fontWeight:'bold',fontSize:'20px',color:'white',paddingBottom:'10px',backgroundColor:'#1892EA'}}>
+              style={styles.header}>
               {props.header}
             </Layout.Header>
-            {props.children}
+            <Layout style={styles.contentLayout}>
+              {props.children}
+            </Layout>
           </Layout>
         </Col>
       </Row>
