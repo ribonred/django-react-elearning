@@ -10,11 +10,12 @@ const FormGroup = (props) => {
 
     const FormList = props.formData.map((data) =>
         <Form.Item
+          key={data.fieldName}
           label={data.label}
           name={data.name}
           rules={[{ required: true, message: `Please input your ${data.name}!` }]}
         >
-          <Input onInput={(e) => { props.onFormChange(data.fieldName, e) }}/>
+          <Input onInput={(e) => { props.onFormChange(data.fieldName, e) }} type={data.name}/>
         </Form.Item>
     );
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Button, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import FormGroup from '../ui-container/formGroup';
 import AuthContainer from '../ui-container/authContainer'
