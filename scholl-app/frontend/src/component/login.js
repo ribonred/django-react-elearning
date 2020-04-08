@@ -1,21 +1,58 @@
 import React from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Row, Layout, Divider,Col, Form, Input, Button, Checkbox } from 'antd'
 
-const LoginView = (props) => (
-    <Form>
-        <Form.Field>
-            <label>{props.userform}</label>
-            <input placeholder='enter your username' onInput={(e) => { props.onloginformchange(e) }} />
-        </Form.Field>
-        <Form.Field>
-            <label>Password</label>
-            <input placeholder='enter your password' type="password" onInput={(e) => { props.onpasswordformchange(e) }} />
-        </Form.Field>
-        <Form.Field>
-            <Checkbox label='I agree to the Terms and Conditions' />
-        </Form.Field>
-        <Button onClick={() => { props.onsubmit() }} type='submit'>Submit</Button>
-    </Form>
-)
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
-export default LoginView
+const LoginView = (props) => {
+    return (
+    <div style={{flex:1, backgroundColor:'aqua'}}>
+      <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>
+      </Divider>
+      <Row gutter={[100,500]} justify="center" align="middle">
+        <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
+          <Layout>
+            <Layout.Header
+              style={{borderRadius:'5px',fontWeight:'bold',fontSize:'20px',color:'white', backgroundColor:'#1892EA'}}>
+              Halo User, Mari Login
+            </Layout.Header>
+            <Layout style={{borderRadius:'5px', padding:'15px'}}>
+              <Form>
+              <Form.Item
+                  label="Username"
+                  name="username"
+                  rules={[{ required: true, message: 'Please input your username!' }]}
+              >
+                  <Input onInput={(e) => { props.onloginformchange(e) }}/>
+              </Form.Item>
+
+              <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                  <Input.Password onInput={(e) => { props.onpasswordformchange(e)}}/>
+              </Form.Item>
+
+              <div style={{flexDirection:'row'}}>
+                <Checkbox>Remember me</Checkbox>
+                <p style={{paddingTop: '10px', fontSize: '15px', color: '#1892EA'}}>Register Now</p>
+              </div>
+
+              <Form.Item {...tailLayout}>
+                  <Button style={{ width:'200px', fontWeight: 'bold' }} type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>
+                    Login
+                  </Button>
+              </Form.Item>
+              </Form>
+            </Layout>
+          </Layout>
+        </Col>
+      </Row>
+      <Layout.Footer style={{height:'500px'}}/>
+      </div>
+    );
+};
+
+export default LoginView;

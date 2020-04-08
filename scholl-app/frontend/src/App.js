@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import LoginPage from './pages/loginpages'
+import SignupPage from './pages/signuppages'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './route/privateroute';
 import Dashboard from './pages/dashboard';
@@ -17,7 +17,8 @@ export default class App extends Component {
       <Router>
         <Switch>
           <Route exact path='/' component={LoginPage} />
-          <Route path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/dashboard' component={Dashboard} />
+          <Route path='/register' component={SignupPage} />
         </Switch>
       </Router>
     )
