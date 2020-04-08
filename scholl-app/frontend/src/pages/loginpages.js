@@ -1,45 +1,30 @@
 import React from 'react';
 import LoginView from '../component/login'
-import axios from 'axios'
+import { request } from '../helper/requestHelper'
 
 class LoginPage extends React.Component {
     state = {
-        username: '',
-        password: ''
+        form: {},
     }
 
-    onloginformchange = (e) => {
+    onFormChange = (fieldName, e) => {
+        const formObj = {...this.state.form};
+        formObj[fieldName] = e.target.value
         this.setState({
-            username: e.target.value
+           form: formObj,
         })
-        console.log(e.target.value)
     }
-    onpasswordformchange = (e) => {
 
-        this.setState({
-            password: e.target.value
-        })
-        console.log(e.target.value)
-    }
-    onsubmit = () => {
-        // let history = useHistory();
-        // console.log(history);
-        axios.post('http://127.0.0.1:8000/get-token/token-auth/', {
-            username: this.state.username,
-            password: this.state.password
-        })
-            .then(function (response) {
-                console.log(response);
-
-                localStorage.setItem('token', response.data.token)
-                // history.push('/dashboard')
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    onsubmit = async() => {
+      const result = await request('/get-token/token-auth/', {
+        method: 'POST',
+       }, this.state.form);
+       if(result){
+         localStorage.setItem('token', result.data.token)
+       }       
     }
     render() {
-        return <LoginView userform='test' onloginformchange={this.onloginformchange} onpasswordformchange={this.onpasswordformchange} onsubmit={this.onsubmit} />
+        return <LoginView userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit}/>
     }
 }
 

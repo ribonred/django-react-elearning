@@ -1,38 +1,20 @@
 import React from 'react'
-import { Form, Input, Button, Checkbox, DatePicker, Select, Row, Col, Layout } from 'antd'
+import { Form, Input, Button, Checkbox, Select } from 'antd'
 import moment from 'moment';
-
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-};
+import AuthContainer from '../ui-container/authContainer';
 
 const SignupView = (props) => {
     const dateFormat = 'YYYY-MM-DD';
     const { Option } = Select;
-    const onFinish = values => {
-        console.log('Success:', values);
-    };
-    
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-    };
-    
     return (
-        <Col span={12} offset={6}>
-            <Form
-            // {...layout}
-            // name="basic"
-            // initialValues={{ remember: true }}
-            // onFinish={onFinish}
-            // onF
-            // inishFailed={onFinishFailed}
-            >
+        <AuthContainer header='Register Page'>
+            <Form>
                 <Form.Item
                     label="Email"
                     name="email"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                 >
-                    <Input onInput={(e) => { props.onemailformchange(e) }}/>
+                    <Input onInput={(e) => { props.onFormChange('nama_depan', e) }}/>
                 </Form.Item>
 
                 <Form.Item
@@ -40,23 +22,23 @@ const SignupView = (props) => {
                     name="phone"
                     rules={[{ required: true, message: 'Please input your phone number!' }]}
                 >
-                    <Input onInput={(e) => { props.onphoneformchange(e) }}/>
+                    <Input onInput={(e) => { props.onFormChange('phone', e) }}/>
                 </Form.Item>
-            
+
                 <Form.Item
                     label="Username"
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                    <Input onInput={(e) => { props.onusernameformchange(e) }}/>
+                    <Input onInput={(e) => { props.onFormChange('tanggal_lahir', e) }}/>
                 </Form.Item>
-            
+
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <Input.Password onInput={(e) => { props.onpasswordformchange(e)}}/>
+                    <Input.Password onInput={(e) => { props.onFormChange('password', e)}}/>
                 </Form.Item>
 
                 <Form.Item
@@ -64,7 +46,7 @@ const SignupView = (props) => {
                     name="nama_depan"
                     rules={[{ required: true, message: 'Please input your first name!' }]}
                 >
-                    <Input onInput={(e) => { props.onnamadepanformchange(e)}}/>
+                    <Input onInput={(e) => { props.onFormChange('nama_depan', e)}}/>
                 </Form.Item>
 
                 <Form.Item
@@ -72,23 +54,14 @@ const SignupView = (props) => {
                     name="nama_belakang"
                     rules={[{ required: true, message: 'Please input your last name!' }]}
                 >
-                    <Input onInput={(e) => { props.onnamabelakangformchange(e)}}/>
+                    <Input onInput={(e) => { props.onFormChange('nama_belakang', e)}}/>
                 </Form.Item>
-
-                <Form.Item
-                    label="Tanggal Lahir"
-                    name="tanggal_lahir"
-                    rules={[{ required: true, message: 'Please input your birth date!' }]}
-                >
-                <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} onChange={(date, dateString) => props.ontanggallahirformchange(date, dateString, 1)}/>
-                </Form.Item>
-
                 <Form.Item
                     label="address"
                     name="address"
                     rules={[{ required: true, message: 'Please input your address!' }]}
                 >
-                    <Input onInput={(e) => { props.onaddressformchange(e)}}/>
+                    <Input onInput={(e) => { props.onFormChange('address', e)}}/>
                 </Form.Item>
 
                 <Form.Item
@@ -96,24 +69,17 @@ const SignupView = (props) => {
                     name="jenis_kelamin"
                     rules={[{ message: 'Please input your gender!' }]}
                 >
-                    <Select defaultValue="laki-laki" style={{ width: 120 }} onChange={(e) => { props.onjeniskelaminformchange(e)}}>
+                    <Select defaultValue="laki-laki" style={{ width: 120 }} onChange={(e) => { props.onFormChange('jenis_kelamin', e)}}>
                         <Option value="laki-laki">laki-laki</Option>
                         <Option value="perempuan">perempuan</Option>
                     </Select>
                 </Form.Item>
 
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-            
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>
+                <Button type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>
                     Submit
-                    </Button>
-                </Form.Item>
+                </Button>
             </Form>
-        </Col>
-        
+        </AuthContainer>
     );
 };
 

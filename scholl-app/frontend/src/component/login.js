@@ -1,30 +1,22 @@
 import React from 'react'
-import { Row, Layout, Divider,Col, Form, Input, Button, Checkbox } from 'antd'
-
+import { Layout, Form, Input, Button, Checkbox } from 'antd';
+import { Link } from 'react-router-dom';
+import AuthContainer from '../ui-container/authContainer'
 const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
 const LoginView = (props) => {
     return (
-    <div style={{flex:1, backgroundColor:'aqua'}}>
-      <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>
-      </Divider>
-      <Row gutter={[100,500]} justify="center" align="middle">
-        <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
-          <Layout>
-            <Layout.Header
-              style={{borderRadius:'5px',fontWeight:'bold',fontSize:'20px',color:'white', backgroundColor:'#1892EA'}}>
-              Halo User, Mari Login
-            </Layout.Header>
-            <Layout style={{borderRadius:'5px', padding:'15px'}}>
+      <AuthContainer header='Login Page'>
+        <Layout style={{borderRadius:'5px', padding:'15px'}}>
               <Form>
               <Form.Item
                   label="Username"
                   name="username"
                   rules={[{ required: true, message: 'Please input your username!' }]}
               >
-                  <Input onInput={(e) => { props.onloginformchange(e) }}/>
+                  <Input onInput={(e) => { props.onFormChange('username', e) }}/>
               </Form.Item>
 
               <Form.Item
@@ -32,12 +24,12 @@ const LoginView = (props) => {
                   name="password"
                   rules={[{ required: true, message: 'Please input your password!' }]}
               >
-                  <Input.Password onInput={(e) => { props.onpasswordformchange(e)}}/>
+                  <Input.Password onInput={(e) => { props.onFormChange('password', e)}}/>
               </Form.Item>
 
               <div style={{flexDirection:'row'}}>
                 <Checkbox>Remember me</Checkbox>
-                <p style={{paddingTop: '10px', fontSize: '15px', color: '#1892EA'}}>Register Now</p>
+                <Link to="/register">register now</Link>
               </div>
 
               <Form.Item {...tailLayout}>
@@ -47,11 +39,7 @@ const LoginView = (props) => {
               </Form.Item>
               </Form>
             </Layout>
-          </Layout>
-        </Col>
-      </Row>
-      <Layout.Footer style={{height:'500px'}}/>
-      </div>
+      </AuthContainer>
     );
 };
 
