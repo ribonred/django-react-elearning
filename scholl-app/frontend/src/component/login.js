@@ -7,51 +7,51 @@ const tailLayout = {
 
 const LoginView = (props) => {
     return (
-    <React.Fragment>
-    <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>
-      Login Page
-    </Divider>
-    <Row justify="center" align="middle">
-      <Col xs={{ span: 14, offset: 1 }} lg={{ span: 14, offset: 1 }}>
-        <Layout>
-          <Layout.Header
-            style={{borderRadius:'5px',fontWeight:'bold',fontSize:'20px',color:'white', backgroundColor:'#1892EA'}}>
-            Halo User, Mari Login
-          </Layout.Header>
-          <Layout style={{borderRadius:'5px', padding:'15px'}}>
-            <Form>
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-                <Input onInput={(e) => { props.onloginformchange(e) }}/>
-            </Form.Item>
+    <div style={{flex:1, backgroundColor:'aqua'}}>
+      <Divider orientation="left" style={{ color: '#333', fontWeight: 'normal' }}>
+      </Divider>
+      <Row gutter={[100,500]} justify="center" align="middle">
+        <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
+          <Layout>
+            <Layout.Header
+              style={{borderRadius:'5px',fontWeight:'bold',fontSize:'20px',color:'white', backgroundColor:'#1892EA'}}>
+              Halo User, Mari Login
+            </Layout.Header>
+            <Layout style={{borderRadius:'5px', padding:'15px'}}>
+              <Form>
+              <Form.Item
+                  label="Username"
+                  name="username"
+                  rules={[{ required: true, message: 'Please input your username!' }]}
+              >
+                  <Input onInput={(e) => { props.onloginformchange(e) }}/>
+              </Form.Item>
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password onInput={(e) => { props.onpasswordformchange(e)}}/>
-            </Form.Item>
+              <Form.Item
+                  label="Password"
+                  name="password"
+                  rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                  <Input.Password onInput={(e) => { props.onpasswordformchange(e)}}/>
+              </Form.Item>
 
-            <div style={{flexDirection:'row'}}>
-              <Checkbox>Remember me</Checkbox>
-              <p style={{paddingTop: '10px', fontSize: '15px', color: '#1892EA'}}>Register Now</p>
-            </div>
+              <div style={{flexDirection:'row'}}>
+                <Checkbox>Remember me</Checkbox>
+                <p style={{paddingTop: '10px', fontSize: '15px', color: '#1892EA'}}>Register Now</p>
+              </div>
 
-            <Form.Item {...tailLayout}>
-                <Button style={{ width:'200px', fontWeight: 'bold' }} type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>
-                  Login
-                </Button>
-            </Form.Item>
-            </Form>
+              <Form.Item {...tailLayout}>
+                  <Button style={{ width:'200px', fontWeight: 'bold' }} type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>
+                    Login
+                  </Button>
+              </Form.Item>
+              </Form>
+            </Layout>
           </Layout>
-        </Layout>
-      </Col>
-    </Row>
-    </React.Fragment>
+        </Col>
+      </Row>
+      <Layout.Footer style={{height:'500px'}}/>
+      </div>
     );
 };
 
