@@ -37,4 +37,5 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'password')
+        fields = ('token', 'username', 'nama_depan', 'nama_belakang', 'email', 'password', 'phone',
+                  'jenis_kelamin', 'tanggal_lahir', 'address', 'role')
