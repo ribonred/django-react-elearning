@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginView from '../component/login'
 import { request } from '../helper/requestHelper'
+import history from '../route/history';
 
 class LoginPage extends React.Component {
     state = {
@@ -20,7 +21,8 @@ class LoginPage extends React.Component {
         method: 'POST',
        }, this.state.form);
        if(result){
-         localStorage.setItem('token', result.data.token)
+        localStorage.setItem('token', result.data.token)
+        history.push('/dashboard')
        }       
     }
     render() {

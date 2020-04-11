@@ -44,9 +44,9 @@ export function convertDataToParams(data) {
 export async function request(path, options, body) {
     let requestObject = null;
     if(options.method === 'GET'){
-      requestObject = axios.get(`${baseUrl}${path}`, body)
+      requestObject = axios.get(`${baseUrl}${path}`, options, body)
     } else if(options.method === 'POST'){
-      requestObject = axios.post(`${baseUrl}${path}`, body)
+      requestObject = axios.post(`${baseUrl}${path}`, body, options)
     } else {
       requestObject = axios.put(`${baseUrl}${path}`, body)
     }
