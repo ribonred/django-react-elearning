@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import LoginPage from './pages/loginpages'
 import SignupPage from './pages/signuppages'
-import LkmFormPage from './pages/lkmformpages'
+import LknFormPage from './pages/lknformpages'
+import PenangkapanFormPage from './pages/penangkapanformpages'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './route/privateroute';
 import Dashboard from './pages/dashboard';
@@ -20,7 +21,8 @@ export default class App extends Component {
           <Route exact path='/' component={LoginPage} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
           <Route path='/register' component={SignupPage} />
-          <Route path='/lkmform' component={LkmFormPage} />
+          <Route path='/lkmform' component={LknFormPage} />
+          <Route path='/penangkapanform' component={PenangkapanFormPage} />
         </Switch>
       </Router>
     )

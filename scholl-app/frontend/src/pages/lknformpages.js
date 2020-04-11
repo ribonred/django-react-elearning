@@ -1,12 +1,11 @@
 import React from 'react';
-import LkmFormView from '../component/lkmform'
+import LknFormView from '../component/lknform'
 import { request } from '../helper/requestHelper'
 
 class LkmFormPage extends React.Component {
     state = {
         form: {
-          role: 3,
-          jenis_kelamin: "laki-laki"
+
         },
     }
 
@@ -26,16 +25,23 @@ class LkmFormPage extends React.Component {
     }
 
     onsubmit = async() => {
-        alert(this.state.form.no_lkn, this.state.form.)
-        // const result = await request('/api/users/', {
-        //     method: 'POST',
-        //    }, this.state.form);
-        // if(result){
-        //     localStorage.setItem('token', result.data.token)
-        // }       
+        let token = localStorage.getItem("token")
+        console.log(token)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${{token}}`
+        }
+        const result = await request('/api/users/', {
+            method: 'GET',
+            headers: headers,
+           });
+        if(result){
+            console.log(result)
+            // localStorage.setItem('token', result.data.token)
+        }       
     }
     render() {
-        return <LkmFormView userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit} />
+        return <LknFormView userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit} />
     }
 }
 

@@ -21,6 +21,7 @@ class LoginPage extends React.Component {
        }, this.state.form);
        if(result){
          localStorage.setItem('token', result.data.token)
+         console.log(result);
        }       
     }
     render() {
