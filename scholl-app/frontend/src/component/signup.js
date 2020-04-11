@@ -27,7 +27,7 @@ const SignupView = (props) => {
                     name="tanggal_lahir"
                     rules={[{ message: 'Please input your birth date!' }]}
                 >
-                    <DatePicker format={dateFormat} onChange={(i, e) => props.onFormChange('tanggal_lahir', e)}/>
+                    <DatePicker defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} onChange={(i, e) => props.onFormChange(i, e)}/>
                 </Form.Item>
                 <Form.Item
                     label="Jenis Kelamin"
