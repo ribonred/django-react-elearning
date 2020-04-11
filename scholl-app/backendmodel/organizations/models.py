@@ -7,7 +7,7 @@ class BerkasLKN(BaseTimeStampModel):
     LKN = models.CharField(max_length=80)
     penyidik = models.ForeignKey(
         User, on_delete=models.SET_NULL, related_name='peyidik_lkn', null=True, blank=True)
-    tgl_dibuat = models.DateTimeField(blank=True, null=True)
+    tgl_dibuat = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.LKN
