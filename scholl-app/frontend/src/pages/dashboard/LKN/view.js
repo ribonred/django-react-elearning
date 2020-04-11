@@ -21,6 +21,7 @@ class LKNView extends Component {
     }
 
     render() {
+      if(this.props.match.params.id!=='buat'){
         return (
           <SideMenu>
             <Layout>
@@ -32,6 +33,8 @@ class LKNView extends Component {
              </Layout>
           </SideMenu>
         )
+      }
+      return <div/>
     }
 }
 
