@@ -50,6 +50,7 @@ export function convertDataToParams(data) {
 }
 
 export async function request(path, options, body) {
+
   let requestObject = null;
   if (options.method === 'GET') {
     requestObject = axios.get(`${baseUrl}${path}`, options, body)
@@ -58,6 +59,7 @@ export async function request(path, options, body) {
   } else {
     requestObject = axios.put(`${baseUrl}${path}`, body)
   }
+
 
   try {
     const result = await requestObject
