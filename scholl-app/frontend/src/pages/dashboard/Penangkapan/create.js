@@ -5,25 +5,27 @@ import SideMenu from '../../../component/sider';
 
 const { Content } = Layout;
 
-class PenyidikView extends Component {
+class CreatePenangkapan extends Component {
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Penyidik</a>
+              <a>LKN</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>{this.props.match.params.id}</a>
+              <a>Penangkapan</a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a>buat</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )
     }
 
     render() {
-      if(this.props.match.params.id!=='buat'){
         return (
-          <SideMenu selected="2">
+          <SideMenu selected="1">
             <Layout>
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
@@ -33,8 +35,6 @@ class PenyidikView extends Component {
              </Layout>
           </SideMenu>
         )
-      }
-      return <div/>
     }
 }
 
@@ -51,4 +51,4 @@ const styles = {
   },
 }
 
-export default connect(mapStateToProps)(PenyidikView)
+export default connect(mapStateToProps)(CreatePenangkapan)
