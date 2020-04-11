@@ -15,7 +15,8 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
                             to={{
                                 pathname: '/',
                                 state: { from: props.location }
-                            }} />
+                            }}
+                        />
                     )
         }
     />
