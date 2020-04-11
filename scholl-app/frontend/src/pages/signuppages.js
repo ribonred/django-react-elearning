@@ -6,15 +6,23 @@ class SignupPage extends React.Component {
     state = {
         form: {
           role: 3,
+          jenis_kelamin: "laki-laki"
         },
     }
 
     onFormChange = (fieldName, e) => {
         const formObj = {...this.state.form};
-        formObj[fieldName] = e.target.value
-        this.setState({
-           form: formObj,
-        })
+        if(!e.target){
+            formObj[fieldName] = e
+            this.setState({
+                form: formObj,
+            })
+        } else {
+            formObj[fieldName] = e.target.value
+            this.setState({
+                form: formObj,
+            })
+        }  
     }
 
     onsubmit = async() => {
