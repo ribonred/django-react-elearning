@@ -1,8 +1,16 @@
 import axios from 'axios';
 import Helper from './helper';
-
+const dotenv = require('dotenv');
+const env = dotenv.config().parsed;
 let baseUrl = 'http://127.0.0.1:8000';
 
+
+
+
+export function get_token() {
+  const token = localStorage.getItem('token')
+  return token
+}
 export function openInNewWindow(path) {
   window.open(`${baseUrl}${path}`, '_blank');
 }
@@ -42,19 +50,21 @@ export function convertDataToParams(data) {
 }
 
 export async function request(path, options, body) {
-    let requestObject = null;
-    if(options.method === 'GET'){
-      requestObject = axios.get(`${baseUrl}${path}`, options, body)
-    } else if(options.method === 'POST'){
-      requestObject = axios.post(`${baseUrl}${path}`, body, options)
-    } else {
-      requestObject = axios.put(`${baseUrl}${path}`, body)
-    }
 
-    try {
-      const result = await requestObject
-      return result;
-    } catch(e){
-      return e;
-    }
+  let requestObject = null;
+  if (options.method === 'GET') {
+    requestObject = axios.get(`${baseUrl}${path}`, options, body)
+  } else if (options.method === 'POST') {
+    requestObject = axios.post(`${baseUrl}${path}`, body, options)
+  } else {
+    requestObject = axios.put(`${baseUrl}${path}`, body)
+  }
+
+
+  try {
+    const result = await requestObject
+    return result;
+  } catch (e) {
+    return e;
+  }
 }

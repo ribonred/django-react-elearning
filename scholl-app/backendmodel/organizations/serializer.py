@@ -28,6 +28,14 @@ class BerkasLknApi(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+class PenangkapanApi(serializers.ModelSerializer):
+
+    class Meta:
+        model = Penangkapan
+        fields = ('id', 'no_lkn', 'no_penangkapan',
+                  'tanggal_penangkapan', 'jam_penangkapan')
+
+
 # class CompanyDivisionMemberSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = DivisionMember

@@ -17,7 +17,9 @@ class Penangkapan(BaseTimeStampModel):
     no_lkn = models.ForeignKey(
         BerkasLKN, null=True, blank=True, related_name='no_lkn', on_delete=models.CASCADE)
     no_penangkapan = models.CharField(max_length=255)
-    tanggal_penangkapan = models.DateTimeField(null=True, blank=True)
+    tanggal_penangkapan = models.DateField(
+        null=True, blank=True)
+    jam_penangkapan = models.TimeField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.no_lkn.LKN} / {self.no_penangkapan}'
@@ -59,7 +61,8 @@ class StatusTersangka(BaseTimeStampModel):
     status_penahanan = models.CharField(
         max_length=125, choices=status)
     rekam_jejak = models.CharField(max_length=125, choices=status2)
-    waktu_tanggal = models.DateTimeField(null=True, blank=True)
+    tanggal = models.DateField(null=True, blank=True)
+    waktu = models.TimeField(null=True, blank=True)
     keterangan = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -111,7 +114,8 @@ class StatusBarangBukti(BaseTimeStampModel):
         (M, 'Masuk')
     )
     barang_bukti = models.ForeignKey(BarangBukti, on_delete=models.CASCADE)
-    tgl_waktu = models.DateTimeField(blank=True, null=True)
+    tanggal_status = models.DateField(null=True, blank=True)
+    waktu_status = models.TimeField(null=True, blank=True)
     jumlah = models.DecimalField(
         decimal_places=2, null=True, blank=True, max_digits=5)
     keterangan = models.TextField(null=True, blank=True)

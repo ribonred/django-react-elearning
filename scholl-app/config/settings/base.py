@@ -112,6 +112,8 @@ USE_TZ = True
 # AUTHUSER
 AUTH_USER_MODEL = 'core.User'
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%Y-%m-%d,%H/%M",
+    'DATETIME_INPUT_FORMATS': "%Y-%m-%d,%H-%M",
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
@@ -160,7 +162,7 @@ JWT_AUTH = {
     'JWT_AUTH_COOKIE': None,
 
 }
-
+TIME_INPUT_FORMATS = ['%H:%M']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

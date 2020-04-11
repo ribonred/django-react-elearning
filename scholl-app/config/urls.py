@@ -4,11 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
 from backendmodel.account.views import ApiUserView
-from backendmodel.organizations.views import BerkasLknView
+from backendmodel.organizations.views import BerkasLknView, PenangkapanView
 
 router = routers.DefaultRouter()
 router.register(r'users', ApiUserView)
 router.register(r'lkn', BerkasLknView)
+router.register(r'pnkp', PenangkapanView)
 # router.register(r'companydiv', CompanyDivisionView)
 
 urlpatterns = [
