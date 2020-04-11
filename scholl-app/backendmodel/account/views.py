@@ -7,7 +7,8 @@ from .serializer import ApiUser, UserSerializerWithToken, UserRegistrations
 from backendmodel.core.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication, BaseJSONWebTokenAuthentication
 
 
 class ApiUserView(viewsets.ModelViewSet):
