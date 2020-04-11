@@ -23,12 +23,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         (L, 'laki-laki'),
         (P, 'perempuan')
     )
-    STUDENT = 1
-    TEACHER = 2
-    MANAGER = 3
+
+    PENYIDIK = 1
+    MANAGER = 2
     ROLE_CHOICES = (
-        (STUDENT, 'student'),
-        (TEACHER, 'teacher'),
+        (PENYIDIK, 'penyidik'),
         (MANAGER, 'manager')
     )
     email = models.EmailField(('email address'))

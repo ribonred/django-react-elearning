@@ -7,21 +7,25 @@ from .serializer import ApiUser, UserSerializerWithToken, UserRegistrations
 from backendmodel.core.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication, BaseJSONWebTokenAuthentication
 
 
 class ApiUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserRegistrations
-    permission_classes = [IsAuthenticated]
 
-    # def get_permissions(self, request):
-    #     permission_classes = []
-    #     if request.method == "POST":
-    #         permission_classes = [AllowAny]
-    #     else:
-    #         permission_classes = [IsAuthenticated]
-    #     return [permission() for permission in permission_classes]
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [AllowAny]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def post(self, request, format=None):
         serializer = UserRegistrations(data=request.data)
