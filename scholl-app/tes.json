@@ -1,31 +1,47 @@
 {
-    "nama_tersangka": "joko-jasndjsa",
-    "umur": 23,
-    "jenis_kelamin": "laki-laki",
-    "foto": null,
-    "no_penangkapan_id": 2,
-    "statustersangka": [
+    "no_lkn": 1,
+    "no_penangkapan": "duadua",
+    "tanggal_penangkapan": "2020-01-02",
+    "jam_penangkapan": "22:30:00",
+    "penangkapan_tersangka": [
         {
-            "status_penahanan": "Di tahan",
-            "rekam_jejak": "Masuk",
-            "tanggal": "2020-04-12",
-            "waktu": "11:41:00",
-            "keterangan": ""
-        }
-    ],
-    "barangbuktitersangka": [
-        {
-            "nama_barang": "sabu",
-            "sp_sita": null,
-            "tap_status": null,
-            "jenis_barang": "narkotika",
-            "statusbarangbukti": [
+            "nama_tersangka": "joko-jasndjsa",
+            "umur": 23,
+            "jenis_kelamin": "laki-laki",
+            "foto": null,
+            "statustersangka": [
                 {
-                    "tanggal_status": "2020-04-12",
-                    "waktu_status": "13:54:00",
-                    "jumlah": "25.00",
-                    "keterangan": "mbuh",
-                    "status": "Masuk"
+                    "created": "2020-04-12,16/17",
+                    "updated": "2020-04-12,16/17",
+                    "status_penahanan": "Di tahan",
+                    "rekam_jejak": "Masuk",
+                    "tanggal": "2020-04-12",
+                    "waktu": "11:41:00",
+                    "keterangan": ""
+                }
+            ],
+            "barangbuktitersangka": [
+                {
+                    "nama_barang": "sabu",
+                    "sp_sita": null,
+                    "tap_status": null,
+                    "jenis_barang": "narkotika",
+                    "statusbarangbukti": [
+                        {
+                            "tanggal_status": "2020-04-12",
+                            "waktu_status": "13:54:00",
+                            "jumlah": "25.00",
+                            "keterangan": "mbuh",
+                            "status": "Masuk"
+                        },
+                        {
+                            "tanggal_status": "2020-04-12",
+                            "waktu_status": "13:54:00",
+                            "jumlah": "21.00",
+                            "keterangan": "mbuh",
+                            "status": "Keluar"
+                        }
+                    ]
                 }
             ]
         }

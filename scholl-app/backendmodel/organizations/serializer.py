@@ -29,14 +29,6 @@ class BerkasLknApi(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class PenangkapanApi(serializers.ModelSerializer):
-
-    class Meta:
-        model = Penangkapan
-        fields = ('id', 'no_lkn', 'no_penangkapan',
-                  'tanggal_penangkapan', 'jam_penangkapan')
-
-
 class StatusBarangBuktiApi(serializers.ModelSerializer):
     class Meta:
         model = StatusBarangBukti
@@ -88,8 +80,8 @@ class TersangkaApi(WritableNestedModelSerializer):
 
     class Meta:
         model = Tersangka
-        fields = ['id', 'nama_tersangka', 'umur', 'jenis_kelamin',
-                  'foto', 'no_penangkapan_id', 'statustersangka', 'barangbuktitersangka']
+        fields = ['id', 'no_penangkapan_id', 'nama_tersangka', 'umur', 'jenis_kelamin',
+                  'foto', 'statustersangka', 'barangbuktitersangka']
 
     # def create(self, validated_data):
     #     _status_tersangka = validated_data.pop('statustersangka')
@@ -103,6 +95,17 @@ class TersangkaApi(WritableNestedModelSerializer):
     #             milik_tersangka_id=tersangka, **bb)
 
     #     return tersangka
+
+
+class PenangkapanApi(WritableNestedModelSerializer):
+    penangkapan_tersangka = TersangkaApi(
+        many=True, required=False, allow_null=True)
+
+    class Meta:
+        model = Penangkapan
+        fields = ('id', 'no_lkn', 'no_penangkapan',
+                  'tanggal_penangkapan', 'jam_penangkapan', 'penangkapan_tersangka')
+
 
 # class CompanyDivisionMemberSerializer(serializers.ModelSerializer):
 #     class Meta:
