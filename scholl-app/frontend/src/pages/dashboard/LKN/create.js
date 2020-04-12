@@ -7,8 +7,9 @@ import LknFormView from '../../../component/lknform';
 const { Content } = Layout;
 
 class CreateLKN extends Component {
-        state = {
-          form: {}
+      state = {
+        form: {},
+        lknId: ''
       }
 
      onFormChange = (fieldName, e) => {
@@ -27,6 +28,7 @@ class CreateLKN extends Component {
     }
 
     onsubmit = async() => {
+      console.log(this.state.form)
       const result = await request('/api/lkn/', {
         method: 'POST',
         headers: {
@@ -34,6 +36,7 @@ class CreateLKN extends Component {
         }
        }, this.state.form);
        if(result){
+        localStorage.setItem('lknId', result.data.id)
          console.log('result',result)
        }       
     }

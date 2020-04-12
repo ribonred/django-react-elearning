@@ -57,7 +57,7 @@ export async function request(path, options, body) {
   } else if (options.method === 'POST') {
     requestObject = axios.post(`${baseUrl}${path}`, body, options)
   } else {
-    requestObject = axios.put(`${baseUrl}${path}`, body)
+    requestObject = axios.put(`${baseUrl}${path}`, body, options)
   }
 
 
