@@ -1,13 +1,13 @@
 import React from 'react'
-import { Row, Layout, Divider,Col } from 'antd';
+import { Row, Layout, Divider, Col } from 'antd';
 
 const styles = {
-  container:{
-    flex:1,
+  container: {
+    flex: 1,
     backgroundImage: "url('https://bnn.go.id/konten/unggahan/2019/03/bnn-featured-1600x900.jpg')"
   },
   divider: {
-    color: '#333', 
+    color: '#333',
     fontWeight: 'normal'
   },
   innerLayout: {
@@ -15,23 +15,23 @@ const styles = {
   },
   contentLayout: {
     padding: '10px',
-  } ,
+  },
   header: {
-    borderRadius:'5px',
-    fontWeight:'bold',
-    fontSize:'20px',
-    color:'white',
-    paddingBottom:'10px',
-    backgroundColor:'#1892EA',
+    borderRadius: '5px',
+    fontWeight: 'bold',
+    fontSize: '20px',
+    color: 'white',
+    paddingBottom: '10px',
+    backgroundColor: '#1892EA',
   }
 }
 
 const AuthContainer = (props) => {
-    return (
+  return (
     <div style={styles.container}>
       <Divider orientation="left" style={styles.divider}>
       </Divider>
-      <Row gutter={[100,600]} justify="center" align="middle">
+      <Row gutter={[100, 600]} justify="center" align="middle">
         <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
           <Layout style={styles.innerLayout}>
             <Layout.Header
@@ -44,9 +44,9 @@ const AuthContainer = (props) => {
           </Layout>
         </Col>
       </Row>
-      <Layout.Footer style={{height:'500px'}}/>
-      </div>
-    );
+      <Layout.Footer style={{ height: '500px' }} />
+    </div>
+  );
 };
 
 export default AuthContainer;

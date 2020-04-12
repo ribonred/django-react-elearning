@@ -10,7 +10,7 @@ from rest_framework_jwt.settings import api_settings
 class ApiUser(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'nama_depan', 'nama_belakang', 'email', 'password', 'phone',
+        fields = ('id', 'username', 'nama_depan', 'nama_belakang', 'email', 'password', 'phone',
                   'jenis_kelamin', 'tanggal_lahir', 'address', 'role')
 
 
@@ -63,5 +63,5 @@ class UserRegistrations(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'nama_depan', 'nama_belakang', 'email', 'password', 'phone',
+        fields = ('token', 'id', 'username', 'nama_depan', 'nama_belakang', 'email', 'password', 'phone',
                   'jenis_kelamin', 'tanggal_lahir', 'address', 'role')
