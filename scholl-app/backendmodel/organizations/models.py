@@ -67,7 +67,7 @@ class StatusTersangka(BaseTimeStampModel):
     keterangan = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.tersangka_id.nama_tersangka} || status: {self.status_penahanan} || rekam: {self.rekam_jejak}'
+        return f'|| status: {self.status_penahanan} || rekam: {self.rekam_jejak}'
 
 
 class ProsesPengadilan(models.Model):
