@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Checkbox, DatePicker } from 'antd';
+import { Form, Button, DatePicker } from 'antd';
 import { Link } from 'react-router-dom';
 import FormGroup from '../ui-container/formGroup';
 import PageContainer from '../ui-container/pageContainer';

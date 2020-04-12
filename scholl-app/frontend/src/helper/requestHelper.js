@@ -4,9 +4,6 @@ const dotenv = require('dotenv');
 const env = dotenv.config().parsed;
 let baseUrl = 'http://127.0.0.1:8000';
 
-
-
-
 export function get_token() {
   const token = localStorage.getItem('token')
   return token

@@ -11,7 +11,7 @@ class BarangBuktiTable extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Barang Bukti</a>
+              <a href="/#">Barang Bukti</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )

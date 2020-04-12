@@ -1,8 +1,7 @@
 import React from 'react'
-import { Form, Input, Button, Select, DatePicker } from 'antd'
+import { Form, Button, Select, DatePicker } from 'antd'
 import AuthContainer from '../ui-container/authContainer';
 import FormGroup from '../ui-container/formGroup';
-import moment from 'moment';
 
 const dateFormat = 'YYYY-MM-DD';
 const formData = [

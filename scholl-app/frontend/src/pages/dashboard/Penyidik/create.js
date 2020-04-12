@@ -11,10 +11,10 @@ class CreatePenyidik extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Penyidik</a>
+              <a href="/#">Penyidik</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>buat</a>
+              <a href="/#">buat</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )

@@ -1,15 +1,21 @@
 'using strict';
 
 const initialState = {
-  route:['Home']
+  lknTableData:[],
+  userTableData:[],
 };
 
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
-    case 'RECEIVE_RECENT_ROUTE':
+    case 'RECEIVE_LKN_TABLE_DATA':
       return {
         ...state,
-        route: ['LKN'],
+        lknTableData: action.data,
+      };
+    case 'RECEIVE_USER_TABLE_DATA':
+      return {
+        ...state,
+        userTableData: action.data,
       };
     default:
       return state;

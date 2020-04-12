@@ -11,7 +11,7 @@ class TersangkaTable extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Tersangka</a>
+              <a href="/#">Tersangka</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )
