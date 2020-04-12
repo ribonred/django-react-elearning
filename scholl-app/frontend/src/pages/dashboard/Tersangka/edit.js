@@ -11,13 +11,13 @@ class EditTersangka extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Tersangka</a>
+              <a href="/#">Tersangka</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>{this.props.match.params.id}</a>
+              <a href="/#">{this.props.match.params.id}</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Edit</a>
+              <a href="/#">Edit</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )

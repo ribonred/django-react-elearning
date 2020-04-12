@@ -1,6 +1,6 @@
 import React from 'react';
 import SignupView from '../component/signup'
-import { request, get_token } from '../helper/requestHelper'
+import { get_token } from '../helper/requestHelper'
 import { registeruser } from '../reduxActions/dashboard'
 import { connect } from 'react-redux'
 
@@ -29,12 +29,6 @@ class SignupPage extends React.Component {
 
     onsubmit = async () => {
         this.props.dispatch(registeruser(get_token(), this.state.form))
-        // const result = await request('/api/users/', {
-        //     method: 'POST',
-        // }, this.state.form);
-        // if (result) {
-        //     localStorage.setItem('token', result.data.token)
-        // }
     }
     render() {
         return <SignupView userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit} />

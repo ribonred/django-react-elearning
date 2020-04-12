@@ -150,13 +150,13 @@ class CreatePenangkapan extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>LKN</a>
+              <a href="/#">LKN</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Penangkapan</a>
+              <a href="/#">Penangkapan</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>buat</a>
+              <a href="/#">buat</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )

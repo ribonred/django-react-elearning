@@ -11,13 +11,13 @@ class EditPenyidik extends Component {
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Penyidik</a>
+              <a href="/#">Penyidik</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>{this.props.match.params.id}</a>
+              <a href="/#">{this.props.match.params.id}</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a>Edit</a>
+              <a href="/#">Edit</a>
             </Breadcrumb.Item>
         </Breadcrumb>
       )
