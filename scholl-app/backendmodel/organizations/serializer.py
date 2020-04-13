@@ -45,25 +45,21 @@ class BarangBuktiApi(WritableNestedModelSerializer):
         fields = ['id', 'milik_tersangka_id', 'nama_barang',
                   'sp_sita', 'tap_status', 'jenis_barang', 'statusbarangbukti']
 
-    # def created(self, validated_data):
-    #     statuses = validated_data.pop['statusbarangbukti']
-    #     bb_created = BarangBukti.objects.all()
-    #     print(bb_created)
-    #     StatusBarangBuktiApi.objects.create(
-    #         barang_bukti_id=bb_created.id, **statuses)
-    #     return bb_created
-
-
-class ProsesTersangkaApi(serializers.ModelSerializer):
-    class Meta:
-        model = ProsesTersangka
-        fields = ('__all__')
-
 
 class ProsesPengadilanApi(serializers.ModelSerializer):
     class Meta:
         model = ProsesPengadilan
         fields = ('__all__')
+
+
+class ProsesTersangkaApi(serializers.ModelSerializer):
+    jenis_proses = serializers.PrimaryKeyRelatedField(
+        queryset=ProsesPengadilan.objects.all())
+
+    class Meta:
+        model = ProsesTersangka
+        fields = ['id', 'proses_tersangka', 'no_proses',
+                  'jenis_proses', 'keterangan']
 
 
 class StatusTersangkaApi(serializers.ModelSerializer):
@@ -80,21 +76,8 @@ class TersangkaApi(WritableNestedModelSerializer):
 
     class Meta:
         model = Tersangka
-        fields = ['id', 'no_penangkapan_id', 'nama_tersangka', 'umur', 'jenis_kelamin',
+        fields = ['id', 'nama_tersangka', 'umur', 'jenis_kelamin',
                   'foto', 'statustersangka', 'barangbuktitersangka']
-
-    # def create(self, validated_data):
-    #     _status_tersangka = validated_data.pop('statustersangka')
-    #     _bb = validated_data.pop('barangbuktitersangka')
-    #     tersangka = Tersangka.objects.create(**validated_data)
-    #     for st in _status_tersangka:
-    #         StatusTersangka.objects.create(
-    #             tersangka_id=tersangka, **st)
-    #     for bb in _bb:
-    #         bb_create = BarangBukti.objects.create(
-    #             milik_tersangka_id=tersangka, **bb)
-
-    #     return tersangka
 
 
 class PenangkapanApi(WritableNestedModelSerializer):
@@ -107,25 +90,14 @@ class PenangkapanApi(WritableNestedModelSerializer):
                   'tanggal_penangkapan', 'jam_penangkapan', 'penangkapan_tersangka')
 
 
-# class CompanyDivisionMemberSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = DivisionMember
-#         fields = ('__all__')
+class TersangkaEditApi(WritableNestedModelSerializer):
+    statustersangka = StatusTersangkaApi(
+        many=True, required=False, allow_null=True)
+    prosestersangka = ProsesTersangkaApi(
+        many=True, required=False, allow_null=True)
 
-
-# class CompanyDivisionSerializer(serializers.ModelSerializer):
-#     company_member_division = CompanyDivisionMemberSerializer(many=True)
-
-#     class Meta:
-#         model = CompanyDivision
-#         fields = ['id', 'division_name',
-#                   'company_member_division', 'company_division']
-
-
-# class CompanySerializerAll(serializers.ModelSerializer):
-#     division = CompanyDivisionSerializer(many=True)
-
-#     class Meta:
-#         model = Company
-#         fields = ['id', 'company_manager', 'company_name',
-#                   'company_address', 'company_code', 'division']
+    class Meta:
+        model = Tersangka
+        fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
+                  'foto', 'no_penangkapan_id', 'statustersangka', 'prosestersangka']
+        depth = 2
