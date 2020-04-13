@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Form, Button, DatePicker, Space } from 'antd';
+import { Form, Button, DatePicker, Space, Spin } from 'antd';
 
 import { Link } from 'react-router-dom';
 import FormGroup from '../ui-container/formGroup';
@@ -23,6 +23,7 @@ const LknFormView = (props) => {
         
         <div align="right" style={{ margin: '20px' }}>
           <Space>
+            {props.isLoading && <Spin size="medium" />}
             <Button style={{ fontWeight: 'bold', backgroundColor: 'green', borderColor: 'green' }} type="primary" htmlType="submit" onClick={() => { props.onsubmit() }}>Simpan</Button>
             <Button style={{ fontWeight: 'bold' }} type="danger" htmlType="submit">
               <Link to="/dashboard/lkn">Kembali</Link>
@@ -37,13 +38,9 @@ const LknFormView = (props) => {
         <Form.Item
           label="Tanggal Dibuat"
           rules={[{ message: 'Masukkan tanggal dibuat form!' }]}
+          rules= {[{ required: true, message: "نام کاربری را وارد کنید." }]}
         >
           <DatePicker defaultValue={moment(new Date(), dateFormat)} format={dateFormat} onChange={(i, e) => props.onFormChange('tgl_dibuat', e)}/>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button style={{ fontWeight: 'bold' }} type="primary" htmlType="submit">
-            <Link to="/dashboard/lkn/penangkapan/buat">Penangkapan</Link>
-          </Button>
         </Form.Item>
         </FormGroup>
       </PageContainer>

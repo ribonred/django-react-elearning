@@ -3,6 +3,8 @@
 const initialState = {
   lknTableData:[],
   userTableData:[],
+  error: false,
+  lknCreated: false,
 };
 
 const dashboard = (state = initialState, action) => {
@@ -17,6 +19,28 @@ const dashboard = (state = initialState, action) => {
         ...state,
         userTableData: action.data,
       };
+    case 'RECEIVE_LKN_CREATED_SUCCESSFULL':
+      return {
+        ...state,
+        lknCreated: true,
+        error: false,
+      }
+    case 'RECEIVE_ERROR':
+      return {
+        ...state,
+        error: action.error,
+      }
+    case 'RECEIVE_LKN_CREATED_SUCCESSFULL':
+      return {
+        ...state,
+        error: false,
+        lknCreated: false,
+      }
+    case 'RECEIVE_ERROR':
+      return {
+        ...state,
+        error: true,
+      }
     default:
       return state;
 

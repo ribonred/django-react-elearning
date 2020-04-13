@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, message } from 'antd';
 import { connect } from 'react-redux';
+import history from '../../../route/history';
+import { createLKN } from '../../../reduxActions/dashboard';
 import SideMenu from '../../../component/sider';
 import { request } from '../../../helper/requestHelper';
 import LknFormView from '../../../component/lknform';
 const { Content } = Layout;
+const key = 'error';
 
 class CreateLKN extends Component {
       state = {
         form: {},
-        lknId: ''
+        lknId: '',
+        isLoading: false
       }
 
      onFormChange = (fieldName, e) => {
@@ -28,17 +32,14 @@ class CreateLKN extends Component {
     }
 
     onsubmit = async() => {
-      console.log(this.state.form)
-      const result = await request('/api/lkn/', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-       }, this.state.form);
-       if(result){
-        localStorage.setItem('lknId', result.data.id)
-         console.log('result',result)
-       }
+      this.setState({ isLoading: true })
+      await this.props.dispatch(createLKN(localStorage.getItem('token'), this.state.form))
+      if(!this.props.error){
+        history.push('/dashboard/LKN')
+      } else {
+        this.openMessage()
+      }
+      this.setState({ isLoading: false })
     }
 
     renderBreadCrumb = () => {
@@ -55,6 +56,13 @@ class CreateLKN extends Component {
       )
     }
 
+    openMessage = () => {
+      message.loading({ content: 'Loading...', key });
+      setTimeout(() => {
+        message.error({ content: this.props.error, key, duration: 4 });
+      }, 1000);
+    };
+
     render() {
         return (
           <SideMenu>
@@ -62,7 +70,7 @@ class CreateLKN extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <LknFormView onFormChange={this.onFormChange} onsubmit={this.onsubmit}></LknFormView>
+                  <LknFormView isLoading={this.state.isLoading} onFormChange={this.onFormChange} onsubmit={this.onsubmit}></LknFormView>
                  </div>
                </Content>
              </Layout>
@@ -73,7 +81,10 @@ class CreateLKN extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { route: dashboard.route }
+  return { 
+    error: dashboard.error,
+    lknCreated: dashboard.lknCreated, 
+  }
 }
 
 const styles = {

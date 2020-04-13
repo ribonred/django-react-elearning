@@ -4,7 +4,7 @@ import uuid
 
 
 class BerkasLKN(BaseTimeStampModel):
-    LKN = models.CharField(max_length=80)
+    LKN = models.CharField(max_length=80, unique=True)
     penyidik = models.ForeignKey(
         User, on_delete=models.SET_NULL, related_name='peyidik_lkn', null=True, blank=True)
     tgl_dibuat = models.DateField(blank=True, null=True)
@@ -16,7 +16,7 @@ class BerkasLKN(BaseTimeStampModel):
 class Penangkapan(BaseTimeStampModel):
     no_lkn = models.ForeignKey(
         BerkasLKN, null=True, blank=True, related_name='penangkapan', on_delete=models.CASCADE)
-    no_penangkapan = models.CharField(max_length=255)
+    no_penangkapan = models.CharField(max_length=255,unique=True)
     tanggal_penangkapan = models.DateField(
         null=True, blank=True)
     jam_penangkapan = models.TimeField(null=True, blank=True)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Button } from 'antd';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { get_token } from '../../../helper/requestHelper';
 import { get_lkn_by_penyidik } from '../../../reduxActions/dashboard';
@@ -49,6 +50,14 @@ class LKNTable extends Component {
       )
     }
 
+    renderAddButton = () => {
+      return (
+        <Button type="primary">
+          <Link to='/dashboard/LKN/buat'>Buat LKN Baru</Link>
+        </Button>
+      )
+    }
+
     render() {
         return (
           <SideMenu>
@@ -56,6 +65,7 @@ class LKNTable extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  {this.renderAddButton()}
                   <TableView
                     path="LKN"
                     tableField={tableField}
