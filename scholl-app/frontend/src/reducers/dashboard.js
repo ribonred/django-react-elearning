@@ -4,6 +4,7 @@ const initialState = {
   lknTableData:[],
   userTableData:[],
   error: false,
+  lknData: [],
   lknCreated: false,
 };
 
@@ -40,6 +41,11 @@ const dashboard = (state = initialState, action) => {
       return {
         ...state,
         error: true,
+      }
+    case 'RECEIVE_LKN_BY_NO_LKN_DATA':
+      return {
+        ...state,
+        lknData: action.data,
       }
     default:
       return state;

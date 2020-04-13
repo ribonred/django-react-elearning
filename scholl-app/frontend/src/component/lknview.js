@@ -5,11 +5,12 @@ import { Descriptions } from 'antd';
 
 
 const LknViewView = (props) => {
+    console.log('aaaa',props.lkn)
     return (
       <ViewContainer>
           <Descriptions title="LKN Info">
-            <Descriptions.Item label="No. LKN">Zhou Maomao</Descriptions.Item>
-            <Descriptions.Item label="Tanggal Dibuat">1810000000</Descriptions.Item>
+            <Descriptions.Item label="No. LKN">{props.lkn.LKN}</Descriptions.Item>
+            <Descriptions.Item label="Tanggal Dibuat">{props.lkn.tanggal_dibuat}</Descriptions.Item>
         </Descriptions>,
       </ViewContainer>
     );

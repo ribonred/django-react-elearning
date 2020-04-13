@@ -36,7 +36,6 @@ class LKNTable extends Component {
     async componentDidMount(){
       this.setState({ isLoading: true })
       await this.props.dispatch(get_lkn_by_penyidik(get_token()))
-      console.log(this.props.lknTableData)
       this.setState({ isLoading: false })
     }
     renderBreadCrumb = () => {

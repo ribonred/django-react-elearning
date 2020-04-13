@@ -7,6 +7,13 @@ function receive_lkn_table(data) {
   }
 }
 
+function receive_lkn_by_no_lkn(data) {
+  return {
+    type: "RECEIVE_LKN_BY_NO_LKN_DATA",
+    data
+  }
+}
+
 function receive_user_table(data) {
   return {
     type: "RECEIVE_USER_TABLE_DATA",
@@ -115,14 +122,18 @@ export function post_lkn_by_penyidik(token, data) {
 }
 
 export function get_lkn_by_no_lkn(token, data) {
-  return dispatch => {
-    return request(`/api/lkn/${data}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => console.log(response))
+  return async dispatch => {
+    try {
+      const result = await request(`/api/lkn/${data}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      dispatch(receive_lkn_by_no_lkn(result.data))
+    } catch(e){
+      console.log(e)
+    }
   }
 }
