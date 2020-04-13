@@ -38,7 +38,6 @@ const LknFormView = (props) => {
         <Form.Item
           label="Tanggal Dibuat"
           rules={[{ message: 'Masukkan tanggal dibuat form!' }]}
-          rules= {[{ required: true, message: "نام کاربری را وارد کنید." }]}
         >
           <DatePicker defaultValue={moment(new Date(), dateFormat)} format={dateFormat} onChange={(i, e) => props.onFormChange('tgl_dibuat', e)}/>
         </Form.Item>

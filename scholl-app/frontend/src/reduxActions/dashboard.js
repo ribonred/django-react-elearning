@@ -46,7 +46,7 @@ export function createLKN(token, data){
         if(data['LKN'] !== undefined){
           dispatch(receive_error('LKN gagal dibuat , no LKN anda sudah ada'))
         } else {
-          dispatch(receive_error('error created LKN , your please complete all required form'))
+          dispatch(receive_error('error created LKN , please complete all required form'))
         }
         return;
       }
@@ -105,6 +105,19 @@ export function post_lkn_by_penyidik(token, data) {
   return dispatch => {
     return request('/api/lkn/', data, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
+export function get_lkn_by_no_lkn(token, data) {
+  return dispatch => {
+    return request(`/api/lkn/${data}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
