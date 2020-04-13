@@ -19,11 +19,14 @@ from .serializer import BerkasLknApi, PenangkapanApi, TersangkaApi, ProsesPengad
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class BerkasLknView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'LKN']
 
     def get_queryset(self):
         queryset = self.queryset
@@ -53,6 +56,8 @@ class BerkasLknView(viewsets.ModelViewSet):
 class PenangkapanView(viewsets.ModelViewSet):
     queryset = Penangkapan.objects.all()
     serializer_class = PenangkapanApi
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'no_penangkapan']
 
     def get_queryset(self):
         user = self.request.user

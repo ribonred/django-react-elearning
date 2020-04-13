@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
 
 ]
 for app in ADDITIONAL_APPS:
@@ -112,6 +113,7 @@ USE_TZ = True
 # AUTHUSER
 AUTH_USER_MODEL = 'core.User'
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DATETIME_FORMAT': "%Y-%m-%d,%H/%M",
     'DATETIME_INPUT_FORMATS': "%Y-%m-%d,%H-%M",
     'DEFAULT_PERMISSION_CLASSES': (
