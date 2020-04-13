@@ -124,7 +124,7 @@ export function post_lkn_by_penyidik(token, data) {
 export function get_lkn_by_no_lkn(token, data) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/${data}`, {
+      const result = await request(`/api/lkn/?LKN=${data}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
