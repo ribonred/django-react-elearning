@@ -76,7 +76,7 @@ class TersangkaApi(WritableNestedModelSerializer):
 
     class Meta:
         model = Tersangka
-        fields = ['id','no_penangkapan.id', 'nama_tersangka', 'umur', 'jenis_kelamin',
+        fields = ['id', 'no_penangkapan_id', 'nama_tersangka', 'umur', 'jenis_kelamin',
                   'foto', 'statustersangka', 'barangbuktitersangka']
 
 

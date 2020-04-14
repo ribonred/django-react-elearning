@@ -1,33 +1,41 @@
 {
+    "id": 2,
     "no_lkn": 1,
     "no_penangkapan": "duadua",
     "tanggal_penangkapan": "2020-01-02",
     "jam_penangkapan": "22:30:00",
     "penangkapan_tersangka": [
         {
+            "id": 3,
+            "no_penangkapan_id": 2,
             "nama_tersangka": "joko-jasndjsa",
             "umur": 23,
             "jenis_kelamin": "laki-laki",
             "foto": null,
             "statustersangka": [
                 {
-                    "created": "2020-04-12,16/17",
-                    "updated": "2020-04-12,16/17",
+                    "id": 4,
+                    "created": "2020-04-13,14/08",
+                    "updated": "2020-04-13,14/08",
                     "status_penahanan": "Di tahan",
                     "rekam_jejak": "Masuk",
                     "tanggal": "2020-04-12",
                     "waktu": "11:41:00",
-                    "keterangan": ""
+                    "keterangan": "",
+                    "tersangka_id": 3
                 }
             ],
             "barangbuktitersangka": [
                 {
+                    "id": 5,
+                    "milik_tersangka_id": 3,
                     "nama_barang": "sabu",
                     "sp_sita": null,
                     "tap_status": null,
                     "jenis_barang": "narkotika",
                     "statusbarangbukti": [
                         {
+                            "id": 6,
                             "tanggal_status": "2020-04-12",
                             "waktu_status": "13:54:00",
                             "jumlah": "25.00",
@@ -35,6 +43,7 @@
                             "status": "Masuk"
                         },
                         {
+                            "id": 7,
                             "tanggal_status": "2020-04-12",
                             "waktu_status": "13:54:00",
                             "jumlah": "21.00",
@@ -44,6 +53,48 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": 8,
+            "no_penangkapan_id": 2,
+            "nama_tersangka": "upin12323",
+            "umur": 21,
+            "jenis_kelamin": "laki-laki",
+            "foto": null,
+            "statustersangka": [
+                {
+                    "id": 13,
+                    "created": "2020-04-14,13/22",
+                    "updated": "2020-04-14,13/22",
+                    "status_penahanan": "Di tahan",
+                    "rekam_jejak": "Masuk",
+                    "tanggal": "2020-04-12",
+                    "waktu": "11:41:00",
+                    "keterangan": "dad12sad",
+                    "tersangka_id": 8
+                },
+                {
+                    "id": 14,
+                    "created": "2020-04-14,13/22",
+                    "updated": "2020-04-14,13/22",
+                    "status_penahanan": "Di Amankan",
+                    "rekam_jejak": "Masuk",
+                    "tanggal": "2020-04-16",
+                    "waktu": "07:41:00",
+                    "keterangan": "ok",
+                    "tersangka_id": 8
+                }
+            ],
+            "barangbuktitersangka": []
+        },
+        {
+            "no_penangkapan_id": 2,
+            "nama_tersangka": "agarez",
+            "umur": 35,
+            "jenis_kelamin": "laki-laki",
+            "foto": null,
+            "statustersangka": [],
+            "barangbuktitersangka": []
         }
     ]
 }
