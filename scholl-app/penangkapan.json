@@ -1,0 +1,47 @@
+{
+    "no_lkn": 1, //detail bawaan api
+    "no_penangkapan": "duadua", //field
+    "tanggal_penangkapan": "2020-01-02", //field
+    "jam_penangkapan": "22:30:00", //field
+    "penangkapan_tersangka": [
+        {
+            "nama_tersangka": "joko-jasndjsa", //field
+            "umur": 23, //field
+            "jenis_kelamin": "laki-laki", //field
+            "foto": null, //field
+            "statustersangka": [ //field array
+                {
+                    "status_penahanan": "Di tahan", //field
+                    "rekam_jejak": "Masuk", //field
+                    "tanggal": "2020-04-12", //field
+                    "waktu": "11:41:00", //field
+                    "keterangan": "" //field
+                }
+            ],
+            "barangbuktitersangka": [ //field array
+                {
+                    "nama_barang": "sabu", //field
+                    "sp_sita": null, //field
+                    "tap_status": null, //field
+                    "jenis_barang": "narkotika", //field
+                    "statusbarangbukti": [ //field array
+                        {
+                            "tanggal_status": "2020-04-12", //field
+                            "waktu_status": "13:54:00", //field
+                            "jumlah": "25.00", //field
+                            "keterangan": "mbuh", //field
+                            "status": "Masuk" //field
+                        },
+                        {
+                            "tanggal_status": "2020-04-12", //field
+                            "waktu_status": "13:54:00", //field
+                            "jumlah": "21.00", //field
+                            "keterangan": "mbuh", //field
+                            "status": "Keluar" //field
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

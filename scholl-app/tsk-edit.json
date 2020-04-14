@@ -1,0 +1,25 @@
+    {
+        "id": 3, //detail bawaan api
+        "nama_tersangka": "joko-jasndjsa", //detail bawaan api
+        "umur": 23, //detail bawaan api
+        "jenis_kelamin": "laki-laki", //detail bawaan api
+        "foto": null, //detail bawaan api
+        "statustersangka": [
+            {
+                "status_penahanan": "Di tahan", //field
+                "rekam_jejak": "Masuk", //field
+                "tanggal": "2020-04-12", //field
+                "waktu": "11:41:00", //field
+                "keterangan": "dad12sad", //field
+                "tersangka_id": 3 //id tersangka
+            }
+        ],
+        "prosestersangka": [
+            {
+                "proses_tersangka": 3, //id tersangka
+                "no_proses": "tes proses", //field
+                "jenis_proses": 2, //field
+                "keterangan": "masuk pengadilan 2" //field
+            }
+        ]
+    }
