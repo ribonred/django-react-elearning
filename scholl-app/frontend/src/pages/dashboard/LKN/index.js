@@ -66,7 +66,7 @@ class LKNTable extends Component {
                   {this.renderBreadCrumb()}
                   {this.renderAddButton()}
                   <TableView
-                    path="LKN"
+                    path="lkn"
                     tableField={tableField}
                     tableData={this.props.lknTableData}
                     isLoading={this.state.isLoading}

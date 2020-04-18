@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
-import ExportView from '../../../component/export';
-import Axios from 'axios';
-import { get_penangkapan } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
+import { get_tersangka_list } from '../../../reduxActions/dashboard';
+import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
 
@@ -15,7 +15,7 @@ class BarangBuktiTable extends Component {
     }
     
     async componentDidMount(){
-      await this.props.dispatch(get_penangkapan(get_token()))
+      // await this.props.dispatch(get_penangkapan(get_token()))
     }
 
     renderBreadCrumb = () => {
@@ -36,9 +36,6 @@ class BarangBuktiTable extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <ExportView
-                    tableData={this.props.penangkapanData}
-                  />
                  </div>
                </Content>
              </Layout>
