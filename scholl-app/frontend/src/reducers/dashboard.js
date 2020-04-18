@@ -6,6 +6,7 @@ const initialState = {
   error: false,
   lknData: [],
   lknCreated: false,
+  penangkapanData: [],
 };
 
 const dashboard = (state = initialState, action) => {
@@ -47,6 +48,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         lknData: action.data,
       }
+    case 'RECEIVE_PENANGKAPAN':
+      return {
+        ...state,
+        penangkapanData: action.data,
+      };
     default:
       return state;
 

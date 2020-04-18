@@ -14,6 +14,13 @@ function receive_lkn_by_no_lkn(data) {
   }
 }
 
+function receive_penangkapan(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN",
+    data
+  }
+}
+
 function receive_user_table(data) {
   return {
     type: "RECEIVE_USER_TABLE_DATA",
@@ -132,6 +139,23 @@ export function get_lkn_by_no_lkn(token, data) {
         }
       })
       dispatch(receive_lkn_by_no_lkn(result.data))
+    } catch(e){
+      console.log(e)
+    }
+  }
+}
+
+export function get_penangkapan(token) {
+  return async dispatch => {
+    try {
+      const result = await request(`/api/pnkp/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      dispatch(receive_penangkapan(result.data))
     } catch(e){
       console.log(e)
     }

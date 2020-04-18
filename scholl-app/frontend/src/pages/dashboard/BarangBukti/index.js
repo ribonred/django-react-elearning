@@ -2,10 +2,22 @@ import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
+import ExportView from '../../../component/export';
+import Axios from 'axios';
+import { get_penangkapan } from '../../../reduxActions/dashboard';
+import { get_token } from '../../../helper/requestHelper';
 
 const { Content } = Layout;
 
 class BarangBuktiTable extends Component {
+    state = {
+      data: '',
+    }
+    
+    async componentDidMount(){
+      await this.props.dispatch(get_penangkapan(get_token()))
+    }
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
@@ -24,6 +36,9 @@ class BarangBuktiTable extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  <ExportView
+                    tableData={this.props.penangkapanData}
+                  />
                  </div>
                </Content>
              </Layout>
@@ -34,7 +49,7 @@ class BarangBuktiTable extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { route: dashboard.route }
+  return { penangkapanData: dashboard.penangkapanData }
 }
 
 const styles = {
