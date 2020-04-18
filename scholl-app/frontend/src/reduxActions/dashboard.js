@@ -14,6 +14,13 @@ function receive_lkn_by_no_lkn(data) {
   }
 }
 
+function receive_penangkapan(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN",
+    data
+  }
+}
+
 function receive_user_table(data) {
   return {
     type: "RECEIVE_USER_TABLE_DATA",
