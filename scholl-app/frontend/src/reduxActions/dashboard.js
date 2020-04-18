@@ -122,6 +122,20 @@ export function get_lkn_by_penyidik(token, id = null) {
   }
 }
 
+export function verify_token(token){
+  return async dispatch => {
+      const result = await request('/get-token/token-verify/',{
+        method: 'POST',
+      }, {
+        'token': token,
+      })
+      if(result instanceof Error){
+        return 'error'
+      }
+      return result.status
+  }
+}
+
 export function post_lkn_by_penyidik(token, data) {
   return dispatch => {
     return request('/api/lkn/', data, {
@@ -151,7 +165,6 @@ export function get_lkn_by_no_lkn(token, data) {
     }
   }
 }
-
 
 // penangkapan CRUD
 
@@ -243,3 +256,4 @@ export function editersangka(data, token, id) {
       .then(response => console.log(response))
   }
 }
+
