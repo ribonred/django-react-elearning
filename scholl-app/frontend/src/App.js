@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import history from './route/history';
-import LoginPage from './pages/loginpages'
 import SignupPage from './pages/signuppages'
 import { Router, Route, Switch } from 'react-router-dom';
-import { PrivateRoute } from './route/privateroute';
+import PrivateRoute from './route/privateroute';
+import LoginPage from './pages/loginpages';
 import Dashboard from './pages/dashboard/index.js';
 import PenangkapanCreate from './pages/dashboard/Penangkapan/create'
 import Lkn from './pages/dashboard/LKN/index.js';
@@ -27,12 +27,12 @@ export default class App extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path='/' component={LoginPage} />
+          <PrivateRoute exact path='/' defaultPath='/dashboard' isReverse component={LoginPage} exact/>
           <Route
             path='/dashboard'
             render={({ match: { url } }) => (
               <>
-                <PrivateRoute path={`${url}/`} component={Dashboard} exact />
+                <PrivateRoute path={`${url}/`} component={Lkn} exact />
                 <PrivateRoute path={`${url}/LKN`} component={Lkn} exact />
                 <PrivateRoute path={`${url}/LKN/buat`} component={LknCreate} exact />
                 <PrivateRoute path={`${url}/LKN/:id`} component={LknView} exact />
@@ -44,8 +44,8 @@ export default class App extends Component {
                 <PrivateRoute path={`${url}/Tersangka`} component={Tersangka} exact />
                 <PrivateRoute path={`${url}/Tersangka/:id`} component={TersangkaView} exact />
                 <PrivateRoute path={`${url}/Tersangka/:id/edit`} component={TersangkaEdit} exact />
-                <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
                 <PrivateRoute path={`${url}/BarangBukti/:id`} component={BarangBuktiView} exact />
+                <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
                 <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />
                 <PrivateRoute path={`${url}/LKN/Penangkapan/buat`} component={PenangkapanCreate} exact />
               </>

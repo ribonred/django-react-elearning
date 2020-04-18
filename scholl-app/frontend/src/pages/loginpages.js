@@ -1,8 +1,11 @@
 import React from 'react';
-import LoginView from '../component/login'
+import LoginSide from './loginSide'
+import { message } from 'antd';
 import { request } from '../helper/requestHelper'
 import networkIssueModal from '../component/networkError'
 import history from '../route/history';
+
+const key = 'error';
 
 class LoginPage extends React.Component {
     state = {
@@ -17,19 +20,37 @@ class LoginPage extends React.Component {
         })
     }
 
+    openMessage = (text) => {
+      message.loading({ content: 'Loading...', key });
+      setTimeout(() => {
+        message.error({ content: text, key, duration: 4 });
+      }, 1000);
+    };
+
     onsubmit = async() => {
+      if(this.state.form.username === undefined){
+        this.openMessage('maaf username harus diisi')
+        return
+      }
+      if(this.state.form.password === undefined){
+        this.openMessage('maaf password harus diisi')
+        return
+      }
+
       try {
         const result = await request('/get-token/token-auth/', {
           method: 'POST',
          }, this.state.form);
+         console.log('user', result)
          localStorage.setItem('token', result.data.token)
          history.push('/dashboard')
       } catch(e){
-        networkIssueModal()
+        this.openMessage('maaf username dan email tidak match')
       }
     }
+
     render() {
-        return <LoginView userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit}/>
+        return <LoginSide userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit}/>
     }
 }
 
