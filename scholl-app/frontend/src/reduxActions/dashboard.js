@@ -122,17 +122,17 @@ export function get_lkn_by_penyidik(token, id = null) {
   }
 }
 
-export function verify_token(token){
+export function verify_token(token) {
   return async dispatch => {
-      const result = await request('/get-token/token-verify/',{
-        method: 'POST',
-      }, {
-        'token': token,
-      })
-      if(result instanceof Error){
-        return 'error'
-      }
-      return result.status
+    const result = await request('/get-token/token-verify/', {
+      method: 'POST',
+    }, {
+      'token': token,
+    })
+    if (result instanceof Error) {
+      return 'error'
+    }
+    return result.status
   }
 }
 
@@ -235,7 +235,7 @@ export function get_tersangka_list(token, id = null) {
       url = `/api/tsk-edit/`
     }
     return request(url, {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -248,6 +248,18 @@ export function editersangka(data, token, id) {
   return dispatch => {
     return request(`/api/tsk-edit/${id}`, data, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+export function deletetersangka(token, id) {
+  return dispatch => {
+    return request(`/api/tsk-edit/${id}`, data, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
