@@ -41,7 +41,7 @@ class LoginPage extends React.Component {
         const result = await request('/get-token/token-auth/', {
           method: 'POST',
          }, this.state.form);
-         console.log('user', result)
+         console.log('user', result.data)
          localStorage.setItem('token', result.data.token)
          history.push('/dashboard')
       } catch(e){

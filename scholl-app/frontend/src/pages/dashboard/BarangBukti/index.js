@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import ExportView from '../../../component/export';
 import Axios from 'axios';
-import { get_penangkapan } from '../../../reduxActions/dashboard';
+import { getpenangkapan } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
 
 const { Content } = Layout;
@@ -13,9 +13,9 @@ class BarangBuktiTable extends Component {
     state = {
       data: '',
     }
-    
+
     async componentDidMount(){
-      await this.props.dispatch(get_penangkapan(get_token()))
+      await this.props.dispatch(getpenangkapan(get_token()))
     }
 
     renderBreadCrumb = () => {
