@@ -49,8 +49,9 @@ class PenyidikTable extends Component {
       return letter.charAt(0).toUpperCase() + letter.slice(1);
     }
     render() {
-      console.log('this props', this.props.userTableData)
-        const userData = this.props.userTableData.map((data)=> {
+      let userData = []
+      if(this.props.userTableData !== undefined){
+        userData = this.props.userTableData.map((data)=> {
           const { nama_depan, nama_belakang } = data
           const nama = data.nama_depan == null ? 'no name' : this.capitalizeFirstLetter(nama_depan)+' '+this.capitalizeFirstLetter(nama_belakang)
           return {
@@ -58,6 +59,7 @@ class PenyidikTable extends Component {
             nama: nama
           }
         })
+      }
         return (
           <SideMenu selected="2">
             <Layout>

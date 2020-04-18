@@ -27,7 +27,7 @@ export default class App extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <PrivateRoute exact path='/' defaultPath='/dashboard' isReverse component={LoginPage} exact/>
+          <Route exact path='/' component={LoginPage} />
           <Route
             path='/dashboard'
             render={({ match: { url } }) => (

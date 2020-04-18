@@ -256,7 +256,7 @@ export function editersangka(data, token, id) {
       .then(response => console.log(response))
   }
 }
-export function deletetersangka(token, id) {
+export function deletetersangka(data, token, id) {
   return dispatch => {
     return request(`/api/tsk-edit/${id}`, data, {
       method: 'DELETE',
@@ -268,4 +268,3 @@ export function deletetersangka(token, id) {
       .then(response => console.log(response))
   }
 }
-
