@@ -31,7 +31,7 @@ const AuthContainer = (props) => {
     <div style={styles.container}>
       <Divider orientation="left" style={styles.divider}>
       </Divider>
-      <Row gutter={[100, 600]} justify="center" align="middle">
+      <Row type="flex" gutter={[100, 600]} justify="center" align="middle" style={{minHeight: '100vh'}}>
         <Col xs={{ span: 25, offset: 1 }} lg={{ span: 15, offset: 1 }}>
           <Layout style={styles.innerLayout}>
             <Layout.Header
@@ -44,7 +44,6 @@ const AuthContainer = (props) => {
           </Layout>
         </Col>
       </Row>
-      <Layout.Footer style={{ height: '500px' }} />
     </div>
   );
 };
