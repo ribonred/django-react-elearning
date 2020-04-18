@@ -13,7 +13,7 @@ class BarangBuktiTable extends Component {
     state = {
       data: '',
     }
-    
+
     async componentDidMount(){
       // await this.props.dispatch(get_penangkapan(get_token()))
     }
