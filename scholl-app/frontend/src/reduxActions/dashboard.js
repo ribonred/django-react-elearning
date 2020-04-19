@@ -283,3 +283,69 @@ export function deletetersangka(data, token, id) {
       .then(response => console.log(response))
   }
 }
+
+// Proses barangbukti Edit and list
+
+export function get_bb_list(token, id = null) {
+  return dispatch => {
+    let url = ''
+    if (id) {
+      url = `/api/bb-edit/${id}`
+    }
+    else {
+      url = `/api/bb-edit/`
+    }
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+export function editbb(data, token, id) {
+  return dispatch => {
+    return request(`/api/bb-edit/${id}`, data, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+export function deletebb(token, id) {
+  return dispatch => {
+    return request(`/api/bb-edit/${id}`, data, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
+
+
+// LKN all detail view
+
+//LKN GET ALL OR LIST VIEW
+
+export function get_bb_list(token) {
+  return dispatch => {
+    let url = `/api/lkn-detail/?LKN=${data}`
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
