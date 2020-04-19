@@ -17,6 +17,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         lknTableData: action.data,
       };
+    case 'RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA':
+      return {
+        ...state,
+        penangkapanData: action.data,
+      }
     case 'RECEIVE_TERSANGKA_TABLE_DATA':
       return {
         ...state,

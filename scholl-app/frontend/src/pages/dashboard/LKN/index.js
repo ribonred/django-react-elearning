@@ -69,6 +69,7 @@ class LKNTable extends Component {
                   {this.renderAddButton()}
                   <TableView
                     path="lkn"
+                    onDelete={(id) => this.props.dispatch()}
                     tableField={tableField}
                     tableData={this.props.lknTableData}
                     isLoading={this.state.isLoading}
