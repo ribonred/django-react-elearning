@@ -101,3 +101,60 @@ class TersangkaEditApi(WritableNestedModelSerializer):
         fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
                   'foto', 'no_penangkapan_id', 'statustersangka', 'prosestersangka']
         depth = 2
+
+
+class BarangBuktiEdit(WritableNestedModelSerializer):
+    statusbarangbukti = StatusBarangBuktiApi(
+        many=True, required=False, allow_null=True)
+
+    class Meta:
+        model = BarangBukti
+        fields = ['id', 'nama_barang',
+                  'sp_sita', 'tap_status', 'jenis_barang', 'statusbarangbukti', 'milik_tersangka_id']
+
+        depth = 3
+
+###DETAIL###
+
+
+class BarangBuktiDetailApi(WritableNestedModelSerializer):
+    statusbarangbukti = StatusBarangBuktiApi(
+        many=True, required=False, allow_null=True)
+
+    class Meta:
+        model = BarangBukti
+        fields = ['id', 'nama_barang',
+                  'sp_sita', 'tap_status', 'jenis_barang', 'statusbarangbukti']
+
+
+class TersangkaDetailApi(WritableNestedModelSerializer):
+    statustersangka = StatusTersangkaApi(
+        many=True, required=False, allow_null=True)
+    prosestersangka = ProsesTersangkaApi(
+        many=True, required=False, allow_null=True)
+    barangbuktitersangka = BarangBuktiDetailApi(
+        many=True, required=False, allow_null=True)
+
+    class Meta:
+        model = Tersangka
+        fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
+                  'foto', 'statustersangka', 'prosestersangka', 'barangbuktitersangka']
+
+
+class PenangkapanApiDetail(WritableNestedModelSerializer):
+    penangkapan_tersangka = TersangkaDetailApi(many=True)
+
+    class Meta:
+        model = Penangkapan
+        fields = ('id', 'no_penangkapan',
+                  'tanggal_penangkapan', 'jam_penangkapan', 'penangkapan_tersangka',)
+
+
+class LknDetailAPi(WritableNestedModelSerializer):
+    penangkapan = PenangkapanApiDetail(
+        many=True, required=False, allow_null=True)
+
+    class Meta:
+        model = BerkasLKN
+        fields = ['id', 'LKN',
+                  'penyidik', 'tgl_dibuat', 'penangkapan']
