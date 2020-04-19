@@ -39,6 +39,7 @@ class LKNTable extends Component {
       await this.props.dispatch(get_lkn_by_penyidik(get_token()))
       this.setState({ isLoading: false })
     }
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>

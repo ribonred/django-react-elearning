@@ -52,7 +52,7 @@ export default class TableView extends React.Component {
 
   getColumnSearchProps = dataIndex => ({
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div style={{ padding: 8 }}>
+        <div style={{ padding: 8 }} key={dataIndex}>
           <Input
             ref={node => {
               this.searchInput = node;
