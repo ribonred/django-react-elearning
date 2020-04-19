@@ -82,6 +82,27 @@ export function createLKN(token, data) {
   }
 }
 
+export function editLKN(token, data, id) {
+  return async dispatch => {
+    const result = await request(`/api/lkn/${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    if (result instanceof Error) {
+      if (data['LKN'] !== undefined) {
+        dispatch(receive_error('LKN gagal dibuat , no LKN anda sudah ada'))
+      } else {
+        dispatch(receive_error('error created LKN , please complete all required form'))
+      }
+      return;
+    }
+    dispatch(receive_lkn_created_successfull(result.data))
+  }
+}
+
 export function registeruser(token, data) {
   return dispatch => {
     return request('/api/users/', data, {

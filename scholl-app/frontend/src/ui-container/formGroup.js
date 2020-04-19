@@ -15,7 +15,6 @@ const FormGroup = (props) => {
       form.setFieldsValue(props.defaultValue || {});
     }, []);
 
-    console.log('props date', props.defaultValue)
     const FormList = props.formData.map((data) => {
       if(data.type === 'input' || data.type === null || data.type === undefined){
         return (
@@ -29,7 +28,7 @@ const FormGroup = (props) => {
           </Form.Item>
         )
       } else if(data.type === 'date'){
-        const defaultDate = props.defaultValue[data.fieldName]
+        const defaultDate = props.defaultValue && props.defaultValue[data.fieldName]
           ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : moment(new Date(), dateFormat)
         return (
           <Form.Item

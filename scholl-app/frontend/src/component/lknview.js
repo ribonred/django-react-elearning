@@ -21,9 +21,6 @@ const LknViewView = (props) => {
             <Descriptions.Item label="No. LKN">{noLkn}</Descriptions.Item>
             <Descriptions.Item label="Tanggal Dibuat">{tanggal_dibuat}</Descriptions.Item>
         </Descriptions>
-        <Button style={{ fontWeight: 'bold' }} type="primary" htmlType="submit">
-            <Link to="/dashboard/lkn/penangkapan/buat">Tambah Penangkapan</Link>
-        </Button>
       </ViewContainer>
     );
 };
