@@ -37,6 +37,33 @@ export default class FormTersangka extends React.Component {
     this.setState({form: forms});
   }
 
+  updateStatusTersangka = (statusForm, indexTersangka) => {
+    console.log('indexTersangka', indexTersangka)
+    const formStatus = this.state.form[indexTersangka];
+    const form = this.state.form;
+    formStatus.statustersangka = statusForm;
+    form[indexTersangka] = formStatus;
+    this.setState({form: form})
+  }
+
+  onFormChange = (fieldName, e, index) => {
+     const formObj = {...this.state.form[index]};
+     const form = this.state.form;
+     if(!e.target){
+         formObj[fieldName] = e
+         form[index] = formObj
+         this.setState({
+             form: form,
+         })
+     } else {
+         formObj[fieldName] = e.target.value
+         form[index] = formObj
+         this.setState({
+            form: form,
+         })
+     }
+  }
+
   render(){
       return (
         <Collapse >
@@ -53,10 +80,9 @@ export default class FormTersangka extends React.Component {
                     </Button>
                     <FormGroup
                       formData={formData}
-                      defaultValue={this.props.defaultValue}
-                      onFormChange={this.props.onFormChange}
+                      onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
                     >
-                      <FormStatusTersangka />
+                      <FormStatusTersangka updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm, index)}/>
                     </FormGroup>
                   </Panel>
                 </Collapse>

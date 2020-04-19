@@ -224,11 +224,13 @@ export function createpenangkapan(token, data) {
 }
 
 export function getpenangkapan(token, id = null, LKN = null) {
+  console.log('lkn', LKN)
   return dispatch => {
     let url = ''
     if (id) {
       url = `/api/pnkp/${id}`;
     } else if(LKN){
+      console.log('lkn', LKN)
       url = `/api/pnkp/?LKN=${LKN}`;
     } else {
       url = `/api/pnkp/`
