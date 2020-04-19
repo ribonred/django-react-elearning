@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { verify_token } from '../reduxActions/dashboard';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 
 class PrivateRoute extends React.Component{
   state = {
@@ -11,6 +12,13 @@ class PrivateRoute extends React.Component{
   async componentDidMount(){
     const status = await this.props.dispatch(verify_token(localStorage.getItem("token")))
     this.setState({status})
+  }
+
+  async componentDidUpdate(newProps) {
+    if (this.props.location.pathname !== newProps.location.pathname) {
+      const status = await this.props.dispatch(verify_token(localStorage.getItem("token")))
+      this.setState({status})
+    }
   }
 
     render(){
@@ -54,4 +62,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default withRouter(connect(mapStateToProps)(PrivateRoute))

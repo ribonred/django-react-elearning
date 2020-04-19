@@ -7,9 +7,23 @@ function receive_lkn_table(data) {
   }
 }
 
+function receive_tersangka_table(data) {
+  return {
+    type: "RECEIVE_TERSANGKA_TABLE_DATA",
+    data
+  }
+}
+
 function receive_lkn_by_no_lkn(data) {
   return {
     type: "RECEIVE_LKN_BY_NO_LKN_DATA",
+    data
+  }
+}
+
+function receive_penangkapan(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN",
     data
   }
 }
@@ -241,9 +255,10 @@ export function get_tersangka_list(token, id = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then(response =>dispatch(receive_tersangka_table(response.data)))
   }
 }
+
 export function editersangka(data, token, id) {
   return dispatch => {
     return request(`/api/tsk-edit/${id}`, data, {
@@ -256,9 +271,9 @@ export function editersangka(data, token, id) {
       .then(response => console.log(response))
   }
 }
-export function deletetersangka(token, id) {
+export function deletetersangka(data, token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}`, data, {
+    return request(`/api/tsk-edit/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
