@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
+import { get_token } from '../../../helper/requestHelper';
 import SideMenu from '../../../component/sider';
+import { get_lkn_by_no_lkn, getpenangkapan } from '../../../reduxActions/dashboard';
 
 const { Content } = Layout;
 
 class EditLkn extends Component {
+    async componentDidMount(){
+      let noLkn = this.props.match.params.id;
+      await this.props.dispatch(get_lkn_by_no_lkn(get_token(), noLkn))
+      await this.props.dispatch(getpenangkapan(get_token(), null, noLkn))
+    }
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
+            <Breadcrumb.Item>
               <a href="/#">LKN</a>
             </Breadcrumb.Item>
-            <Breadcrumb.Item>
               <a href="/#">{this.props.match.params.id}</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
@@ -40,7 +47,10 @@ class EditLkn extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { route: dashboard.route }
+  return {
+    penangkapanData: dashboard.penangkapanData,
+    lknData: dashboard.lknData,
+  }
 }
 
 const styles = {

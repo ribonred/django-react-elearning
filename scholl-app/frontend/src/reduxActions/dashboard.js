@@ -21,6 +21,13 @@ function receive_lkn_by_no_lkn(data) {
   }
 }
 
+function receive_penangkapan_by_no_lkn(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA",
+    data
+  }
+}
+
 function receive_penangkapan(data) {
   return {
     type: "RECEIVE_PENANGKAPAN",
@@ -194,15 +201,18 @@ export function createpenangkapan(token, data) {
       .then(response => console.log(response))
   }
 }
-export function getpenangkapan(token, id = null) {
+
+export function getpenangkapan(token, id = null, LKN = null) {
   return dispatch => {
     let url = ''
     if (id) {
-      url = `/api/pnkp/${id}`
-    }
-    else {
+      url = `/api/pnkp/${id}`;
+    } else if(LKN){
+      url = `/api/pnkp/?LKN=${LKN}`;
+    } else {
       url = `/api/pnkp/`
     }
+
     return request(url, {
       method: 'GET',
       headers: {
@@ -210,9 +220,10 @@ export function getpenangkapan(token, id = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then(response => dispatch(receive_penangkapan_by_no_lkn(response.data)))
   }
 }
+
 export function deletepenangkapan(token, id) {
   return dispatch => {
     return request(`/api/pnkp/${id}`, {

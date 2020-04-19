@@ -52,6 +52,17 @@ class TersangkaTable extends Component {
 
     render() {
       const { tersangkaTableData } = this.props;
+      let dataTersangka = []
+      if(tersangkaTableData.length > 0){
+        dataTersangka = tersangkaTableData.map((data) => {
+          return {
+            ...data,
+            no_penangkapan: data.no_penangkapan_id.id,
+            "LKN": data.no_penangkapan_id.no_lkn.id,
+          }
+        }
+      )
+      }
         return (
           <SideMenu selected="3">
             <Layout>
@@ -61,7 +72,7 @@ class TersangkaTable extends Component {
                   <TableView
                     path="tersangka"
                     tableField={tableField}
-                    tableData={tersangkaTableData || []}
+                    tableData={dataTersangka}
                     isLoading={this.state.isLoading}
                   />
                  </div>
