@@ -6,12 +6,14 @@ import { Descriptions, Button } from 'antd';
 
 
 const LknViewView = (props) => {
+    let noLkn=''
+    let tanggal_dibuat='';
     if(!props.lkn[0]){
-        var noLkn = '';
-        var tanggal_dibuat = '';
+        noLkn = '';
+        tanggal_dibuat = '';
     } else{
-        var noLkn = props.lkn[0].LKN;
-        var tanggal_dibuat = props.lkn[0].tgl_dibuat;
+        noLkn = props.lkn[0].LKN;
+        tanggal_dibuat = props.lkn[0].tgl_dibuat;
     }
     return (
       <ViewContainer>

@@ -81,9 +81,9 @@ class CreateLKN extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { 
+  return {
     error: dashboard.error,
-    lknCreated: dashboard.lknCreated, 
+    lknCreated: dashboard.lknCreated,
   }
 }
 
