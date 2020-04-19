@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb, Button } from 'antd';
+import Profile from '../../../component/profile'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { get_token } from '../../../helper/requestHelper';
@@ -64,6 +65,7 @@ class LKNTable extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  <Profile />
                   {this.renderAddButton()}
                   <TableView
                     path="lkn"

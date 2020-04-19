@@ -106,15 +106,6 @@ export default function SignInSide(props) {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-              </Grid>
-            </Grid>
             <Box mt={5}>
               <Copyright />
             </Box>

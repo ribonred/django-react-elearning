@@ -32,21 +32,10 @@ const tableField = [
 class TersangkaTable extends Component {
     state = {
       isLoading: false,
-      dataTable: []
     }
     async componentDidMount(){
       this.setState({ isLoading: true })
       await this.props.dispatch(get_tersangka_list(get_token()))
-      var data = []
-      this.props.tersangkaTableData.forEach(tersangka => {
-        let dataTersangka = {
-          LKN: tersangka.no_penangkapan_id.no_lkn.LKN,
-          no_penangkapan: tersangka.no_penangkapan_id.no_penangkapan,
-          nama_tersangka: tersangka.nama_tersangka
-        }
-        data.push(dataTersangka);
-      });
-      this.setState({ dataTable: data })
       this.setState({ isLoading: false })
     }
 
@@ -62,6 +51,7 @@ class TersangkaTable extends Component {
     }
 
     render() {
+      const { tersangkaTableData } = this.props;
         return (
           <SideMenu selected="3">
             <Layout>
@@ -71,7 +61,7 @@ class TersangkaTable extends Component {
                   <TableView
                     path="tersangka"
                     tableField={tableField}
-                    tableData={this.state.dataTable}
+                    tableData={tersangkaTableData || []}
                     isLoading={this.state.isLoading}
                   />
                  </div>

@@ -146,6 +146,7 @@ export default class TableView extends React.Component {
       }
     })
 
+    const { useId } = this.props;
     const columns = column.concat({
       title: 'Action',
       key: 'action',
@@ -162,13 +163,13 @@ export default class TableView extends React.Component {
             Delete <DeleteOutlined />
           </a>
           <Link
-            to={`/dashboard/${path}/${record[tableField[0].dataIndex]}/edit`}
+            to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}/edit`}
             style={{ marginRight: 16 }}
           >
             Edit <EditOutlined />
           </Link>
           <Link
-            to={`/dashboard/${path}/${record[tableField[0].dataIndex]}`}
+            to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}`}
             style={{ marginRight: 16, color: 'aqua' }}
           >
             View <EyeOutlined />
