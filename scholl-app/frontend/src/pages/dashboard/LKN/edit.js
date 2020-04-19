@@ -1,14 +1,37 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, message, Skeleton } from 'antd';
+import { Layout, Breadcrumb, Button, message, Skeleton } from 'antd';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import history from '../../../route/history';
-import { createLKN } from '../../../reduxActions/dashboard';
+import { editLKN } from '../../../reduxActions/dashboard';
+import TableView from '../../../component/table/tableFilterable'
 import { get_token } from '../../../helper/requestHelper';
 import SideMenu from '../../../component/sider';
 import LknFormView from '../../../component/lknform';
 import { get_lkn_by_no_lkn, getpenangkapan } from '../../../reduxActions/dashboard';
 
 const { Content } = Layout;
+
+const tableField = [
+  {
+    title: 'No.LKN',
+    dataIndex: 'no_lkn',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'No Penangkapan',
+    dataIndex: 'no_penangkapan',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Tanggal Penangkapan',
+    dataIndex: 'tanggal_penangkapan',
+    sorter: true,
+    dropdown: ['Tanggal Baik', 'Tanggal Buruk'],
+  }
+]
 
 class EditLkn extends Component {
       state = {
@@ -52,7 +75,7 @@ class EditLkn extends Component {
 
     onsubmit = async() => {
       this.setState({ isLoading: true })
-      await this.props.dispatch(createLKN(localStorage.getItem('token'), this.state.form))
+      await this.props.dispatch(editLKN(get_token(), this.state.form, this.props.lknData[0].id))
       if(!this.props.error){
         history.push('/dashboard/LKN')
       } else {
@@ -86,6 +109,7 @@ class EditLkn extends Component {
 
     render() {
         const { isDataChange } = this.state;
+        console.log('data table', this.props.penangkapanData)
         return (
           <SideMenu>
             <Layout>
@@ -93,6 +117,19 @@ class EditLkn extends Component {
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
                   {isDataChange && this.renderLKNForm()}
+                  {isDataChange && (
+                    <Button style={{ fontWeight: 'bold', margin: '20px' }} type="primary" htmlType="submit">
+                      <Link to="/dashboard/lkn/penangkapan/buat">Tambah Penangkapan</Link>
+                    </Button>
+                  )}
+                  {isDataChange && (
+                    <TableView
+                      path="penangkapan"
+                      tableField={tableField}
+                      tableData={this.props.penangkapanData || []}
+                      isLoading={this.state.isLoading}
+                    />
+                  )}
                   {!isDataChange && <Skeleton active />}
                  </div>
                </Content>
