@@ -330,7 +330,7 @@ export function editbb(data, token, id) {
 }
 export function deletebb(token, id) {
   return dispatch => {
-    return request(`/api/bb-edit/${id}`, data, {
+    return request(`/api/bb-edit/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ export function deletebb(token, id) {
 
 //LKN GET ALL OR LIST VIEW
 
-export function get_bb_list(token) {
+export function get_bb_list_lkn(token, data) {
   return dispatch => {
     let url = `/api/lkn-detail/?LKN=${data}`
     return request(url, {
