@@ -30,10 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+    'rest_framework',
+    'backendmodel.organizations',
+    'backendmodel.core',
+    'backendmodel.account',
+    'rest_framework_jwt',
 
 ]
-for app in ADDITIONAL_APPS:
-    INSTALLED_APPS.append(app)
+
 
 
 MIDDLEWARE = [
