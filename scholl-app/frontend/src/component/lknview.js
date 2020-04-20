@@ -15,6 +15,8 @@ const LknViewView = (props) => {
         noLkn = props.lkn[0].LKN;
         tanggal_dibuat = props.lkn[0].tgl_dibuat;
     }
+    console.log('isi props', props)
+    
     return (
       <ViewContainer>
         <Descriptions title="LKN Info">

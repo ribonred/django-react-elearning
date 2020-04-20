@@ -383,3 +383,18 @@ export function get_bb_list_lkn(token, data) {
       .then(response => console.log(response))
   }
 }
+
+
+export function get_lkn_detail(token, data) {
+  return dispatch => {
+    let url = `/api/lkn-detail/?no_lkn__LKN=${data}`
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
