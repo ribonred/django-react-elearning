@@ -56,7 +56,7 @@ export default class FormStatusTersangka extends React.Component {
 
   render(){
       return (
-        <Collapse >
+        <Collapse style={{margin:'7px'}}>
           <Panel header="STATUS TERSANGKA" key="1">
             <Button type="primary" style={{margin:'10px'}} onClick={() => this.addStatus()} icon={<PlusSquareOutlined />}>
               Add Status Tersangka

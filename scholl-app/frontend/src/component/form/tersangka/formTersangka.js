@@ -4,6 +4,7 @@ import { Button, Collapse } from 'antd';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
 import FormStatusTersangka from './formStatusTersangka';
+import FormBarangBukti from '../barang_bukti/formBarangBukti';
 import PageContainer from '../../../ui-container/pageContainer';
 
 const { Panel } = Collapse;
@@ -38,11 +39,18 @@ export default class FormTersangka extends React.Component {
   }
 
   updateStatusTersangka = (statusForm, indexTersangka) => {
-    console.log('indexTersangka', indexTersangka)
     const formStatus = this.state.form[indexTersangka];
     const form = this.state.form;
     formStatus.statustersangka = statusForm;
     form[indexTersangka] = formStatus;
+    this.setState({form: form})
+  }
+
+  updateBarangBukti = (barangBuktiForm, indexBarangBukti) => {
+    const formStatus = this.state.form[indexBarangBukti];
+    const form = this.state.form;
+    formStatus.barangbuktitersangka = barangBuktiForm;
+    form[indexBarangBukti] = formStatus;
     this.setState({form: form})
   }
 
@@ -65,11 +73,12 @@ export default class FormTersangka extends React.Component {
   }
 
   render(){
+      console.log('form', this.state.form)
       return (
-        <Collapse >
+        <Collapse style={{margin:'7px'}}>
           <Panel header="FORM DATA TERSANGKA" key="1">
             <Button type="primary" style={{margin:'10px'}} onClick={() => this.addStatus()} icon={<PlusSquareOutlined />}>
-              Add Status Tersangka
+              Add Tersangka
             </Button>
             {this.state.form.map((data, index) => (
               data!==null && (
@@ -83,6 +92,7 @@ export default class FormTersangka extends React.Component {
                       onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
                     >
                       <FormStatusTersangka updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm, index)}/>
+                      <FormBarangBukti updateBarangBukti={(barangBuktiForm) => this.updateBarangBukti(barangBuktiForm, index)}/>
                     </FormGroup>
                   </Panel>
                 </Collapse>
