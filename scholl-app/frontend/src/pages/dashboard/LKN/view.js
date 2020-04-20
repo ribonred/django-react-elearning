@@ -13,7 +13,8 @@ class LKNView extends Component {
     state = {
       lkn: {
         LKN: '',
-        tanggal_dibuat: ''
+        tanggal_dibuat: '',
+        coba: '',
       },
     }
 
