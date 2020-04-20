@@ -1,0 +1,23 @@
+version: '3'
+services:
+    django:
+        build: ./scholl-app
+        command: python manage.py runserver 0.0.0.0:8000
+        env_file: ./scholl-app/.env
+        volumes:
+        - ./scholl-app:/code
+        ports:
+        - "8000:8000"
+    react:
+        stdin_open: true
+        build: ./scholl-app/frontend
+        tty: true
+        environment:
+            - NODE_ENV=development
+        command:
+            npm start
+        volumes:
+        - ./scholl-app/frontend:/frontend
+        - /frontend/node_modules
+        ports:
+        - "3000:3000"
