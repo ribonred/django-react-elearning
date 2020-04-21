@@ -1,22 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { Button, Collapse } from 'antd';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
 import FormStatusBarangBukti from './formStatusBarangBukti';
-import PageContainer from '../../../ui-container/pageContainer';
 
 const { Panel } = Collapse;
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 const formData = [
   {label: 'nama_barang', name: 'Nama Barang', fieldName: 'nama_barang'},
   {label: 'sp_sita', name: 'SP Sita', fieldName: 'sp_sita'},
   {label: 'tap_status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang'},
+  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown:['narkotika', 'non_narkotika']},
 ]
 
 export default class FormBarangBukti extends React.Component {
@@ -80,9 +74,8 @@ export default class FormBarangBukti extends React.Component {
                     <FormGroup
                       formData={formData}
                       onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                    >
-                      <FormStatusBarangBukti updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm, index)}/>
-                    </FormGroup>
+                    />
+                    <FormStatusBarangBukti updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm, index)}/>
                   </Panel>
                 </Collapse>
               )

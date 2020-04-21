@@ -1,8 +1,7 @@
 import React from 'react'
 import ViewContainer from '../ui-container/viewContainer';
-import { Link } from 'react-router-dom'
 
-import { Descriptions, Button } from 'antd';
+import { Descriptions } from 'antd';
 
 
 const LknViewView = (props) => {
@@ -16,7 +15,7 @@ const LknViewView = (props) => {
         tanggal_dibuat = props.lkn[0].tgl_dibuat;
     }
     console.log('isi props', props)
-    
+
     return (
       <ViewContainer>
         <Descriptions title="LKN Info">

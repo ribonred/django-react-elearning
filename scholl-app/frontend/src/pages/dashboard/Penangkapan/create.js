@@ -3,9 +3,6 @@ import { Layout, Breadcrumb } from 'antd';
 import FormTersangka from '../../../component/form/tersangka/formTersangka'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
-import PenangkapanFormView from '../../../component/penangkapanform';
-import { request } from '../../../helper/requestHelper';
-
 const { Content } = Layout;
 
 class CreatePenangkapan extends Component {

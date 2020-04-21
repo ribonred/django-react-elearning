@@ -1,21 +1,16 @@
 import React from 'react'
 import { Button, Collapse } from 'antd';
-import { Link } from 'react-router-dom';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
-import PageContainer from '../../../ui-container/pageContainer';
 
 const { Panel } = Collapse;
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 const formData = [
   {label: 'tanggal_status', name: 'Tanggal Status', fieldName: 'tanggal_status', type:'date'},
-  {label: 'waktu_status', name: 'Waktu Status', fieldName: 'waktu_status'},
-  {label: 'jumlah', name: 'Jumlah', fieldName: 'jumlah'},
-  {label: 'keterangan', name: 'Keterangan', fieldName: 'keterangan'},
-  {label: 'status', name: 'Status', fieldName: 'status'}
+  {label: 'waktu_status', name: 'Waktu Status', fieldName: 'waktu_status', type:'time'},
+  {label: 'jumlah', name: 'Jumlah', fieldName: 'jumlah', type:'number'},
+  {label: 'keterangan', name: 'Keterangan', fieldName: 'keterangan', type:'area'},
+  {label: 'status', name: 'Status', fieldName: 'status', type:'select', dropdown:['masuk','keluar']}
 ]
 
 export default class FormStatusBarangBukti extends React.Component {
@@ -71,8 +66,7 @@ export default class FormStatusBarangBukti extends React.Component {
                   <FormGroup
                     formData={formData}
                     onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                  >
-                  </FormGroup>
+                  />
                 </Panel>
               </Collapse>
             )

@@ -1,15 +1,10 @@
 import React from 'react'
 
-import { Form, Button, Space, Spin } from 'antd';
+import { Button, Space, Spin } from 'antd';
 
 import { Link } from 'react-router-dom';
 import FormGroup from '../ui-container/formGroup';
 import PageContainer from '../ui-container/pageContainer';
-import history from '../route/history';
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 const formData = [
   {label: 'No. LKN', name: 'LKN', fieldName: 'LKN'},

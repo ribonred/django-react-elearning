@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import { get_token } from '../../../helper/requestHelper';
@@ -52,17 +51,13 @@ class TersangkaTable extends Component {
 
     render() {
       const { tersangkaTableData } = this.props;
-      let dataTersangka = []
-      if(tersangkaTableData.length > 0){
-        dataTersangka = tersangkaTableData.map((data) => {
-          return {
-            ...data,
-            no_penangkapan: data.no_penangkapan_id.id,
-            "LKN": data.no_penangkapan_id.no_lkn.id,
-          }
+      const dataTersangka = tersangkaTableData.map((data) => {
+        return {
+          ...data,
+          no_penangkapan: data.no_penangkapan_id.id,
+          "LKN": data.no_penangkapan_id.no_lkn.id,
         }
-      )
-      }
+      })
         return (
           <SideMenu selected="3">
             <Layout>

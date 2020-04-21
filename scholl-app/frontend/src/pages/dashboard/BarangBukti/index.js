@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
-import { get_token } from '../../../helper/requestHelper';
-import { get_tersangka_list } from '../../../reduxActions/dashboard';
-import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
 

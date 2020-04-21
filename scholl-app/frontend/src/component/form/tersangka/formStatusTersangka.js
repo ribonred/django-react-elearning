@@ -1,22 +1,9 @@
 import React from 'react'
 import { Button, Collapse } from 'antd';
-import { Link } from 'react-router-dom';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
-import PageContainer from '../../../ui-container/pageContainer';
 
 const { Panel } = Collapse;
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
-const formData = [
-  {label: 'status_penahanan', name: 'Status Penahanan', fieldName: 'status_penahanan'},
-  {label: 'rekam_jejak', name: 'Rekam Jejak', fieldName: 'rekam_jejak'},
-  {label: 'Tanggal', name: 'Tanggal', fieldName: 'tanggal', type:'date'},
-  {label: 'waktu', name: 'waktu', fieldName: 'waktu'},
-  {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan'}
-]
 
 export default class FormStatusTersangka extends React.Component {
   state = {
@@ -55,6 +42,16 @@ export default class FormStatusTersangka extends React.Component {
   }
 
   render(){
+      const rekam_jejak = ['Masuk', 'Keluar']
+      const status_penahanan = ['Diamankan', 'Ditahan']
+      const formData = [
+        {label: 'status_penahanan', name: 'Status Penahanan', dropdown: status_penahanan, fieldName: 'status_penahanan', type: 'select'},
+        {label: 'rekam_jejak', name: 'Rekam Jejak', dropdown: rekam_jejak, fieldName: 'rekam_jejak', type: 'select'},
+        {label: 'Tanggal', name: 'Tanggal', fieldName: 'tanggal', type:'date'},
+        {label: 'waktu', name: 'waktu', fieldName: 'waktu', type: 'time'},
+        {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'}
+      ]
+
       return (
         <Collapse style={{margin:'7px'}}>
           <Panel header="STATUS TERSANGKA" key="1">
@@ -63,7 +60,7 @@ export default class FormStatusTersangka extends React.Component {
             </Button>
             {this.state.form.map((data, index) => (
               data!==null && (
-                <Collapse style={{margin:'10px'}}>
+                <Collapse key={index} style={{margin:'10px'}}>
                 <Panel header="Form Status Tersangka" key={index}>
                   <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
                     Hapus Form
@@ -71,8 +68,7 @@ export default class FormStatusTersangka extends React.Component {
                   <FormGroup
                     formData={formData}
                     onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                  >
-                  </FormGroup>
+                  />
                 </Panel>
               </Collapse>
             )

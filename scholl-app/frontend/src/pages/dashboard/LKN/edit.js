@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, Button, message, Skeleton } from 'antd';
+import { Layout, Breadcrumb, Button, Skeleton } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import history from '../../../route/history';

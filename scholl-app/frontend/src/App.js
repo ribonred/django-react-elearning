@@ -5,7 +5,6 @@ import SignupPage from './pages/signuppages'
 import { Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './route/privateroute';
 import LoginPage from './pages/loginpages';
-import Dashboard from './pages/dashboard/index.js';
 import PenangkapanCreate from './pages/dashboard/Penangkapan/create'
 import Lkn from './pages/dashboard/LKN/index.js';
 import LknView from './pages/dashboard/LKN/view.js';

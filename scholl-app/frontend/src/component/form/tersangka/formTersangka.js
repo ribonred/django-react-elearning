@@ -1,29 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { Button, Collapse } from 'antd';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
 import FormStatusTersangka from './formStatusTersangka';
 import FormBarangBukti from '../barang_bukti/formBarangBukti';
-import PageContainer from '../../../ui-container/pageContainer';
 
 const { Panel } = Collapse;
 
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
+const dropdown = ['laki-laki', 'perempuan'];
 const formData = [
-  {label: 'No penangkapan id', name: 'No penangkapan id', fieldName: 'no_penangkapan_id'},
-  {label: 'nama_tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
-  {label: 'Umur', name: 'Umur', fieldName: 'umur'},
-  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin'},
-  {label: 'Foto', name: 'foto', fieldName: 'foto'}
+  {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
+  {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'number'},
+  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
+  {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 
 export default class FormTersangka extends React.Component {
   state = {
     form:[{}]
+  }
+
+  componentDidMount(){
+    window.scrollTo(0, 0);
+  }
+
+  componentDidUpdate(){
+    window.scrollTo(0, 0);
   }
 
   addStatus = () => {
@@ -57,23 +59,24 @@ export default class FormTersangka extends React.Component {
   onFormChange = (fieldName, e, index) => {
      const formObj = {...this.state.form[index]};
      const form = this.state.form;
-     if(!e.target){
-         formObj[fieldName] = e
-         form[index] = formObj
-         this.setState({
-             form: form,
-         })
-     } else {
-         formObj[fieldName] = e.target.value
-         form[index] = formObj
-         this.setState({
-            form: form,
-         })
+     if(e!==null && e!==undefined && e!==''){
+       if(!e.target){
+           formObj[fieldName] = e
+           form[index] = formObj
+           this.setState({
+               form: form,
+           })
+       } else {
+           formObj[fieldName] = e.target.value
+           form[index] = formObj
+           this.setState({
+              form: form,
+           })
+       }
      }
   }
 
   render(){
-      console.log('form', this.state.form)
       return (
         <Collapse style={{margin:'7px'}}>
           <Panel header="FORM DATA TERSANGKA" key="1">
@@ -91,9 +94,9 @@ export default class FormTersangka extends React.Component {
                       formData={formData}
                       onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
                     >
-                      <FormStatusTersangka updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm, index)}/>
-                      <FormBarangBukti updateBarangBukti={(barangBuktiForm) => this.updateBarangBukti(barangBuktiForm, index)}/>
                     </FormGroup>
+                    <FormStatusTersangka updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm, index)}/>
+                    <FormBarangBukti updateBarangBukti={(barangBuktiForm) => this.updateBarangBukti(barangBuktiForm, index)}/>
                   </Panel>
                 </Collapse>
               )

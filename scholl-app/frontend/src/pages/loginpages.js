@@ -2,7 +2,6 @@ import React from 'react';
 import LoginSide from './loginSide'
 import { message } from 'antd';
 import { request } from '../helper/requestHelper'
-import networkIssueModal from '../component/networkError'
 import history from '../route/history';
 
 const key = 'error';

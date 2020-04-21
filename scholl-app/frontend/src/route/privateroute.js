@@ -25,7 +25,7 @@ class PrivateRoute extends React.Component{
       const { component, defaultPath, isReverse,...rest } = this.props
       const pathTo = defaultPath === null || defaultPath === undefined ? '/' : defaultPath
       const condition = isReverse === null || isReverse === undefined
-        ? this.state.status == 200 : this.state.status !== 200
+        ? this.state.status === 200 : this.state.status !== 200
       const Component = component
       if(this.state.status){
         return (
@@ -38,7 +38,7 @@ class PrivateRoute extends React.Component{
                 ) : (
                     <Redirect
                         to={{
-                          pathname: defaultPath,
+                          pathname: pathTo,
                           state: { from: props.location }
                         }}
                     />

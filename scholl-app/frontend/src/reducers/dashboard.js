@@ -7,7 +7,8 @@ const initialState = {
   lknData: [],
   lknCreated: false,
   penangkapanData: [],
-  tersangkaTableData: []
+  tersangkaTableData: [],
+  tersangkaData: [],
 };
 
 const dashboard = (state = initialState, action) => {
@@ -27,6 +28,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         tersangkaTableData: action.data,
       };
+    case 'RECEIVE_TERSANGKA_DATA':
+      return {
+        ...state,
+        tersangkaData: action.data,
+      }
     case 'RECEIVE_USER_TABLE_DATA':
       return {
         ...state,
@@ -37,17 +43,6 @@ const dashboard = (state = initialState, action) => {
         ...state,
         lknCreated: true,
         error: false,
-      }
-    case 'RECEIVE_ERROR':
-      return {
-        ...state,
-        error: action.error,
-      }
-    case 'RECEIVE_LKN_CREATED_SUCCESSFULL':
-      return {
-        ...state,
-        error: false,
-        lknCreated: false,
       }
     case 'RECEIVE_ERROR':
       return {

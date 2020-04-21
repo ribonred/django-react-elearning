@@ -1,7 +1,5 @@
 import axios from 'axios';
 import Helper from './helper';
-const dotenv = require('dotenv');
-const env = dotenv.config().parsed;
 let baseUrl = 'http://127.0.0.1:8000';
 
 export function get_token() {

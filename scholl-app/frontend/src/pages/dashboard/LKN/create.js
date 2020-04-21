@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import history from '../../../route/history';
 import { createLKN } from '../../../reduxActions/dashboard';
 import SideMenu from '../../../component/sider';
-import { request } from '../../../helper/requestHelper';
 import LknFormView from '../../../component/lknform';
 const { Content } = Layout;
 const key = 'error';
