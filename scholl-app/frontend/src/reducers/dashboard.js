@@ -7,7 +7,8 @@ const initialState = {
   lknData: [],
   lknCreated: false,
   penangkapanData: [],
-  tersangkaTableData: []
+  tersangkaTableData: [],
+  lknDetail: []
 };
 
 const dashboard = (state = initialState, action) => {
@@ -57,8 +58,13 @@ const dashboard = (state = initialState, action) => {
     case 'RECEIVE_LKN_BY_NO_LKN_DATA':
       return {
         ...state,
-        lknData: action.data,
+        lknDetail: action.data,
       }
+    case 'RECEIVE_LKN_DETAIL':
+    return {
+      ...state,
+      lknData: action.data,
+    }
     case 'RECEIVE_PENANGKAPAN':
       return {
         ...state,

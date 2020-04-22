@@ -35,9 +35,7 @@ const tableField = [
 
 class EditLkn extends Component {
       state = {
-        form: {
-          'LKN': 'Ok'
-        },
+        form: {},
         isDataChange: false,
         isLoading: false
       }
@@ -109,7 +107,7 @@ class EditLkn extends Component {
 
     render() {
         const { isDataChange } = this.state;
-        console.log('data table', this.props.penangkapanData)
+        // console.log('data table', this.props.penangkapanData)
         return (
           <SideMenu>
             <Layout>

@@ -3,7 +3,7 @@ import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import LknView from '../../../component/lknview';
-import { get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
+import { get_lkn_detail, get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
 
 const { Content } = Layout;
@@ -19,6 +19,7 @@ class LKNView extends Component {
 
     async componentDidMount(){
       let noLkn = this.props.match.params.id;
+      await this.props.dispatch(get_lkn_detail(get_token(), noLkn))
       await this.props.dispatch(get_lkn_by_no_lkn(get_token(), noLkn))
       if(!this.props.error){
         this.setState({
@@ -67,7 +68,7 @@ class LKNView extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { lknData: dashboard.lknData }
+  return { lknData: dashboard.lknData, lknDetail: dashboard.lknDetail }
 }
 
 const styles = {
