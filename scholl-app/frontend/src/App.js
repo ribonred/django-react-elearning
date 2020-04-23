@@ -17,6 +17,7 @@ import PenyidikView from './pages/dashboard/Penyidik/view.js';
 import PenyidikEdit from './pages/dashboard/Penyidik/edit.js';
 import Tersangka from './pages/dashboard/Tersangka/index.js';
 import TersangkaEdit from './pages/dashboard/Tersangka/edit.js';
+import TersangkaStatus from './pages/dashboard/Tersangka/status.js';
 import TersangkaView from './pages/dashboard/Tersangka/view.js';
 import BarangBukti from './pages/dashboard/BarangBukti/index.js';
 import BarangBuktiEdit from './pages/dashboard/BarangBukti/edit.js';
@@ -44,6 +45,7 @@ export default class App extends Component {
                 <PrivateRoute path={`${url}/Tersangka`} component={Tersangka} exact />
                 <PrivateRoute path={`${url}/Tersangka/:id`} component={TersangkaView} exact />
                 <PrivateRoute path={`${url}/Tersangka/:id/edit`} component={TersangkaEdit} exact />
+                <PrivateRoute path={`${url}/Tersangka/:id/edit/status`} component={TersangkaStatus} exact />
                 <PrivateRoute path={`${url}/BarangBukti/:id`} component={BarangBuktiView} exact />
                 <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
                 <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />

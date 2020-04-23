@@ -53,12 +53,12 @@ class TersangkaTable extends Component {
     render() {
       const { tersangkaTableData } = this.props;
       let dataTersangka = []
-      if(tersangkaTableData.length > 0){
+      if(typeof tersangkaTableData && tersangkaTableData.length > 0){
         dataTersangka = tersangkaTableData.map((data) => {
           return {
             ...data,
-            no_penangkapan: data.no_penangkapan_id.id,
-            "LKN": data.no_penangkapan_id.no_lkn.id,
+            no_penangkapan: data.no_penangkapan_id.no_penangkapan,
+            "LKN": data.no_penangkapan_id.no_lkn.LKN,
           }
         }
       )
@@ -71,6 +71,7 @@ class TersangkaTable extends Component {
                   {this.renderBreadCrumb()}
                   <TableView
                     path="tersangka"
+                    useId="true"
                     tableField={tableField}
                     tableData={dataTersangka}
                     isLoading={this.state.isLoading}

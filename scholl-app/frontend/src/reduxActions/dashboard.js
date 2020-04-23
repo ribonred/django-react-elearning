@@ -21,6 +21,13 @@ function receive_lkn_by_no_lkn(data) {
   }
 }
 
+function receive_lkn_detail(data) {
+  return {
+    type: "RECEIVE_LKN_DETAIL",
+    data
+  }
+}
+
 function receive_penangkapan_by_no_lkn(data) {
   return {
     type: "RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA",
@@ -293,15 +300,15 @@ export function get_tersangka_list(token, id = null) {
   }
 }
 
-export function editersangka(data, token, id) {
+export function edit_tersangka(data, token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}`, data, {
+    return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    }, data)
       .then(response => console.log(response))
   }
 }
@@ -370,17 +377,20 @@ export function deletebb(token, id) {
 
 //LKN GET ALL OR LIST VIEW
 
-export function get_bb_list_lkn(token, data) {
-  return dispatch => {
-    let url = `/api/lkn-detail/?LKN=${data}`
-    return request(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => console.log(response))
+export function get_lkn_detail(token, data) {
+  return async dispatch => {
+    try {
+      const result = await request(`/api/lkn-detail/?LKN=${data}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      dispatch(receive_lkn_detail(result.data))
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 
