@@ -107,10 +107,7 @@ class EditLkn extends Component {
 
     render() {
         const { isDataChange } = this.state;
-<<<<<<< HEAD
-=======
         // console.log('data table', this.props.penangkapanData)
->>>>>>> d8fa828f6c384d0a2c96cdf144175a00c2145d54
         return (
           <SideMenu>
             <Layout>
