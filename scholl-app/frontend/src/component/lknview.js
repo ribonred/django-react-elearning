@@ -1,8 +1,7 @@
 import React from 'react'
 import ViewContainer from '../ui-container/viewContainer';
-import { Link } from 'react-router-dom'
 
-import { Descriptions, Button } from 'antd';
+import { Descriptions } from 'antd';
 
 
 const LknViewView = (props) => {
