@@ -19,28 +19,29 @@ export default class FormBarangBukti extends React.Component {
   }
 
   addStatus = () => {
-    const forms = this.state.form
+    const forms = [...this.state.form]
     forms.push({})
     this.setState({form: forms})
   }
 
   removeStatus = (removedIndex) => {
-    const forms = this.state.form;
+    const forms = [...this.state.form];
     delete forms[removedIndex]
     this.setState({form: forms});
+    this.props.updateBarangBukti(forms)
   }
 
-  updateStatusBarangBukti = (statusForm, indexTersangka) => {
-    const formStatus = this.state.form[indexTersangka];
-    const form = this.state.form;
-    formStatus.statusbarangbukti = statusForm;
-    form[indexTersangka] = formStatus;
+  updateStatusBarangBukti = (statusForm, indexBarangBukti) => {
+    const formStatus = {...this.state.form[indexBarangBukti]};
+    const form = [...this.state.form];
+    formStatus.statusbarangbukti = statusForm.filter(data => data!==null && data!==undefined);
+    form[indexBarangBukti] = formStatus;
     this.setState({form: form})
   }
 
   onFormChange = (fieldName, e, index) => {
      const formObj = {...this.state.form[index]};
-     const form = this.state.form;
+     const form = [...this.state.form];
      if(!e.target){
          formObj[fieldName] = e
          form[index] = formObj
@@ -65,7 +66,7 @@ export default class FormBarangBukti extends React.Component {
               Add Barang Bukti
             </Button>
             {this.state.form.map((data, index) => (
-              data!==null && (
+              data!==null && data!==undefined && (
                 <Collapse style={{margin:'10px'}} key={index}>
                   <Panel header={`Form Data Barang Bukti`} key={index}>
                     <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
