@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
-import FormTersangka from '../../../component/form/tersangka/formTersangka'
+import FormPenangkapan from '../../../component/form/penangkapan/penangkapan'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 const { Content } = Layout;
@@ -49,7 +49,7 @@ class CreatePenangkapan extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <FormTersangka />
+                  <FormPenangkapan />
                  </div>
                </Content>
              </Layout>

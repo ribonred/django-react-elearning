@@ -111,7 +111,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <TimePicker onChange={(e) => props.onFormChange(data.fieldName, e)}/>
+            <TimePicker onChange={(i,e) => props.onFormChange(data.fieldName, e)}/>
           </Form.Item>
         )
       } else if(data.type === 'area'){
@@ -133,12 +133,12 @@ const FormGroup = (props) => {
         <Form
           form={form}
           labelCol={{
-            span: 4,
+            span: 12,
           }}
           wrapperCol={{
-            span: 18,
+            span: 20,
           }}
-          layout="horizontal"
+          layout="vertical"
             initialValues={{
               size: componentSize,
             }}

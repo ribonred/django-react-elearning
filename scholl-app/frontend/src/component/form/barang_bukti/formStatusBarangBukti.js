@@ -47,6 +47,7 @@ export default class FormStatusBarangBukti extends React.Component {
     const forms = this.state.form;
     delete forms[removedIndex]
     this.setState({form: forms});
+    this.props.updateStatusBarangBukti(forms)
   }
 
   render(){
@@ -58,8 +59,8 @@ export default class FormStatusBarangBukti extends React.Component {
             </Button>
             {this.state.form.map((data, index) => (
               data!==null && (
-                <Collapse style={{margin:'10px'}}>
-                <Panel header="Form Status Barang Bukti" key={index}>
+                <Collapse style={{margin:'10px'}} key={index}>
+                <Panel header="Form Status Barang Bukti">
                   <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
                     Hapus Form
                   </Button>

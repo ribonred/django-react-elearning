@@ -12,7 +12,7 @@ export default class FormStatusTersangka extends React.Component {
 
   onFormChange = (fieldName, e, index) => {
      const formObj = {...this.state.form[index]};
-     const form = this.state.form;
+     const form = [...this.state.form];
      if(!e.target){
          formObj[fieldName] = e
          form[index] = formObj
@@ -30,23 +30,24 @@ export default class FormStatusTersangka extends React.Component {
   }
 
   addStatus = () => {
-    const forms = this.state.form
+    const forms = [...this.state.form]
     forms.push({})
     this.setState({form: forms})
   }
 
   removeStatus = (removedIndex) => {
-    const forms = this.state.form;
+    const forms = [...this.state.form];
     delete forms[removedIndex]
     this.setState({form: forms});
+    this.props.updateStatusTersangka(forms)
   }
 
   render(){
       const rekam_jejak = ['Masuk', 'Keluar']
       const status_penahanan = ['Diamankan', 'Ditahan']
       const formData = [
-        {label: 'status_penahanan', name: 'Status Penahanan', dropdown: status_penahanan, fieldName: 'status_penahanan', type: 'select'},
-        {label: 'rekam_jejak', name: 'Rekam Jejak', dropdown: rekam_jejak, fieldName: 'rekam_jejak', type: 'select'},
+        {label: 'Status Penahanan', name: 'Status Penahanan', dropdown: status_penahanan, fieldName: 'status_penahanan', type: 'select'},
+        {label: 'Rekam Jejak', name: 'Rekam Jejak', dropdown: rekam_jejak, fieldName: 'rekam_jejak', type: 'select'},
         {label: 'Tanggal', name: 'Tanggal', fieldName: 'tanggal', type:'date'},
         {label: 'waktu', name: 'waktu', fieldName: 'waktu', type: 'time'},
         {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'}
@@ -59,7 +60,7 @@ export default class FormStatusTersangka extends React.Component {
               Add Status Tersangka
             </Button>
             {this.state.form.map((data, index) => (
-              data!==null && (
+              data!==null && data!==undefined && (
                 <Collapse key={index} style={{margin:'10px'}}>
                 <Panel header="Form Status Tersangka" key={index}>
                   <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
