@@ -7,10 +7,12 @@ const { Sider, Content } = Layout;
 export default class SideMenu extends Component {
     state = {
       collapsed: false,
+      isCollapsed: false,
     };
 
     onCollapse = collapsed => {
       this.setState({ collapsed });
+      setTimeout(() => { this.setState({ isCollapsed: collapsed}) }, 200);
     };
 
     renderSkeleton = () => {
@@ -54,10 +56,13 @@ export default class SideMenu extends Component {
     }
 
     render() {
+        const siderCollapseSize = this.state.isCollapsed ? '80px' : '200px'
         return (
           <Layout>
             {this.renderSideMenu()}
-            {this.props.children}
+            <Layout style={{overflow: 'visible', marginLeft: this.state.collapsed ? siderCollapseSize :'200px'}}>
+              {this.props.children}
+            </Layout>
           </Layout>
         )
     }
@@ -71,5 +76,10 @@ const styles = {
   },
   linearGradientBackground: {
     backgroundImage: 'linear-gradient(#4F6575, #0CA2E7)',
+    overflow: 'auto',
+    height: '100vh',
+    maxWidth: '200px',
+    position: 'fixed',
+    left: 0,
   }
 }
