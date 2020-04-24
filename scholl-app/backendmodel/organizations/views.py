@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render
+from rest_framework.parsers import FileUploadParser
 from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework import status
 from rest_framework.views import APIView
@@ -58,6 +59,7 @@ class PenangkapanView(viewsets.ModelViewSet):
     serializer_class = PenangkapanApi
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn']
+    parser_class = (FileUploadParser,)
 
     def get_queryset(self):
         user = self.request.user
@@ -92,6 +94,8 @@ class PenangkapanView(viewsets.ModelViewSet):
 class TersangkaView(viewsets.ModelViewSet):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaApi
+    parser_class = (FileUploadParser,)
+
 
     def get_queryset(self):
         user = self.request.user
@@ -150,6 +154,8 @@ class ProsesPengadilanView(viewsets.ModelViewSet):
 class TersangkaEditDetailView(viewsets.ModelViewSet):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaEditApi
+    parser_class = (FileUploadParser,)
+
 
     def get_queryset(self):
         user = self.request.user

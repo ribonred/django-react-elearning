@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'backendmodel.core',
     'backendmodel.account',
     'rest_framework_jwt',
+    'channels',
+    'channels_api',
+    'backendmodel.notify'
 
 ]
 
