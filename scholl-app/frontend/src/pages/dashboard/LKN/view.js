@@ -32,7 +32,7 @@ class LKNView extends Component {
         this.openMessage()
       }
     }
-    
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
@@ -51,14 +51,12 @@ class LKNView extends Component {
       if(this.props.match.params.id!=='buat'){
         return (
           <SideMenu>
-            <Layout>
-              <Content style={{padding:'20px'}}>
-                <div style={styles.siteLayout}>
-                  {this.renderBreadCrumb()}
-                  <LknView lkn={this.props.lknData}/>
-                 </div>
-               </Content>
-             </Layout>
+            <Content style={{padding:'20px'}}>
+              <div style={styles.siteLayout}>
+                {this.renderBreadCrumb()}
+                <LknView lkn={this.props.lknData}/>
+               </div>
+             </Content>
           </SideMenu>
         )
       }
