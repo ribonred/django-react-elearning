@@ -7,6 +7,13 @@ function receive_lkn_table(data) {
   }
 }
 
+function receive_proses(data) {
+  return {
+    type: "RECEIVE_PROSES",
+    data
+  }
+}
+
 function receive_tersangka_table(data) {
   return {
     type: "RECEIVE_TERSANGKA_TABLE_DATA",
@@ -17,6 +24,20 @@ function receive_tersangka_table(data) {
 function receive_tersangka_data(data) {
   return {
     type: "RECEIVE_TERSANGKA_DATA",
+    data
+  }
+}
+
+function receive_bb_table(data) {
+  return {
+    type: "RECEIVE_BB_TABLE_DATA",
+    data
+  }
+}
+
+function receive_bb_data(data) {
+  return {
+    type: "RECEIVE_BB_DATA",
     data
   }
 }
@@ -38,6 +59,13 @@ function receive_penangkapan_by_no_lkn(data) {
 function receive_user_table(data) {
   return {
     type: "RECEIVE_USER_TABLE_DATA",
+    data
+  }
+}
+
+function receive_user_data(data) {
+  return {
+    type: "RECEIVE_USER_DATA",
     data
   }
 }
@@ -133,7 +161,11 @@ export function fetchalluser(token, id = null) {
           'Authorization': `Bearer ${token}`
         }
       })
-      dispatch(receive_user_table(result.data))
+      if(id) {
+        dispatch(receive_user_data(result.data))
+      } else {
+        dispatch(receive_user_table(result.data))
+      }
     } catch (e) {
       console.log(e)
     }
@@ -231,7 +263,7 @@ export function getpenangkapan(token, id = null, LKN = null) {
       url = `/api/pnkp/${id}`;
     } else if(LKN){
       console.log('lkn', LKN)
-      url = `/api/pnkp/?LKN=${LKN}`;
+      url = `/api/pnkp/?no_lkn__LKN=${LKN}`;
     } else {
       url = `/api/pnkp/`
     }
@@ -343,7 +375,13 @@ export function get_bb_list(token, id = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+    .then((response) => {
+      if(!id){
+        dispatch(receive_bb_table(response.data))
+      } else {
+        dispatch(receive_bb_data(response.data))
+      }
+    })
   }
 }
 export function editbb(data, token, id) {
@@ -403,5 +441,20 @@ export function get_lkn_detail(token, data) {
       }
     })
       .then(response => console.log(response))
+  }
+}
+
+// proses pengadilan
+export function get_proses(token) {
+  return dispatch => {
+    let url = `/api/proses/`
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then((response) => {dispatch(receive_proses(response.data))})
   }
 }

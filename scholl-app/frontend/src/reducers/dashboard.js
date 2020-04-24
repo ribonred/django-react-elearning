@@ -3,12 +3,16 @@
 const initialState = {
   lknTableData:[],
   userTableData:[],
+  userData: [],
   error: false,
   lknData: [],
   lknCreated: false,
   penangkapanData: [],
   tersangkaTableData: [],
   tersangkaData: [],
+  bbTableData: [],
+  bbData: [],
+  prosesIndex: []
 };
 
 const dashboard = (state = initialState, action) => {
@@ -17,6 +21,11 @@ const dashboard = (state = initialState, action) => {
       return {
         ...state,
         lknTableData: action.data,
+      };
+    case 'RECEIVE_PROSES':
+      return {
+        ...state,
+        prosesIndex: action.data,
       };
     case 'RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA':
       return {
@@ -33,10 +42,25 @@ const dashboard = (state = initialState, action) => {
         ...state,
         tersangkaData: action.data,
       }
+    case 'RECEIVE_BB_TABLE_DATA':
+      return {
+        ...state,
+        bbTableData: action.data,
+      };
+    case 'RECEIVE_BB_DATA':
+      return {
+        ...state,
+        bbData: action.data,
+      };
     case 'RECEIVE_USER_TABLE_DATA':
       return {
         ...state,
         userTableData: action.data,
+      };
+    case 'RECEIVE_USER_DATA':
+      return {
+        ...state,
+        userData: action.data,
       };
     case 'RECEIVE_LKN_CREATED_SUCCESSFULL':
       return {

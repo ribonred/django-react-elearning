@@ -67,6 +67,7 @@ class PenyidikTable extends Component {
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
                   <TableView
+                    useId="true"
                     path="Penyidik"
                     tableField={tableField}
                     tableData={userData}
