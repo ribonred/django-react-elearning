@@ -9,7 +9,7 @@ const initialState = {
   lknCreated: false,
   penangkapanData: [],
   tersangkaTableData: [],
-  tersangkaData: [],
+  tersangkaData: {},
   bbTableData: [],
   bbData: [],
   prosesIndex: []

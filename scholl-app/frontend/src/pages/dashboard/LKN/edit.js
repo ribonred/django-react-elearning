@@ -117,7 +117,7 @@ class EditLkn extends Component {
                 {isDataChange && this.renderLKNForm()}
                 {isDataChange && (
                   <Button style={{ fontWeight: 'bold', margin: '20px' }} type="primary" htmlType="submit">
-                    <Link to="/dashboard/lkn/penangkapan/buat">Tambah Penangkapan</Link>
+                    <Link to={`/dashboard/lkn/${this.props.match.params.id}/penangkapan/buat`}>Tambah Penangkapan</Link>
                   </Button>
                 )}
                 {isDataChange && (
