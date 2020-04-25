@@ -21,6 +21,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
+from django.views.generic import TemplateView
+
+from django.shortcuts import render
 
 
 class BerkasLknView(viewsets.ModelViewSet):
@@ -47,6 +50,7 @@ class BerkasLknView(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def post(self, request, format=None):
+        image = request.FILES["penangkapan_tersangka.foto"]
         serializer = BerkasLKN(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -243,3 +247,22 @@ class LknDetailApiView(viewsets.ReadOnlyModelViewSet):
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticatedOrReadOnly]
         return [permission() for permission in permission_classes]
+
+
+
+
+
+
+
+
+class HomeView(TemplateView):
+    template_name = 'base.html'
+
+
+
+
+
+def room(request, room_name):
+    return render(request, 'room.html', {
+        'room_name': room_name
+    })
