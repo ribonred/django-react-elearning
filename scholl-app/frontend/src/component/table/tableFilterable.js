@@ -2,13 +2,15 @@ import React from 'react';
 import {
   Link
 } from "react-router-dom";
-import { Table, Button, Input } from 'antd';
+import { Table, Button, Input, DatePicker } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 export default class TableView extends React.Component {
   state = {
     bordered: false,
+    // startDate: '',
+    // endDate: ''
   };
 
   handleToggle = prop => enable => {
@@ -44,7 +46,12 @@ export default class TableView extends React.Component {
           },
         ],
         onFilter: (value, record) => {
-          return record[dataIndex].indexOf(value) === 0
+          if(record[dataIndex]){
+            return record[dataIndex].indexOf(value) === 0
+          } else {
+            return false
+          }
+          // return record[dataIndex].indexOf(value) === 0
         },
       }
     )
@@ -89,7 +96,7 @@ export default class TableView extends React.Component {
         }
       },
       render: text =>
-        this.state.searchedColumn === dataIndex ? (
+        this.state.searchedColumn === dataIndex && text ? (
           <Highlighter
             highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[this.state.searchText]}
@@ -118,6 +125,14 @@ export default class TableView extends React.Component {
     alert(a)
     console.log('edit',a)
   }
+
+  // selectDate = (a, b) => {
+  //   if (a === 'startDate') {
+  //     this.setState({ startDate: b})
+  //   } else {
+  //     this.setState({ endDate: b})
+  //   }
+  // }
 
   render() {
     const { xScroll, yScroll, ...state } = this.state;
@@ -211,6 +226,12 @@ export default class TableView extends React.Component {
     }) : []
     return (
       <div style={{padding:'15px'}}>
+        {/* <div className="table-operations">
+          <DatePicker onChange={(i, e) => this.selectDate('startDate', e)}/>
+          <DatePicker onChange={(i, e) => this.selectDate('endDate', e)}/>
+          <Button onClick={this.props.print()}>Filter</Button>
+          <Button onClick={this.clearFilters}>Clear filters</Button>
+        </div> */}
         <Table
           {...this.state}
           loading={this.props.isLoading}
