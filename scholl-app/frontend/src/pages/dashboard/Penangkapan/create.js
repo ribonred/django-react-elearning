@@ -48,7 +48,7 @@ class CreatePenangkapan extends Component {
             <Content style={{padding:'20px'}}>
               <div style={styles.siteLayout}>
                 {this.renderBreadCrumb()}
-                <FormPenangkapan />
+                <FormPenangkapan noLkn={this.props.match.params.id}/>
                </div>
              </Content>
           </SideMenu>

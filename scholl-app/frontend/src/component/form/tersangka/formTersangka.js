@@ -5,6 +5,9 @@ import FormGroup from '../../../ui-container/formGroup';
 import { Link } from 'react-router-dom';
 import FormStatusTersangka from './formStatusTersangka';
 import FormBarangBukti from '../barang_bukti/formBarangBukti';
+import { get_token } from '../../../helper/requestHelper';
+import { createpenangkapan, get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
+import { connect } from 'react-redux';
 
 const { Panel } = Collapse;
 
@@ -16,12 +19,13 @@ const formData = [
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 
-export default class FormTersangka extends React.Component {
+class FormTersangka extends React.Component {
   state = {
-    form:[{}],
+    form:[],
   }
 
-  componentDidMount(){
+  async componentDidMount(){
+    await this.props.dispatch(get_lkn_by_no_lkn(get_token(), this.props.noLkn))
     window.scrollTo(0, 0);
   }
 
@@ -73,12 +77,15 @@ export default class FormTersangka extends React.Component {
      }
   }
 
-  onsubmit = () => {
+  onsubmit = async() => {
+    const { lknData } = this.props;
     const submittedForm = {
       ...this.props.formPenangkapan,
-      penangkapan_tersangka: [...this.state.form.filter(data => (data!==null && data!==undefined))]
+      penangkapan_tersangka: [...this.state.form.filter(data => (data!==null && data!==undefined))],
+      no_lkn: lknData[0].id,
     }
-    console.log('submittedForm', submittedForm)
+    console.log(submittedForm)
+    await this.props.dispatch(createpenangkapan(get_token(), submittedForm))
   }
   render(){
       return (
@@ -120,3 +127,12 @@ export default class FormTersangka extends React.Component {
       );
   }
 };
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    lknData: dashboard.lknData,
+  }
+}
+
+export default connect(mapStateToProps)(FormTersangka)

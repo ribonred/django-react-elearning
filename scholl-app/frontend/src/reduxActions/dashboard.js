@@ -244,14 +244,14 @@ export function get_lkn_by_no_lkn(token, data) {
 
 export function createpenangkapan(token, data) {
   return dispatch => {
-    return request('/api/pnkp/', data, {
+    return request('/api/pnkp/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
-      .then(response => console.log(response))
+    }, data)
+      .then(response =>console.log(response))
   }
 }
 
