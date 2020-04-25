@@ -38,7 +38,7 @@ export default class FormPenangkapan extends React.Component {
             formData={formData}
             onFormChange={this.onFormChange}
           />
-          <FormTersangka formPenangkapan={this.state.form}/>
+          <FormTersangka formPenangkapan={this.state.form} noLkn={this.props.noLkn}/>
         </PageContainer>
       );
   }

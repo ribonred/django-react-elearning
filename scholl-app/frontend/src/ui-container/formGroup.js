@@ -51,7 +51,7 @@ const FormGroup = (props) => {
         )
       } else if(data.type === 'date'){
         const defaultDate = props.defaultValue && props.defaultValue[data.fieldName]
-          ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : moment(new Date(), dateFormat)
+          ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : ''
         return (
           <Form.Item
             key={data.fieldName}

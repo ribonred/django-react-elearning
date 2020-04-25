@@ -54,8 +54,8 @@ class TersangkaTable extends Component {
       const dataTersangka = tersangkaTableData.map((data) => {
         return {
           ...data,
-          no_penangkapan: data.no_penangkapan_id.id,
-          "LKN": data.no_penangkapan_id.no_lkn.id,
+          no_penangkapan: data.no_penangkapan_id.no_penangkapan,
+          "LKN": data.no_penangkapan_id.no_lkn.LKN,
         }
       })
         return (
@@ -65,6 +65,7 @@ class TersangkaTable extends Component {
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
                   <TableView
+                    useId="true"
                     path="tersangka"
                     tableField={tableField}
                     tableData={dataTersangka}

@@ -46,7 +46,7 @@ export default class App extends Component {
                 <PrivateRoute path={`${url}/BarangBukti/:id`} component={BarangBuktiView} exact />
                 <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
                 <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />
-                <PrivateRoute path={`${url}/LKN/Penangkapan/buat`} component={PenangkapanCreate} exact />
+                <PrivateRoute path={`${url}/LKN/:id/Penangkapan/buat`} component={PenangkapanCreate} exact />
               </>
             )}
           />
