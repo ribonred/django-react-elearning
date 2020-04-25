@@ -179,15 +179,15 @@ export function fetchalluser(token, id = null) {
   }
 }
 // LKN CRUD
-export function get_lkn_by_penyidik(token, id = null, filtermehtod=false, ...filter) {
+export function get_lkn_by_penyidik(token, id = null, filter = null) {
   return async dispatch => {
     try {
       let url = ''
       if (id) {
         url = `/api/lkn/${id}`
       }
-      else if (filtermehtod){
-        url = `/api/lkn/?tgl_dibuat_mulai${filter[0]}&tgl_dibuat_akhir${filter[1]}`
+      else if (filter){
+        url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
       }
       else {
         url = `/api/lkn/`

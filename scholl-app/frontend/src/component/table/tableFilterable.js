@@ -5,12 +5,13 @@ import {
 import { Table, Button, Input, DatePicker } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import {filterdate} from '../../helper/filter'
+
+const filter = filterdate
 
 export default class TableView extends React.Component {
   state = {
     bordered: false,
-    // startDate: '',
-    // endDate: ''
   };
 
   handleToggle = prop => enable => {
@@ -126,17 +127,17 @@ export default class TableView extends React.Component {
     console.log('edit',a)
   }
 
-  // selectDate = (a, b) => {
-  //   if (a === 'startDate') {
-  //     this.setState({ startDate: b})
-  //   } else {
-  //     this.setState({ endDate: b})
-  //   }
-  // }
+  applyDateFilter = (action) => {
+    if(action==='filter'){
+      this.props.applyDateFilter(filter)
+    } else {
+      this.props.applyDateFilter()
+    }
+  }
 
   render() {
     const { xScroll, yScroll, ...state } = this.state;
-    const { path, tableField } = this.props;
+    const { path, tableField, applyDateFilter } = this.props;
     const scroll = {};
     if (yScroll) {
       scroll.y = 240;
@@ -148,7 +149,7 @@ export default class TableView extends React.Component {
     const column = this.props.tableField.map(data => {
       const isSearchable = data.search === true
         ? this.getColumnSearchProps(data.dataIndex) : {};
-      const isSortable = data.sort === true
+      const isSortable = data.sorting === true
         ? this.withSorter(data.dataIndex) : {};
       const isWithDropdown = data.dropdown !== null && data.dropdown !== undefined
         ? this.withDropdownFilter(data.dropdown[0], data.dropdown[1], data.dataIndex) : {};
@@ -226,12 +227,12 @@ export default class TableView extends React.Component {
     }) : []
     return (
       <div style={{padding:'15px'}}>
-        {/* <div className="table-operations">
-          <DatePicker onChange={(i, e) => this.selectDate('startDate', e)}/>
-          <DatePicker onChange={(i, e) => this.selectDate('endDate', e)}/>
-          <Button onClick={this.props.print()}>Filter</Button>
-          <Button onClick={this.clearFilters}>Clear filters</Button>
-        </div> */}
+        <div className="table-operations">
+          <DatePicker onChange={(i, e) => filter.startDate = e}/>
+          <DatePicker onChange={(i, e) => filter.endDate = e}/>
+          <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
+          <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
+        </div>
         <Table
           {...this.state}
           loading={this.props.isLoading}
