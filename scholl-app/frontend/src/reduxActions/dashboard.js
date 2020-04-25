@@ -7,6 +7,13 @@ function receive_lkn_table(data) {
   }
 }
 
+function receive_lkn_data(data) {
+  return {
+    type: "RECEIVE_LKN_DATA",
+    data
+  }
+}
+
 function receive_proses(data) {
   return {
     type: "RECEIVE_PROSES",
@@ -432,7 +439,7 @@ export function get_bb_list_lkn(token, data) {
 
 export function get_lkn_detail(token, data) {
   return dispatch => {
-    let url = `/api/lkn-detail/?no_lkn__LKN=${data}`
+    let url = `/api/lkn-detail/${data}`
     return request(url, {
       method: 'GET',
       headers: {
@@ -440,7 +447,9 @@ export function get_lkn_detail(token, data) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then((response) => {
+        dispatch(receive_lkn_data(response.data))
+      })
   }
 }
 
