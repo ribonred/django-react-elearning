@@ -91,7 +91,6 @@ class TersangkaView extends Component {
     render() {
       const { tersangkaData, prosesIndex } = this.props;
       let dataTersangka = [];
-      let jenisProses = {}
       if (tersangkaData.id) {
         dataTersangka = [
           {label: 'Nama', value: tersangkaData.nama_tersangka},
@@ -101,18 +100,16 @@ class TersangkaView extends Component {
         ];
       }
       let dataStatus = tersangkaData.statustersangka
-      if (prosesIndex.length > 0) {
-        prosesIndex.map((data) => {
-          jenisProses[`${data.id}`] = {nama_proses: data.nama_proses}
-        })
-      }
-      let dataProses = tersangkaData.prosestersangka;
-      if (dataProses && this.state.needChange) {
-        dataProses.map((data) => {
-        data.jenis_proses = jenisProses[data.jenis_proses]['nama_proses'];
-        this.setState({ needChange: false })
-        })
-      }
+        let dataProses = tersangkaData.prosestersangka;
+        if(prosesIndex.length > 0 && tersangkaData.id){
+          dataProses = dataProses.map((data) => {
+            return {
+              ...data,
+              jenis_proses: prosesIndex.find(item => item.id === data.jenis_proses).nama_proses
+            }
+          })
+        }
+
         return (
           <SideMenu selected="3">
             <Layout>
@@ -125,12 +122,14 @@ class TersangkaView extends Component {
                   />
                   <TableView
                     path="status tersangka"
+                    isNotAllowTo={['view','edit','delete']}
                     tableField={tableFieldStatus}
                     tableData={dataStatus}
                     isLoading={this.state.isLoading}
                   />
                   <TableView
                     path="proses tersangka"
+                    isNotAllowTo={['view','edit','delete']}
                     tableField={tableFieldProses}
                     tableData={dataProses}
                     isLoading={this.state.isLoading}

@@ -51,7 +51,7 @@ class BarangBuktiView extends Component {
       await this.props.dispatch(get_bb_list(get_token(), noBB))
       this.setState({ isLoading: false })
     }
-    
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
@@ -85,7 +85,7 @@ class BarangBuktiView extends Component {
         ];
       }
       let dataStatus = bbData.statusbarangbukti
-      
+
         return (
           <SideMenu selected="4">
             <Layout>
@@ -102,6 +102,7 @@ class BarangBuktiView extends Component {
                   />
                   <TableView
                     path="status barang bukti"
+                    isNotAllowTo={['view','edit','delete']}
                     tableField={tableField}
                     tableData={dataStatus}
                     isLoading={this.state.isLoading}

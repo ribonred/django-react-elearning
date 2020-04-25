@@ -147,43 +147,68 @@ export default class TableView extends React.Component {
     })
 
     const { useId } = this.props;
-    const columns = column.concat({
-      title: 'Action',
-      key: 'action',
-      sorter: true,
-      filters: [],
-      onFilter: () => {},
-      render: (text, record) => (
-        <span>
-          <a
-            href="#!"
-            style={{ marginRight: 16, color: 'red' }}
-            onClick={(e) => { this.onDelete(record, e); }}
-          >
-            Delete <DeleteOutlined />
-          </a>
-          <Link
-            to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}/edit`}
-            style={{ marginRight: 16 }}
-          >
-            Edit <EditOutlined />
-          </Link>
-          <Link
-            to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}`}
-            style={{ marginRight: 16, color: 'aqua' }}
-          >
-            View <EyeOutlined />
-          </Link>
-        </span>
-      ),
-    })
+    let isEditAllowed = true;
+    let isDeleteAllowed = true;
+    let isViewAllowed = true;
+    if(this.props.isNotAllowTo){
+      isEditAllowed = this.props.isNotAllowTo.indexOf('edit') === -1
+      isDeleteAllowed = this.props.isNotAllowTo.indexOf('delete') === -1
+      isViewAllowed = this.props.isNotAllowTo.indexOf('view') === -1
+    }
+
+    const isAllNotAllowed = !isEditAllowed && !isDeleteAllowed && !isViewAllowed
+
+    let columns = column;
+    if(!isAllNotAllowed){
+      columns = columns.concat({
+        title: 'Action',
+        key: 'action',
+        sorter: true,
+        filters: [],
+        onFilter: () => {},
+        render: (text, record) => (
+          <span>
+            {isDeleteAllowed && (
+              <a
+              href="#!"
+              style={{ marginRight: 16, color: 'red' }}
+              onClick={(e) => { this.onDelete(record, e); }}
+            >
+              Delete <DeleteOutlined />
+            </a>
+          )}
+          {isEditAllowed && (
+            <Link
+              to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}/edit`}
+              style={{ marginRight: 16 }}
+            >
+              Edit <EditOutlined />
+            </Link>
+          )}
+          {isViewAllowed && (
+            <Link
+              to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}`}
+              style={{ marginRight: 16, color: 'aqua' }}
+            >
+              View <EyeOutlined />
+            </Link>
+          )}
+          </span>
+        ),
+      })
+    }
 
     const tableColumns = columns.map(item => ({ ...item }));
     if (xScroll === 'fixed') {
       tableColumns[0].fixed = true;
       tableColumns[tableColumns.length - 1].fixed = 'right';
     }
-
+    const tableDataWithKey = this.props.tableData ? this.props.tableData.map((data, index) => {
+      return {
+        ...data,
+        key:index
+      }
+    }) : []
     return (
       <div style={{padding:'15px'}}>
         <Table
@@ -192,7 +217,7 @@ export default class TableView extends React.Component {
           columns={tableColumns}
           bordered
           title={() => `BASIS DATA ${path.toUpperCase()}`}
-          dataSource={this.props.tableData}
+          dataSource={tableDataWithKey}
           scroll={scroll}
         />
       </div>
