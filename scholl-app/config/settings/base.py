@@ -38,7 +38,6 @@ INSTALLED_APPS = [
 
     'backendmodel.notify',
     'channels',
-    'djangochannelsrestframework',
 
 ]
 
