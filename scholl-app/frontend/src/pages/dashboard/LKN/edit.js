@@ -111,28 +111,26 @@ class EditLkn extends Component {
         const { isDataChange } = this.state;
         return (
           <SideMenu>
-            <Layout>
-              <Content style={{padding:'20px'}}>
-                <div style={styles.siteLayout}>
-                  {this.renderBreadCrumb()}
-                  {isDataChange && this.renderLKNForm()}
-                  {isDataChange && (
-                    <Button style={{ fontWeight: 'bold', margin: '20px' }} type="primary" htmlType="submit">
-                      <Link to="/dashboard/lkn/penangkapan/buat">Tambah Penangkapan</Link>
-                    </Button>
-                  )}
-                  {isDataChange && (
-                    <TableView
-                      path="penangkapan"
-                      tableField={tableField}
-                      tableData={this.props.penangkapanData || []}
-                      isLoading={this.state.isLoading}
-                    />
-                  )}
-                  {!isDataChange && <Skeleton active />}
-                 </div>
-               </Content>
-             </Layout>
+            <Content style={{padding:'20px'}}>
+              <div style={styles.siteLayout}>
+                {this.renderBreadCrumb()}
+                {isDataChange && this.renderLKNForm()}
+                {isDataChange && (
+                  <Button style={{ fontWeight: 'bold', margin: '20px' }} type="primary" htmlType="submit">
+                    <Link to={`/dashboard/lkn/${this.props.match.params.id}/penangkapan/buat`}>Tambah Penangkapan</Link>
+                  </Button>
+                )}
+                {isDataChange && (
+                  <TableView
+                    path="penangkapan"
+                    tableField={tableField}
+                    tableData={this.props.penangkapanData || []}
+                    isLoading={this.state.isLoading}
+                  />
+                )}
+                {!isDataChange && <Skeleton active />}
+               </div>
+             </Content>
           </SideMenu>
         )
     }
