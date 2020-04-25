@@ -37,6 +37,7 @@ const styles = {
       borderRadius: '10px',
       marginTop: '10px',
       display: 'block',
+      opacity: '0.7'
     },
     center: {
       display: 'block',
