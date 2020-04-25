@@ -70,6 +70,7 @@ class LKNTable extends Component {
                   {this.renderAddButton()}
                   <TableView
                     path="lkn"
+                    isNotAllowTo={['delete']}
                     onDelete={(id) => this.props.dispatch()}
                     tableField={tableField}
                     tableData={this.props.lknTableData}

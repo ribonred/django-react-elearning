@@ -65,11 +65,16 @@ class BarangBuktiTable extends Component {
     render() {
       const { bbTableData } = this.props;
       const dataBB = bbTableData.map((data) => {
+        const haveData = data.milikdata ? data.milikdata : {}
+        const tersangka = data.milik_tersangka_id ? data.milik_tersangka_id : null;
+        const no_penangkapan = tersangka ? tersangka.no_penangkapan_id.no_penangkapan : 'no_data';
+        const LKN = tersangka ? tersangka.no_penangkapan_id.no_lkn.LKN : 'no_data';
+        const nama_tersangka = tersangka ? tersangka.nama_tersangka : 'no_data';
         return {
           ...data,
-          no_penangkapan: data.milik_tersangka_id.no_penangkapan_id.no_penangkapan,
-          LKN: data.milik_tersangka_id.no_penangkapan_id.no_lkn.LKN,
-          nama_tersangka: data.milik_tersangka_id.nama_tersangka,
+          no_penangkapan: no_penangkapan,
+          LKN: LKN,
+          nama_tersangka: nama_tersangka,
         }
       })
         return (
