@@ -269,7 +269,6 @@ export function getpenangkapan(token, id = null, LKN = null) {
     if (id) {
       url = `/api/pnkp/${id}`;
     } else if(LKN){
-      console.log('lkn', LKN)
       url = `/api/pnkp/?no_lkn__LKN=${LKN}`;
     } else {
       url = `/api/pnkp/`

@@ -56,8 +56,6 @@ class LknDateFilter(FilterSet):
             
         ]
 
-
-
 class BerkasLknView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
@@ -193,6 +191,9 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaEditApi
     parser_class = (FileUploadParser,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['no_penangkapan_id__id']
+
 
 
     def get_queryset(self):
@@ -227,7 +228,8 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
 class BarangBuktiEditView(viewsets.ModelViewSet):
     queryset = BarangBukti.objects.all()
     serializer_class = BarangBuktiEdit
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset

@@ -22,7 +22,7 @@ class Penangkapan(BaseTimeStampModel):
     jam_penangkapan = models.TimeField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.no_lkn.LKN} / {self.no_penangkapan}'
+        return f'/ {self.no_penangkapan}'
 
 
 class Tersangka(BaseTimeStampModel):
