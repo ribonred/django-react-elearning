@@ -34,9 +34,9 @@ class Tersangka(BaseTimeStampModel):
     )
     no_penangkapan_id = models.ForeignKey(
         Penangkapan, related_name='penangkapan_tersangka', on_delete=models.CASCADE)
-    nama_tersangka = models.CharField(max_length=255,null=True, blank=True)
+    nama_tersangka = models.CharField(max_length=255)
     umur = models.SmallIntegerField(blank=True, null=True)
-    jenis_kelamin = models.CharField(max_length=20, choices=sex,null=True, blank=True)
+    jenis_kelamin = models.CharField(max_length=20, choices=sex)
     foto = models.ImageField(null=True, blank=True, upload_to='media')
 
     def __str__(self):
