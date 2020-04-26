@@ -2,6 +2,7 @@ import React from 'react'
 import { get_bb_list } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import MainForm from '../../../ui-container/mainFormContainer';
+import FormStatusBarangBukti from './formStatusBarangBukti';
 import { get_token } from '../../../helper/requestHelper';
 
 const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non_narkotika', name:'non_narkotika'}];
@@ -36,7 +37,7 @@ class FormBarangBukti extends React.Component {
 
   updateStatusBarangBukti = (statusForm) => {
     const form = {...this.state.form};
-    form.statustersangka = statusForm.filter(data => data!==null && data!==undefined);
+    form.statusbarangbukti = statusForm.filter(data => data!==null && data!==undefined);
     this.setState({form: form})
   }
 
@@ -75,11 +76,11 @@ class FormBarangBukti extends React.Component {
           defaultValue={this.state.form}
           isCreated={this.state.isCreated}
           isLoading={this.state.isLoading}
-          redirectRoute={`/dashboard`}
           onFormChange={this.onFormChange}
           formData={formData}
           onsubmit={this.onsubmit}
         >
+          <FormStatusBarangBukti defaultValue={this.state.form.statusbarangbukti} updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm)}/>
         </MainForm>
       );
   }

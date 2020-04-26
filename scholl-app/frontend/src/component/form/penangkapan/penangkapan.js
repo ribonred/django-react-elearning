@@ -83,7 +83,6 @@ class FormPenangkapan extends React.Component {
   }
 
   render(){
-      const no_lkn = this.state.form.no_lkn
       return (
         <MainForm
           title={this.props.penangkapanID ? 'Edit Form Penangkapan' : 'Edit Form Penangkapan'}
@@ -93,7 +92,6 @@ class FormPenangkapan extends React.Component {
           defaultValue={this.state.form}
           isCreated={this.state.isCreated}
           isLoading={this.state.isLoading}
-          redirectRoute={`/dashboard/lkn/${no_lkn}/edit`}
           onFormChange={this.onFormChange}
           formData={formData}
           onsubmit={this.onsubmit}

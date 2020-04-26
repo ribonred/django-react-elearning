@@ -3,7 +3,6 @@ import FormGroup from './formGroup';
 import { Button, Space, Skeleton } from 'antd';
 import history from '../route/history';
 import { message } from 'antd';
-import { Link } from 'react-router-dom';
 import PageContainer from './pageContainer';
 
 const key='error'
@@ -49,8 +48,8 @@ class MainForm extends React.Component {
             <div align="right" style={{ margin: '20px' }}>
               <Space>
                 <Button style={{ fontWeight: 'bold', backgroundColor: 'green', borderColor: 'green' }} type="primary" htmlType="submit" onClick={() => { this.props.onsubmit() }}>Simpan</Button>
-                <Button style={{ fontWeight: 'bold' }} type="danger" htmlType="submit">
-                  <Link to={this.props.redirectRoute} replace>Kembali</Link>
+                <Button onClick={() => history.goBack()} style={{ fontWeight: 'bold' }} type="danger" htmlType="submit">
+                  Kembali
                 </Button>
               </Space>
             </div>

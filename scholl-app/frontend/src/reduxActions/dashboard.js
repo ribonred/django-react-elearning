@@ -368,7 +368,6 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
         if(!id){
           dispatch(receive_tersangka_table(response.data))
         } else {
-          console.log('tersangka data', response.data)
           dispatch(receive_tersangka_data(response.data))
         }
       })

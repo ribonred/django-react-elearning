@@ -13,10 +13,12 @@ class PenyidikView extends Component {
       isLoading: false,
     }
     async componentDidMount(){
-      this.setState({ isLoading: true })
-      let noUser = this.props.match.params.id;
-      await this.props.dispatch(fetchalluser(get_token(), noUser))
-      this.setState({ isLoading: false })
+      if(this.props.match.params.id!=='buat'){
+        this.setState({ isLoading: true })
+        let noUser = this.props.match.params.id;
+        await this.props.dispatch(fetchalluser(get_token(), noUser))
+        this.setState({ isLoading: false })
+      }
     }
 
     renderBreadCrumb = () => {
@@ -34,21 +36,21 @@ class PenyidikView extends Component {
     }
 
     render() {
-      const { userData } = this.props;
-      let dataPenyidik = []
-      if (userData.id) {
-        dataPenyidik = [
-          {label: 'Username', value: userData.username},
-          {label: 'Email', value: userData.email},
-          {label: 'No. Telepon', value: userData.phone},
-          {label: 'Nama Depan', value: userData.nama_depan},
-          {label: 'Nama Belakang', value: userData.nama_belakang},
-          {label: 'Jenis Kelamin', value: userData.jenis_kelamin},
-          {label: 'Tanggal Lahir', value: userData.Tanggal_lahir},
-          {label: 'Alamat', value: userData.address},
-        ];
-      }
       if(this.props.match.params.id!=='buat'){
+        const { userData } = this.props;
+        let dataPenyidik = []
+        if (userData.id) {
+          dataPenyidik = [
+            {label: 'Username', value: userData.username},
+            {label: 'Email', value: userData.email},
+            {label: 'No. Telepon', value: userData.phone},
+            {label: 'Nama Depan', value: userData.nama_depan},
+            {label: 'Nama Belakang', value: userData.nama_belakang},
+            {label: 'Jenis Kelamin', value: userData.jenis_kelamin},
+            {label: 'Tanggal Lahir', value: userData.Tanggal_lahir},
+            {label: 'Alamat', value: userData.address},
+          ];
+        }
         return (
           <SideMenu selected="2">
             <Layout>

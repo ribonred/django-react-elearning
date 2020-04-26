@@ -24,11 +24,6 @@ class FormTersangka extends React.Component {
   }
 
   async componentDidMount(){
-    await this.props.dispatch(get_lkn_by_no_lkn(get_token(), this.props.noLkn))
-    window.scrollTo(0, 0);
-  }
-
-  async componentDidMount(){
     this.setState({ isLoading: true })
     await this.props.dispatch(get_tersangka_list(get_token(), this.props.tersangkaId))
     this.setState({ isLoading: false })
@@ -86,7 +81,6 @@ class FormTersangka extends React.Component {
           defaultValue={this.state.form}
           isCreated={this.state.isCreated}
           isLoading={this.state.isLoading}
-          redirectRoute={`/dashboard`}
           onFormChange={this.onFormChange}
           formData={formData}
           onsubmit={this.onsubmit}
