@@ -10,10 +10,12 @@ const initialState = {
   penangkapanData: [],
   penangkapanSelectedData: {},
   tersangkaTableData: [],
+  tersangkaTableDataByLkn: [],
   tersangkaData: {},
   bbTableData: [],
   bbData: [],
-  prosesIndex: []
+  bbDataByPnkp: [],
+  prosesIndex: [],
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
@@ -47,6 +49,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         tersangkaTableData: action.data,
       };
+    case 'RECEIVE_TERSANGKA_TABLE_DATA_BY_LKN':
+      return {
+        ...state,
+        tersangkaTableDataByLkn: action.data,
+      };
     case 'RECEIVE_TERSANGKA_DATA':
       return {
         ...state,
@@ -61,6 +68,11 @@ const dashboard = (state = initialState, action) => {
       return {
         ...state,
         bbData: action.data,
+      };
+    case 'RECEIVE_BB_DATA_BY_PNKP':
+      return {
+        ...state,
+        bbDataByPnkp: action.data,
       };
     case 'RECEIVE_USER_TABLE_DATA':
       return {

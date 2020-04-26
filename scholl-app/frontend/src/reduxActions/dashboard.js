@@ -28,6 +28,13 @@ function receive_tersangka_table(data) {
   }
 }
 
+function receive_tersangka_table_by_no_lkn(data) {
+  return {
+    type: "RECEIVE_TERSANGKA_TABLE_DATA_BY_LKN",
+    data
+  }
+}
+
 function receive_tersangka_data(data) {
   return {
     type: "RECEIVE_TERSANGKA_DATA",
@@ -45,6 +52,13 @@ function receive_bb_table(data) {
 function receive_bb_data(data) {
   return {
     type: "RECEIVE_BB_DATA",
+    data
+  }
+}
+
+function receive_bb_data_by_pnkp(data) {
+  return {
+    type: "RECEIVE_BB_DATA_BY_PNKP",
     data
   }
 }
@@ -353,13 +367,13 @@ export function deletepenangkapan(token, id) {
 }
 export function editpenangkapan(token, data, id) {
   return dispatch => {
-    return request(`/api/pnkp/${id}`, data, {
+    return request(`/api/pnkp/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    }, data)
     .then(response => {
       if(response instanceof Error){
         throw Error
@@ -394,10 +408,14 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
-        if(!id){
-          dispatch(receive_tersangka_table(response.data))
-        } else {
+        if(id){
           dispatch(receive_tersangka_data(response.data))
+        } 
+        else if (pnkp_id) {
+          dispatch(receive_tersangka_table_by_no_lkn(response.data))
+        }
+        else {
+          dispatch(receive_tersangka_table(response.data))
         }
       })
   }
@@ -439,6 +457,19 @@ export function deletetersangka(data, token, id) {
   }
 }
 
+export function createtersangka(token, data) {
+  return dispatch => {
+    return request('/api/tsk-edit/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    },data)
+      .then(response => console.log(response))
+  }
+}
+
 // Proses barangbukti Edit and list
 
 export function get_bb_list(token, id = null, pnkp_id) {
@@ -448,7 +479,7 @@ export function get_bb_list(token, id = null, pnkp_id) {
       url = `/api/bb-edit/${id}`
     }
     else if (pnkp_id){
-      url = `/api/tsk-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
+      url = `/api/bb-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
     }
     else {
       url = `/api/bb-edit/`
@@ -461,10 +492,14 @@ export function get_bb_list(token, id = null, pnkp_id) {
       }
     })
     .then((response) => {
-      if(!id){
-        dispatch(receive_bb_table(response.data))
-      } else {
+      if(id){
         dispatch(receive_bb_data(response.data))
+      } 
+      else if(pnkp_id){
+        dispatch(receive_bb_data_by_pnkp(response.data))
+      } 
+      else {
+        dispatch(receive_bb_table(response.data))
       }
     })
   }
@@ -500,6 +535,20 @@ export function deletebb(token, id) {
     })
       .then(response => console.log(response))
   }
+}
+
+export function create_bb_by_tersangka(token, data) {
+  return dispatch => {
+    return request(`/api/bb-edit/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+      .then(response => console.log(response))
+  }
+  
 }
 
 
