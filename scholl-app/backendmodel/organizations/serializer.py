@@ -115,7 +115,12 @@ class BarangBuktiEdit(WritableNestedModelSerializer):
         depth = 3
 
 ###DETAIL###
-
+class CreateBarangBuktiByTsk(WritableNestedModelSerializer):
+    
+    class Meta:
+        model = BarangBukti
+        fields = ['id','milik_tersangka_id' ,'nama_barang',
+                  'sp_sita', 'tap_status', 'jenis_barang']
 
 class BarangBuktiDetailApi(WritableNestedModelSerializer):
     statusbarangbukti = StatusBarangBuktiApi(

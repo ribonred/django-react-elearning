@@ -16,7 +16,7 @@ from .models import (
     StatusTersangka,
 
 )
-from .serializer import BerkasLknApi, PenangkapanApi, TersangkaApi, ProsesPengadilanApi, TersangkaEditApi, BarangBuktiEdit, LknDetailAPi
+from .serializer import BerkasLknApi, PenangkapanApi, TersangkaApi, ProsesPengadilanApi, TersangkaEditApi, BarangBuktiEdit, LknDetailAPi,CreateBarangBuktiByTsk
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
@@ -230,6 +230,9 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     serializer_class = BarangBuktiEdit
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
+    
+    
+    
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset
@@ -243,6 +246,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
         permission_classes = []
         if self.action == 'create':
             permission_classes = [IsAuthenticated]
+            self.serializer_class = CreateBarangBuktiByTsk
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
