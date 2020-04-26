@@ -344,12 +344,16 @@ export function editpenangkapan(token, data, id) {
 }
 
 // Proses tersangka Edit and list
-export function get_tersangka_list(token, id = null) {
+export function get_tersangka_list(token, id = null, pnkp_id = null) {
   return dispatch => {
     let url = ''
     if (id) {
       url = `/api/tsk-edit/${id}`
     }
+    else if (pnkp_id){
+      url = `/api/tsk-edit/?no_penangkapan_id__id=${pnkp_id}`
+    }
+
     else {
       url = `/api/tsk-edit/`
     }
@@ -399,11 +403,14 @@ export function deletetersangka(data, token, id) {
 
 // Proses barangbukti Edit and list
 
-export function get_bb_list(token, id = null) {
+export function get_bb_list(token, id = null, pnkp_id) {
   return dispatch => {
     let url = ''
     if (id) {
       url = `/api/bb-edit/${id}`
+    }
+    else if (pnkp_id){
+      url = `/api/tsk-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
     }
     else {
       url = `/api/bb-edit/`
