@@ -124,11 +124,13 @@ const styles = {
     backgroundImage: '#dedede',
     padding: '10px',
     boxShadow: '0px 0px 10px #dedede',
-    opacity: '0,8'
+    opacity: '0,8',
+    // width: '70vw'
   },
   penangkapanBox: {
     display: 'flex',
     flexDirection: 'row',
+    width: '75vw'
   },
   profilTersangkaBox: {
     display: 'flex',
