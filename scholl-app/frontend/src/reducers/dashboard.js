@@ -8,6 +8,7 @@ const initialState = {
   lknData: [],
   lknCreated: false,
   penangkapanData: [],
+  penangkapanSelectedData: {},
   tersangkaTableData: [],
   tersangkaData: {},
   bbTableData: [],
@@ -35,6 +36,11 @@ const dashboard = (state = initialState, action) => {
       return {
         ...state,
         penangkapanData: action.data,
+      }
+    case 'RECEIVE_PENANGKAPAN_BY_ID':
+      return {
+        ...state,
+        penangkapanSelectedData: action.data,
       }
     case 'RECEIVE_TERSANGKA_TABLE_DATA':
       return {
