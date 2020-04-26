@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_tersangka_list, get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, edittersangka, get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import FormStatusTersangka from './formStatusTersangka';
 import FormProsesTersangka from './formProsesTersangka';
@@ -21,11 +21,6 @@ class FormTersangka extends React.Component {
     isCreated: false,
     isDataChange: false,
     isError: false,
-  }
-
-  async componentDidMount(){
-    await this.props.dispatch(get_lkn_by_no_lkn(get_token(), this.props.noLkn))
-    window.scrollTo(0, 0);
   }
 
   async componentDidMount(){
@@ -69,7 +64,21 @@ class FormTersangka extends React.Component {
      }
   }
 
-  onsubmit = () => {
+  onsubmit = async() => {
+    this.setState({isLoading:true})
+    const result= await this.props.dispatch(edittersangka(this.state.form, get_token(), this.props.tersangkaId));
+    if(result === 'error'){
+      this.setState({ isError: true })
+      setTimeout(() => {
+        this.setState({ isError: false })
+      }, 200);
+    } else {
+      this.setState({ isCreated: true})
+      setTimeout(() => {
+        this.setState({ isCreated: false })
+      }, 200);
+    }
+    this.setState({isLoading:false})
   }
 
   getDefaultForm = () => {
@@ -86,7 +95,6 @@ class FormTersangka extends React.Component {
           defaultValue={this.state.form}
           isCreated={this.state.isCreated}
           isLoading={this.state.isLoading}
-          redirectRoute={`/dashboard`}
           onFormChange={this.onFormChange}
           formData={formData}
           onsubmit={this.onsubmit}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 import TableView from '../../../component/table/tableFilterable';
@@ -44,6 +45,14 @@ class PenyidikTable extends Component {
       )
     }
 
+    renderAddButton = () => {
+      return (
+        <Button type="primary">
+          <Link to='/dashboard/penyidik/buat'>Buat Penyidik Baru</Link>
+        </Button>
+      )
+    }
+
     capitalizeFirstLetter = (letter) => {
       return letter.charAt(0).toUpperCase() + letter.slice(1);
     }
@@ -65,6 +74,7 @@ class PenyidikTable extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  {this.renderAddButton()}
                   <TableView
                     useId="true"
                     path="Penyidik"

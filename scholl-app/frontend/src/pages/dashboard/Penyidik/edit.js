@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
+import FormPenyidik from '../../../component/form/penyidik/penyidik';
 
 const { Content } = Layout;
 
@@ -30,6 +31,7 @@ class EditPenyidik extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  <FormPenyidik penyidikID={this.props.match.params.id} />
                  </div>
                </Content>
              </Layout>

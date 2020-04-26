@@ -1,7 +1,8 @@
 import React from 'react'
-import { get_bb_list } from '../../../reduxActions/dashboard';
+import { get_bb_list, editbb } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import MainForm from '../../../ui-container/mainFormContainer';
+import FormStatusBarangBukti from './formStatusBarangBukti';
 import { get_token } from '../../../helper/requestHelper';
 
 const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non_narkotika', name:'non_narkotika'}];
@@ -36,7 +37,7 @@ class FormBarangBukti extends React.Component {
 
   updateStatusBarangBukti = (statusForm) => {
     const form = {...this.state.form};
-    form.statustersangka = statusForm.filter(data => data!==null && data!==undefined);
+    form.statusbarangbukti = statusForm.filter(data => data!==null && data!==undefined);
     this.setState({form: form})
   }
 
@@ -57,8 +58,21 @@ class FormBarangBukti extends React.Component {
      }
   }
 
-  onsubmit = () => {
-
+  onsubmit = async() => {
+    this.setState({isLoading:true})
+    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.tersangkaId));
+    if(result === 'error'){
+      this.setState({ isError: true })
+      setTimeout(() => {
+        this.setState({ isError: false })
+      }, 200);
+    } else {
+      this.setState({ isCreated: true})
+      setTimeout(() => {
+        this.setState({ isCreated: false })
+      }, 200);
+    }
+    this.setState({isLoading:false})
   }
 
   getDefaultForm = () => {
@@ -75,11 +89,11 @@ class FormBarangBukti extends React.Component {
           defaultValue={this.state.form}
           isCreated={this.state.isCreated}
           isLoading={this.state.isLoading}
-          redirectRoute={`/dashboard`}
           onFormChange={this.onFormChange}
           formData={formData}
           onsubmit={this.onsubmit}
         >
+          <FormStatusBarangBukti defaultValue={this.state.form.statusbarangbukti} updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm)}/>
         </MainForm>
       );
   }
