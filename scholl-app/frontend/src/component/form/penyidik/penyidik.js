@@ -41,16 +41,27 @@ class FormPenyidik extends React.Component {
   }
 
   getDefaultForm = () => {
-     this.setState({form: this.props.userData}, () => this.setState({ isDataChange: true}))
+    let ExcludePassVal = this.props.userData
+    if (this.props.penyidikID){
+      ExcludePassVal = {
+        ...this.props.userData,
+        password:''
+      }
+    }
+     this.setState({form:  ExcludePassVal }, () => this.setState({ isDataChange: true}))
   }
 
   onsubmit = async() => {
+    const data={
+      ...this.state.form,
+      role:1
+    }
     this.setState({isLoading:true})
     let result;
     if(this.props.penyidikID){
-      result = await this.props.dispatch(edituser(get_token(), this.state.form, this.props.penyidikID))
+      result = await this.props.dispatch(edituser(get_token(), data, this.props.penyidikID))
     } else {
-      result = await this.props.dispatch(registeruser(get_token(), this.state.form))
+      result = await this.props.dispatch(registeruser(get_token(), data))
     }
     if(result === 'error'){
       this.setState({ isError: true })

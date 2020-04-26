@@ -12,6 +12,12 @@ class ApiUser(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'nama_depan', 'nama_belakang', 'profile_pic', 'email', 'password', 'phone',
                   'jenis_kelamin', 'tanggal_lahir', 'address', 'role')
+    
+    
+    def update(self, instance, validated_data):
+        instance.set_password(validated_data['password'])
+        instance.save()
+        return instance
 
 
 class UserSerializerWithToken(serializers.ModelSerializer):
@@ -58,6 +64,7 @@ class UserRegistrations(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         if password is not None:
             instance.set_password(password)
+        instance.is_active = True
         instance.save()
         return instance
 

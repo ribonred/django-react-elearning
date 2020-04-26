@@ -19,7 +19,6 @@ daphne==2.5.0
 distlib==0.3.0
 distro==1.4.0
 Django==2.2.10
-django-channels==0.7.0
 django-cors-headers==3.2.1
 django-filter==2.2.0
 django-polymorphic==2.1.2
