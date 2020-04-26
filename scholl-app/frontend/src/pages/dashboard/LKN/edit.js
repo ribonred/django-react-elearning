@@ -29,7 +29,11 @@ const tableField = [
     title: 'Tanggal Penangkapan',
     dataIndex: 'tanggal_penangkapan',
     sorter: true,
-    dropdown: ['Tanggal Baik', 'Tanggal Buruk'],
+  },
+  {
+    title: 'Jam Penangkapan',
+    dataIndex: 'jam_penangkapan',
+    sorter: true,
   }
 ]
 
@@ -109,6 +113,7 @@ class EditLkn extends Component {
 
     render() {
         const { isDataChange } = this.state;
+        console.log('this.props.', this.props.penangkapanData)
         return (
           <SideMenu>
             <Content style={{padding:'20px'}}>
@@ -123,6 +128,8 @@ class EditLkn extends Component {
                 {isDataChange && (
                   <TableView
                     path="penangkapan"
+                    useId
+                    isNotAllowTo={['view']}
                     tableField={tableField}
                     tableData={this.props.penangkapanData || []}
                     isLoading={this.state.isLoading}

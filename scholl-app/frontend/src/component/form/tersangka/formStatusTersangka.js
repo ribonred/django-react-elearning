@@ -5,9 +5,9 @@ import FormGroup from '../../../ui-container/formGroup';
 
 const { Panel } = Collapse;
 
-export default class FormStatusTersangka extends React.Component {
+export default class FormProsesTersangka extends React.Component {
   state = {
-    form:[{}]
+    form:this.props.defaultValue
   }
 
   onFormChange = (fieldName, e, index) => {
@@ -43,8 +43,8 @@ export default class FormStatusTersangka extends React.Component {
   }
 
   render(){
-      const rekam_jejak = ['Masuk', 'Keluar']
-      const status_penahanan = ['Diamankan', 'Ditahan']
+      const rekam_jejak = [{value:'Masuk', name:'Masuk'}, {value:'Keluar', name:'Keluar'}]
+      const status_penahanan = [{value:'Diamankan', name:'Diamankan'}, {value:'Ditahan', name:'Ditahan'}]
       const formData = [
         {label: 'Status Penahanan', name: 'Status Penahanan', dropdown: status_penahanan, fieldName: 'status_penahanan', type: 'select'},
         {label: 'Rekam Jejak', name: 'Rekam Jejak', dropdown: rekam_jejak, fieldName: 'rekam_jejak', type: 'select'},
@@ -68,7 +68,9 @@ export default class FormStatusTersangka extends React.Component {
                   </Button>
                   <FormGroup
                     formData={formData}
+                    key={index}
                     onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
+                    defaultValue={this.state.form[index]}
                   />
                 </Panel>
               </Collapse>

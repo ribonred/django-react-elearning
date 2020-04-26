@@ -56,6 +56,13 @@ function receive_penangkapan_by_no_lkn(data) {
   }
 }
 
+function receive_penangkapan_by_id(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN_BY_ID",
+    data
+  }
+}
+
 function receive_user_table(data) {
   return {
     type: "RECEIVE_USER_TABLE_DATA",
@@ -223,10 +230,10 @@ export function post_lkn_by_penyidik(token, data) {
   }
 }
 
-export function get_lkn_by_no_lkn(token, data) {
+export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/?LKN=${data}`, {
+      const result = await request(`/api/lkn/?id=${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -244,26 +251,32 @@ export function get_lkn_by_no_lkn(token, data) {
 
 export function createpenangkapan(token, data) {
   return dispatch => {
-    return request('/api/pnkp/', data, {
+    return request('/api/pnkp/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
-      .then(response => console.log(response))
+    }, data)
+      .then(response => {
+        if(response instanceof Error){
+          throw Error
+        }
+        return response
+      })
+      .catch((e) => {
+        return 'error'
+      })
   }
 }
 
 export function getpenangkapan(token, id = null, LKN = null) {
-  console.log('lkn', LKN)
   return dispatch => {
     let url = ''
     if (id) {
-      url = `/api/pnkp/${id}`;
+      url = `/api/pnkp/${id}/`;
     } else if(LKN){
-      console.log('lkn', LKN)
-      url = `/api/pnkp/?no_lkn__LKN=${LKN}`;
+      url = `/api/pnkp/?no_lkn=${LKN}`;
     } else {
       url = `/api/pnkp/`
     }
@@ -275,7 +288,15 @@ export function getpenangkapan(token, id = null, LKN = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_penangkapan_by_no_lkn(response.data)))
+      .then(response => {
+        console.log('response', response.data)
+        if(LKN){
+          dispatch(receive_penangkapan_by_no_lkn(response.data))
+        } else if(id){
+          dispatch(receive_penangkapan_by_id(response.data))
+        }
+
+      })
   }
 }
 
@@ -291,7 +312,7 @@ export function deletepenangkapan(token, id) {
       .then(response => console.log(response))
   }
 }
-export function editpenangkapan(data, token, id) {
+export function editpenangkapan(token, data, id) {
   return dispatch => {
     return request(`/api/pnkp/${id}`, data, {
       method: 'PUT',
@@ -300,7 +321,15 @@ export function editpenangkapan(data, token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
@@ -325,6 +354,7 @@ export function get_tersangka_list(token, id = null) {
         if(!id){
           dispatch(receive_tersangka_table(response.data))
         } else {
+          console.log('tersangka data', response.data)
           dispatch(receive_tersangka_data(response.data))
         }
       })

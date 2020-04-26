@@ -26,7 +26,6 @@ const tableField = [
     title: 'Dibuat Pada',
     dataIndex: 'tgl_dibuat',
     sorter: true,
-    dropdown: ['Tanggal Baik', 'Tanggal Buruk'],
   }
 ]
 
@@ -70,6 +69,7 @@ class LKNTable extends Component {
                   {this.renderAddButton()}
                   <TableView
                     path="lkn"
+                    useId
                     isNotAllowTo={['delete']}
                     onDelete={(id) => this.props.dispatch()}
                     tableField={tableField}

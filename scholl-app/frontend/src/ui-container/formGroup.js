@@ -14,7 +14,9 @@ const FormGroup = (props) => {
     const onFormLayoutChange = ({ size }) => {
       setComponentSize(size);
     };
-
+    const onFinish = (value) => {
+      console.log('value', value)
+    }
     const uploadProps = {
       name: 'fileList',
       action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -43,7 +45,7 @@ const FormGroup = (props) => {
           <Form.Item
             key={data.fieldName}
             label={data.label}
-            name={data.name}
+            name={data.fieldName}
             rules={[{ required: true, message: `Please input your ${data.name}!` }]}
           >
               <Input onInput={(e) => { props.onFormChange(data.fieldName, e) }} type={data.name}/>
@@ -51,7 +53,7 @@ const FormGroup = (props) => {
         )
       } else if(data.type === 'date'){
         const defaultDate = props.defaultValue && props.defaultValue[data.fieldName]
-          ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : moment(new Date(), dateFormat)
+          ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : ''
         return (
           <Form.Item
             key={data.fieldName}
@@ -71,10 +73,12 @@ const FormGroup = (props) => {
             <Select
               style={{ width: 200 }}
               placeholder={`pilih ${data.label}`}
+              defaultValue={props.defaultValue && props.defaultValue[data.fieldName]
+                ? props.defaultValue[data.fieldName] : ''}
               onChange={(e) => props.onFormChange(data.fieldName, e)}
             >
               {data.dropdown.map((opsi) =>
-                <Option key={opsi} value={opsi}>{opsi}</Option>
+                <Option key={opsi.value} value={opsi.value}>{opsi.name}</Option>
               )}
             </Select>
           </Form.Item>
@@ -111,7 +115,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <TimePicker onChange={(i,e) => props.onFormChange(data.fieldName, e)}/>
+            <TimePicker defaultValue={props.defaultValue && props.defaultValue[data.fieldName] ? moment(props.defaultValue[data.fieldName], 'HH:mm:ss') : ''} onChange={(i,e) => props.onFormChange(data.fieldName, e)}/>
           </Form.Item>
         )
       } else if(data.type === 'area'){
@@ -121,7 +125,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <TextArea onChange={(e) => props.onFormChange(data.fieldName, e)} rows={5} />
+            <TextArea defaultValue={props.defaultValue[data.fieldName]} onChange={(e) => props.onFormChange(data.fieldName, e)} rows={5} />
           </Form.Item>
         )
       }
@@ -132,6 +136,8 @@ const FormGroup = (props) => {
     return (
         <Form
           form={form}
+          onFinish={onFinish}
+          initialValues={props.defaultValue}
           labelCol={{
             span: 12,
           }}
