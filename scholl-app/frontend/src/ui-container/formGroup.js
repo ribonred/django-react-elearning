@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, message, TimePicker, Input, InputNumber, DatePicker, Select, Upload, Button } from 'antd'
+import { Form, message, Dropdown, TimePicker, Input, InputNumber, DatePicker, Select, Upload, Button } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
@@ -14,9 +14,7 @@ const FormGroup = (props) => {
     const onFormLayoutChange = ({ size }) => {
       setComponentSize(size);
     };
-    const onFinish = (value) => {
-      console.log('value', value)
-    }
+
     const uploadProps = {
       name: 'fileList',
       action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -37,7 +35,7 @@ const FormGroup = (props) => {
 
     React.useEffect(() => {
       form.setFieldsValue(props.defaultValue || {});
-    }, []);
+    }, [props.defaultValue, form]);
 
     const FormList = props.formData.map((data) => {
       if(data.type === 'input' || data.type === null || data.type === undefined){
@@ -128,6 +126,18 @@ const FormGroup = (props) => {
             <TextArea defaultValue={props.defaultValue[data.fieldName]} onChange={(e) => props.onFormChange(data.fieldName, e)} rows={5} />
           </Form.Item>
         )
+      } else if(data.type === 'disabled'){
+        return (
+          <Form.Item
+            key={data.fieldName}
+            label={data.label}
+            rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
+          >
+            <Dropdown.Button disabled>
+              {data.value}
+            </Dropdown.Button>
+          </Form.Item>
+        )
       }
       return <div />
     }
@@ -136,8 +146,6 @@ const FormGroup = (props) => {
     return (
         <Form
           form={form}
-          onFinish={onFinish}
-          initialValues={props.defaultValue}
           labelCol={{
             span: 12,
           }}

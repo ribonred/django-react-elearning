@@ -19,17 +19,9 @@ class LKNView extends Component {
     }
 
     async componentDidMount(){
-      let lknId = this.props.match.params.id;
-      await this.props.dispatch(get_lkn_detail(get_token(), lknId))
-      if(!this.props.error){
-        this.setState({
-          lkn: {
-            noLkn: this.props.lknData.LKN,
-            tglDibuat: this.props.lknData.tanggal_dibuat
-          }
-        })
-      } else {
-        this.openMessage()
+      if(this.props.match.params.id!=='buat'){
+        let lknId = this.props.match.params.id;
+        await this.props.dispatch(get_lkn_detail(get_token(), lknId))
       }
     }
 

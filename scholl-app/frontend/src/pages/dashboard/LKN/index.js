@@ -74,7 +74,6 @@ class LKNTable extends Component {
                   <Profile />
                   {this.renderAddButton()}
                   <TableView
-                    useId="true"
                     path="lkn"
                     useId
                     isNotAllowTo={['delete']}

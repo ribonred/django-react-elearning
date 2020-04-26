@@ -137,7 +137,7 @@ export default class TableView extends React.Component {
 
   render() {
     const { xScroll, yScroll, ...state } = this.state;
-    const { path, tableField, applyDateFilter } = this.props;
+    const { path, tableField } = this.props;
     const scroll = {};
     if (yScroll) {
       scroll.y = 240;
