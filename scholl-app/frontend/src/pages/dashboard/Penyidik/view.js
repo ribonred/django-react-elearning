@@ -71,7 +71,6 @@ class PenyidikView extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.userData)
   return { userData: dashboard.userData }
 }
 

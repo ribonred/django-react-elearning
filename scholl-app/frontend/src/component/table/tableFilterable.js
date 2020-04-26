@@ -2,9 +2,12 @@ import React from 'react';
 import {
   Link
 } from "react-router-dom";
-import { Table, Button, Input } from 'antd';
+import { Table, Button, Input, DatePicker } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import {filterdate} from '../../helper/filter'
+
+const filter = filterdate
 
 export default class TableView extends React.Component {
   state = {
@@ -44,7 +47,12 @@ export default class TableView extends React.Component {
           },
         ],
         onFilter: (value, record) => {
-          return record[dataIndex].indexOf(value) === 0
+          if(record[dataIndex]){
+            return record[dataIndex].indexOf(value) === 0
+          } else {
+            return false
+          }
+          // return record[dataIndex].indexOf(value) === 0
         },
       }
     )
@@ -89,7 +97,7 @@ export default class TableView extends React.Component {
         }
       },
       render: text =>
-        this.state.searchedColumn === dataIndex ? (
+        this.state.searchedColumn === dataIndex && text ? (
           <Highlighter
             highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
             searchWords={[this.state.searchText]}
@@ -119,9 +127,17 @@ export default class TableView extends React.Component {
     console.log('edit',a)
   }
 
+  applyDateFilter = (action) => {
+    if(action==='filter'){
+      this.props.applyDateFilter(filter)
+    } else {
+      this.props.applyDateFilter()
+    }
+  }
+
   render() {
     const { xScroll, yScroll, ...state } = this.state;
-    const { path, tableField } = this.props;
+    const { path, tableField, applyDateFilter } = this.props;
     const scroll = {};
     if (yScroll) {
       scroll.y = 240;
@@ -133,7 +149,7 @@ export default class TableView extends React.Component {
     const column = this.props.tableField.map(data => {
       const isSearchable = data.search === true
         ? this.getColumnSearchProps(data.dataIndex) : {};
-      const isSortable = data.sort === true
+      const isSortable = data.sorting === true
         ? this.withSorter(data.dataIndex) : {};
       const isWithDropdown = data.dropdown !== null && data.dropdown !== undefined
         ? this.withDropdownFilter(data.dropdown[0], data.dropdown[1], data.dataIndex) : {};
@@ -211,6 +227,12 @@ export default class TableView extends React.Component {
     }) : []
     return (
       <div style={{padding:'15px'}}>
+        <div className="table-operations">
+          <DatePicker onChange={(i, e) => filter.startDate = e}/>
+          <DatePicker onChange={(i, e) => filter.endDate = e}/>
+          <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
+          <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
+        </div>
         <Table
           {...this.state}
           loading={this.props.isLoading}
