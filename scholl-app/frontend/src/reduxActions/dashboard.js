@@ -399,16 +399,24 @@ export function get_tersangka_list(token, id = null) {
   }
 }
 
-export function editersangka(data, token, id) {
+export function edittersangka(data, token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}`, data, {
+    return request(`/api/tsk-edit/${id}/`, data, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
@@ -461,7 +469,15 @@ export function editbb(data, token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 export function deletebb(token, id) {

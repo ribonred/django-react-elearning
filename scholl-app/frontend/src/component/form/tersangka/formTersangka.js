@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_tersangka_list } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, edittersangka } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import FormStatusTersangka from './formStatusTersangka';
 import FormProsesTersangka from './formProsesTersangka';
@@ -64,7 +64,21 @@ class FormTersangka extends React.Component {
      }
   }
 
-  onsubmit = () => {
+  onsubmit = async() => {
+    this.setState({isLoading:true})
+    const result= await this.props.dispatch(edittersangka(this.state.form, get_token(), this.props.tersangkaId));
+    if(result === 'error'){
+      this.setState({ isError: true })
+      setTimeout(() => {
+        this.setState({ isError: false })
+      }, 200);
+    } else {
+      this.setState({ isCreated: true})
+      setTimeout(() => {
+        this.setState({ isCreated: false })
+      }, 200);
+    }
+    this.setState({isLoading:false})
   }
 
   getDefaultForm = () => {
