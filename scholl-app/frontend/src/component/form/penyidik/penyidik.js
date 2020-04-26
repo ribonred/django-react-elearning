@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchalluser } from '../../../reduxActions/dashboard'
+import { fetchalluser, registeruser, edituser } from '../../../reduxActions/dashboard'
 import { connect } from 'react-redux';
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
@@ -44,8 +44,26 @@ class FormPenyidik extends React.Component {
      this.setState({form: this.props.userData}, () => this.setState({ isDataChange: true}))
   }
 
-  onsubmit = () => {
-
+  onsubmit = async() => {
+    this.setState({isLoading:true})
+    let result;
+    if(this.props.penyidikID){
+      result = await this.props.dispatch(edituser(get_token(), this.state.form, this.props.penyidikID))
+    } else {
+      result = await this.props.dispatch(registeruser(get_token(), this.state.form))
+    }
+    if(result === 'error'){
+      this.setState({ isError: true })
+      setTimeout(() => {
+        this.setState({ isError: false })
+      }, 200);
+    } else {
+      this.setState({ isCreated: true})
+      setTimeout(() => {
+        this.setState({ isCreated: false })
+      }, 200);
+    }
+    this.setState({isLoading:false})
   }
 
   onFormChange = (fieldName, e) => {
@@ -69,7 +87,7 @@ class FormPenyidik extends React.Component {
       return (
         <MainForm
           title={this.props.penyidikID ? 'Edit Form Penyidik' : 'Add Form Penyidik'}
-          messageTitle='Penyidik'
+          messageTitle='Username'
           isError={this.state.isError}
           isDataChange={this.props.type === 'create' ? true : this.state.isDataChange}
           defaultValue={this.state.form}

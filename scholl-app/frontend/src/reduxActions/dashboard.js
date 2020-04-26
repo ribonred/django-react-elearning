@@ -147,14 +147,43 @@ export function editLKN(token, data, id) {
 
 export function registeruser(token, data) {
   return dispatch => {
-    return request('/api/users/', data, {
+    return request('/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
     })
-      .then(response => console.log(response))
+    .catch((e) => {
+      return 'error'
+    })
+  }
+}
+
+export function edituser(token, data, id) {
+  return dispatch => {
+    return request(`/api/users/${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
