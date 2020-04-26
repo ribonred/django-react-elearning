@@ -98,3 +98,53 @@
         }
     ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    "id": 7,
+    "nama_tersangka": "tes",
+    "umur": 22,
+    "jenis_kelamin": "laki-laki",
+    "foto": null,
+    "no_penangkapan_id": {
+        "id": 6,
+        "created": "2020-04-26,05/08",
+        "updated": "2020-04-24,19/12",
+        "no_penangkapan": "asdsa",
+        "tanggal_penangkapan": "2020-12-12",
+        "jam_penangkapan": null,
+        "no_lkn": {
+            "id": 1,
+            "created": "2020-04-24,18/46",
+            "updated": "2020-04-24,18/46",
+            "LKN": "1234",
+            "tgl_dibuat": "2020-04-10",
+            "penyidik": 1
+        }
+    },
+    "statustersangka": [],
+    "prosestersangka": []
+}
+
+
+
+{"status_penahanan": "Di tahan",
+            "rekam_jejak": "Keluar",
+            "tanggal": null,
+            "waktu": null,
+            "keterangan": "sudah mati",
+            "tersangka_id": 7
+        }

@@ -66,6 +66,7 @@ class FormTersangka extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
+    console.log(this.state.form)
     const result= await this.props.dispatch(edittersangka(this.state.form, get_token(), this.props.tersangkaId));
     if(result === 'error'){
       this.setState({ isError: true })
@@ -86,6 +87,26 @@ class FormTersangka extends React.Component {
   }
 
   render(){
+    let tersangkaIdDefaultStatus = []
+    let  tersangkaIdDefaultProses = []
+
+    if (this.state.form.id){
+      tersangkaIdDefaultStatus = this.state.form.statustersangka.map( data => {
+        return {
+          ...data,
+          tersangka_id:Number(this.props.tersangkaId)
+        }
+      } )
+      tersangkaIdDefaultProses = this.state.form.prosestersangka.map( data => {
+        return {
+          ...data,
+          tersangka_id:Number(this.props.tersangkaId)
+        }
+      } )
+    }
+
+
+   
       return (
         <MainForm
           title={'Edit Form Tersangka'}
@@ -99,8 +120,8 @@ class FormTersangka extends React.Component {
           formData={formData}
           onsubmit={this.onsubmit}
         >
-          <FormStatusTersangka defaultValue={this.state.form.statustersangka || []} updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm)}/>
-          <FormProsesTersangka defaultValue={this.state.form.prosestersangka || []} updateProsesTersangka={(prosesForm) => this.updateProsesTersangka(prosesForm)}/>
+          <FormStatusTersangka tersangkaId={this.props.tersangkaId} defaultValue={tersangkaIdDefaultStatus || []} updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm)}/>
+          <FormProsesTersangka tersangkaId={this.props.tersangkaId} defaultValue={tersangkaIdDefaultProses || []} updateProsesTersangka={(prosesForm) => this.updateProsesTersangka(prosesForm)}/>
         </MainForm>
       );
   }

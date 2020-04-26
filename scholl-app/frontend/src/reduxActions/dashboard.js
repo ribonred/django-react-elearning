@@ -405,14 +405,16 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
 
 export function edittersangka(data, token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}/`, data, {
+    console.log('reducer', data)
+    return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    },data)
     .then(response => {
+  
       if(response instanceof Error){
         throw Error
       }
