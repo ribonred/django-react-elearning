@@ -506,13 +506,13 @@ export function get_bb_list(token, id = null, pnkp_id) {
 }
 export function editbb(data, token, id) {
   return dispatch => {
-    return request(`/api/bb-edit/${id}`, data, {
+    return request(`/api/bb-edit/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })
+    },data)
     .then(response => {
       if(response instanceof Error){
         throw Error

@@ -278,10 +278,28 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = BarangBukti.objects.get(pk=kwargs['pk'])
+            serializer = BarangBuktiEdit(instance=instance,data=request.data)
+            
+            if serializer.is_valid():
+                serializer.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return error
+        except BarangBukti.DoesNotExist:
+            serializer = BarangBuktiEdit(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
         serializer = BarangBukti(data=request.data)
