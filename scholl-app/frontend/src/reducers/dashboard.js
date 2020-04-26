@@ -15,13 +15,17 @@ const initialState = {
   bbData: [],
   prosesIndex: []
 };
-
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
     case 'RECEIVE_LKN_TABLE_DATA':
       return {
         ...state,
         lknTableData: action.data,
+      };
+    case 'RECEIVE_LKN_DATA':
+      return {
+        ...state,
+        lknData: action.data,
       };
     case 'RECEIVE_PROSES':
       return {

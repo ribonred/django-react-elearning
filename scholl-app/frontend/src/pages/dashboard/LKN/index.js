@@ -58,6 +58,12 @@ class LKNTable extends Component {
       )
     }
 
+    async applyDateFilter (e) {
+      this.setState({ isLoading: true })
+      await this.props.dispatch(get_lkn_by_penyidik(get_token(), null, e))
+      this.setState({ isLoading: false })
+    }
+
     render() {
         return (
           <SideMenu>
@@ -68,6 +74,7 @@ class LKNTable extends Component {
                   <Profile />
                   {this.renderAddButton()}
                   <TableView
+                    useId="true"
                     path="lkn"
                     useId
                     isNotAllowTo={['delete']}
@@ -75,6 +82,7 @@ class LKNTable extends Component {
                     tableField={tableField}
                     tableData={this.props.lknTableData}
                     isLoading={this.state.isLoading}
+                    applyDateFilter={(e) => { this.applyDateFilter(e); }}
                   />
                  </div>
                </Content>

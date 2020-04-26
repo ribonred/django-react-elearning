@@ -35,12 +35,25 @@ INSTALLED_APPS = [
     'backendmodel.core',
     'backendmodel.account',
     'rest_framework_jwt',
-    'backendmodel.notify'
+
+    'backendmodel.notify',
+    'channels',
 
 ]
 
+CHANNELS_API = {
+    'DEFAULT_PERMISSION_CLASSES': ('channels_api.permissions.AllowAny',)
 
-
+}
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],   # Change localhost to the ip in which you have redis server running on.
+        },
+    },
+}
+ASGI_APPLICATION = "config.routing.application"
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -173,3 +185,4 @@ TIME_INPUT_FORMATS = ['%H:%M']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+

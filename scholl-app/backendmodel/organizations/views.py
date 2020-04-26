@@ -20,7 +20,42 @@ from .serializer import BerkasLknApi, PenangkapanApi, TersangkaApi, ProsesPengad
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, filters
+from django.views.generic import TemplateView
+from django_filters.widgets import RangeWidget
+from django_filters.filters import RangeFilter
+from django_filters.fields import RangeField
+from django.shortcuts import render
+from django import forms
+
+
+class DateRangeCustomWidget(RangeWidget):
+    suffixes = ['mulai','akhir']
+
+
+class CustomRange(RangeField):
+    
+    widget = DateRangeCustomWidget
+
+    def __init__(self, *args, **kwargs):
+        fields = (
+            forms.DateField(),
+            forms.DateField())
+        super().__init__(fields, *args, **kwargs)
+
+
+class DateFromTo(RangeFilter):
+    field_class = CustomRange
+
+class LknDateFilter(FilterSet):
+    tgl_dibuat = DateFromTo()
+
+    class Meta:
+        model = BerkasLKN
+        fields = [
+            
+        ]
+
 
 
 class BerkasLknView(viewsets.ModelViewSet):
@@ -28,7 +63,9 @@ class BerkasLknView(viewsets.ModelViewSet):
     serializer_class = BerkasLknApi
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'LKN']
-
+    filter_class = LknDateFilter
+    
+    
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.filter(penyidik=self.request.user)
@@ -47,6 +84,7 @@ class BerkasLknView(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def post(self, request, format=None):
+        image = request.FILES["penangkapan_tersangka.foto"]
         serializer = BerkasLKN(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -243,3 +281,13 @@ class LknDetailApiView(viewsets.ReadOnlyModelViewSet):
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticatedOrReadOnly]
         return [permission() for permission in permission_classes]
+
+
+
+
+
+
+
+
+class HomeView(TemplateView):
+    template_name = 'base.html'
