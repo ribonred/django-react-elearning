@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
-import FormTersangka from '../../../component/form/tersangka/formTersangka'
+import FormPenangkapan from '../../../component/form/penangkapan/penangkapan'
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 const { Content } = Layout;
 
 class CreatePenangkapan extends Component {
-    state = {
-      form: {},
-    }
-
-    onFormChange = (fieldName, e) => {
-      const formObj = {...this.state.form};
-        if(!e.target){
-            formObj[fieldName] = e
-            this.setState({
-                form: formObj,
-            })
-        } else {
-            formObj[fieldName] = e.target.value
-            this.setState({
-                form: formObj,
-            })
-        }
-    }
-
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
             <Breadcrumb.Item>
               <a href="/#">LKN</a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a href="/#">{this.props.match.params.id}</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <a href="/#">Penangkapan</a>
@@ -45,14 +29,12 @@ class CreatePenangkapan extends Component {
     render() {
         return (
           <SideMenu selected="1">
-            <Layout>
-              <Content style={{padding:'20px'}}>
-                <div style={styles.siteLayout}>
-                  {this.renderBreadCrumb()}
-                  <FormTersangka />
-                 </div>
-               </Content>
-             </Layout>
+            <Content style={{padding:'20px'}}>
+              <div style={styles.siteLayout}>
+                {this.renderBreadCrumb()}
+                <FormPenangkapan type='create' LKNID={this.props.match.params.id}/>
+               </div>
+             </Content>
           </SideMenu>
         )
     }

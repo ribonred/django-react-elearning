@@ -30,7 +30,6 @@ class PenyidikTable extends Component {
     async componentDidMount(){
       this.setState({ isLoading: true })
       await this.props.dispatch(fetchalluser(get_token()))
-      console.log(this.props.lknTableData)
       this.setState({ isLoading: false })
     }
 
@@ -67,6 +66,7 @@ class PenyidikTable extends Component {
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
                   <TableView
+                    useId="true"
                     path="Penyidik"
                     tableField={tableField}
                     tableData={userData}

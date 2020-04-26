@@ -5,12 +5,13 @@ import FormGroup from '../../../ui-container/formGroup';
 
 const { Panel } = Collapse;
 
+const dropdown = [{value:'masuk', name:'masuk'},{value:'keluar', name:'keluar'}]
 const formData = [
   {label: 'tanggal_status', name: 'Tanggal Status', fieldName: 'tanggal_status', type:'date'},
   {label: 'waktu_status', name: 'Waktu Status', fieldName: 'waktu_status', type:'time'},
   {label: 'jumlah', name: 'Jumlah', fieldName: 'jumlah', type:'number'},
   {label: 'keterangan', name: 'Keterangan', fieldName: 'keterangan', type:'area'},
-  {label: 'status', name: 'Status', fieldName: 'status', type:'select', dropdown:['masuk','keluar']}
+  {label: 'status', name: 'Status', fieldName: 'status', type:'select', dropdown:dropdown}
 ]
 
 export default class FormStatusBarangBukti extends React.Component {
@@ -47,6 +48,7 @@ export default class FormStatusBarangBukti extends React.Component {
     const forms = this.state.form;
     delete forms[removedIndex]
     this.setState({form: forms});
+    this.props.updateStatusBarangBukti(forms)
   }
 
   render(){
@@ -58,8 +60,8 @@ export default class FormStatusBarangBukti extends React.Component {
             </Button>
             {this.state.form.map((data, index) => (
               data!==null && (
-                <Collapse style={{margin:'10px'}}>
-                <Panel header="Form Status Barang Bukti" key={index}>
+                <Collapse style={{margin:'10px'}} key={index}>
+                <Panel header="Form Status Barang Bukti">
                   <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
                     Hapus Form
                   </Button>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
+import FormBarangBukti from '../../../component/form/barang_bukti/formBarangBukti';
 import SideMenu from '../../../component/sider';
 
 const { Content } = Layout;
@@ -30,6 +31,7 @@ class EditBarangBukti extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
+                  <FormBarangBukti barangBuktiId={this.props.match.params.id} />
                  </div>
                </Content>
              </Layout>

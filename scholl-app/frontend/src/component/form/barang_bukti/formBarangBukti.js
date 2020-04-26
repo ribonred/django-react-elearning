@@ -1,87 +1,95 @@
 import React from 'react'
-import { Button, Collapse } from 'antd';
-import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
-import FormGroup from '../../../ui-container/formGroup';
-import FormStatusBarangBukti from './formStatusBarangBukti';
+import { get_bb_list } from '../../../reduxActions/dashboard';
+import { connect } from 'react-redux';
+import MainForm from '../../../ui-container/mainFormContainer';
+import { get_token } from '../../../helper/requestHelper';
 
-const { Panel } = Collapse;
+const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non_narkotika', name:'non_narkotika'}];
 
 const formData = [
   {label: 'nama_barang', name: 'Nama Barang', fieldName: 'nama_barang'},
   {label: 'sp_sita', name: 'SP Sita', fieldName: 'sp_sita'},
   {label: 'tap_status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown:['narkotika', 'non_narkotika']},
+  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown},
 ]
 
-export default class FormBarangBukti extends React.Component {
+class FormBarangBukti extends React.Component {
   state = {
-    form:[{}]
+    form:{},
+    isLoading: false,
+    isCreated: false,
+    isDataChange: false,
+    isError: false,
   }
 
-  addStatus = () => {
-    const forms = this.state.form
-    forms.push({})
-    this.setState({form: forms})
+  async componentDidMount(){
+    this.setState({ isLoading: true })
+    await this.props.dispatch(get_bb_list(get_token(), this.props.barangBuktiId))
+    this.setState({ isLoading: false })
   }
 
-  removeStatus = (removedIndex) => {
-    const forms = this.state.form;
-    delete forms[removedIndex]
-    this.setState({form: forms});
+  componentDidUpdate(prevProps){
+    if(this.props.bbData !== prevProps.bbData){
+      this.getDefaultForm()
+    }
   }
 
-  updateStatusBarangBukti = (statusForm, indexTersangka) => {
-    const formStatus = this.state.form[indexTersangka];
-    const form = this.state.form;
-    formStatus.statusbarangbukti = statusForm;
-    form[indexTersangka] = formStatus;
+  updateStatusBarangBukti = (statusForm) => {
+    const form = {...this.state.form};
+    form.statustersangka = statusForm.filter(data => data!==null && data!==undefined);
     this.setState({form: form})
   }
 
-  onFormChange = (fieldName, e, index) => {
-     const formObj = {...this.state.form[index]};
-     const form = this.state.form;
-     if(!e.target){
-         formObj[fieldName] = e
-         form[index] = formObj
+  onFormChange = (fieldName, e) => {
+     const form = {...this.state.form};
+     if(e!==null && e!==undefined && e!==''){
+       if(!e.target){
+         form[fieldName] = e
          this.setState({
              form: form,
          })
-     } else {
-         formObj[fieldName] = e.target.value
-         form[index] = formObj
+       } else {
+         form[fieldName] = e.target.value
          this.setState({
             form: form,
          })
+       }
      }
-     this.props.updateBarangBukti(form)
+  }
+
+  onsubmit = () => {
+
+  }
+
+  getDefaultForm = () => {
+     this.setState({form: this.props.bbData}, () => this.setState({ isDataChange: true}))
   }
 
   render(){
       return (
-        <Collapse style={{margin:'7px'}}>
-          <Panel header="FORM BARANG BUKTI" key="1">
-            <Button type="primary" style={{margin:'10px'}} onClick={() => this.addStatus()} icon={<PlusSquareOutlined />}>
-              Add Barang Bukti
-            </Button>
-            {this.state.form.map((data, index) => (
-              data!==null && (
-                <Collapse style={{margin:'10px'}} key={index}>
-                  <Panel header={`Form Data Barang Bukti`} key={index}>
-                    <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
-                      Hapus Form
-                    </Button>
-                    <FormGroup
-                      formData={formData}
-                      onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                    />
-                    <FormStatusBarangBukti updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm, index)}/>
-                  </Panel>
-                </Collapse>
-              )
-            ))}
-          </Panel>
-        </Collapse>
+        <MainForm
+          title={'Edit Form Barang Bukti'}
+          messageTitle='Barang Bukti'
+          isError={this.state.isError}
+          isDataChange={this.state.isDataChange}
+          defaultValue={this.state.form}
+          isCreated={this.state.isCreated}
+          isLoading={this.state.isLoading}
+          redirectRoute={`/dashboard`}
+          onFormChange={this.onFormChange}
+          formData={formData}
+          onsubmit={this.onsubmit}
+        >
+        </MainForm>
       );
   }
 };
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    bbData: dashboard.bbData,
+  }
+}
+
+export default connect(mapStateToProps)(FormBarangBukti)
