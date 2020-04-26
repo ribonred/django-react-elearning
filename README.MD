@@ -147,3 +147,12 @@ django-admin startapp yourappname backendmodel
 ADDITIONAL_APPS = backendmodel.yourappname1, backendmodel.yourappname2
 ```
 you can install react vue or frontend framework on frontend folder
+
+
+# IF IMPORT CHANNELS ERROR DO THIS
+```sh
+pip uninstall asgi_redis
+pip uninstall channels-redis
+pip uninstall channels # Successfully uninstalled channels-2.1.5
+pip install channels 
+```

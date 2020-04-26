@@ -19,8 +19,8 @@ class LKNView extends Component {
     }
 
     async componentDidMount(){
-      let noLkn = this.props.match.params.id;
-      await this.props.dispatch(get_lkn_detail(get_token(), noLkn))
+      let lknId = this.props.match.params.id;
+      await this.props.dispatch(get_lkn_detail(get_token(), lknId))
       if(!this.props.error){
         this.setState({
           lkn: {

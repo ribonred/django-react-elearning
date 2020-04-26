@@ -7,6 +7,13 @@ function receive_lkn_table(data) {
   }
 }
 
+function receive_lkn_data(data) {
+  return {
+    type: "RECEIVE_LKN_DATA",
+    data
+  }
+}
+
 function receive_proses(data) {
   return {
     type: "RECEIVE_PROSES",
@@ -52,6 +59,13 @@ function receive_lkn_by_no_lkn(data) {
 function receive_penangkapan_by_no_lkn(data) {
   return {
     type: "RECEIVE_PENANGKAPAN_BY_NO_LKN_DATA",
+    data
+  }
+}
+
+function receive_penangkapan_by_id(data) {
+  return {
+    type: "RECEIVE_PENANGKAPAN_BY_ID",
     data
   }
 }
@@ -172,12 +186,15 @@ export function fetchalluser(token, id = null) {
   }
 }
 // LKN CRUD
-export function get_lkn_by_penyidik(token, id = null) {
+export function get_lkn_by_penyidik(token, id = null, filter = null) {
   return async dispatch => {
     try {
       let url = ''
       if (id) {
         url = `/api/lkn/${id}`
+      }
+      else if (filter){
+        url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
       }
       else {
         url = `/api/lkn/`
@@ -223,10 +240,10 @@ export function post_lkn_by_penyidik(token, data) {
   }
 }
 
-export function get_lkn_by_no_lkn(token, data) {
+export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/?LKN=${data}`, {
+      const result = await request(`/api/lkn/?id=${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -251,19 +268,25 @@ export function createpenangkapan(token, data) {
         'Authorization': `Bearer ${token}`
       }
     }, data)
-      .then(response =>console.log(response))
+      .then(response => {
+        if(response instanceof Error){
+          throw Error
+        }
+        return response
+      })
+      .catch((e) => {
+        return 'error'
+      })
   }
 }
 
 export function getpenangkapan(token, id = null, LKN = null) {
-  console.log('lkn', LKN)
   return dispatch => {
     let url = ''
     if (id) {
-      url = `/api/pnkp/${id}`;
+      url = `/api/pnkp/${id}/`;
     } else if(LKN){
-      console.log('lkn', LKN)
-      url = `/api/pnkp/?no_lkn__LKN=${LKN}`;
+      url = `/api/pnkp/?no_lkn=${LKN}`;
     } else {
       url = `/api/pnkp/`
     }
@@ -275,7 +298,15 @@ export function getpenangkapan(token, id = null, LKN = null) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_penangkapan_by_no_lkn(response.data)))
+      .then(response => {
+        console.log('response', response.data)
+        if(LKN){
+          dispatch(receive_penangkapan_by_no_lkn(response.data))
+        } else if(id){
+          dispatch(receive_penangkapan_by_id(response.data))
+        }
+
+      })
   }
 }
 
@@ -291,7 +322,7 @@ export function deletepenangkapan(token, id) {
       .then(response => console.log(response))
   }
 }
-export function editpenangkapan(data, token, id) {
+export function editpenangkapan(token, data, id) {
   return dispatch => {
     return request(`/api/pnkp/${id}`, data, {
       method: 'PUT',
@@ -300,17 +331,29 @@ export function editpenangkapan(data, token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
 // Proses tersangka Edit and list
-export function get_tersangka_list(token, id = null) {
+export function get_tersangka_list(token, id = null, pnkp_id = null) {
   return dispatch => {
     let url = ''
     if (id) {
       url = `/api/tsk-edit/${id}`
     }
+    else if (pnkp_id){
+      url = `/api/tsk-edit/?no_penangkapan_id__id=${pnkp_id}`
+    }
+
     else {
       url = `/api/tsk-edit/`
     }
@@ -325,6 +368,7 @@ export function get_tersangka_list(token, id = null) {
         if(!id){
           dispatch(receive_tersangka_table(response.data))
         } else {
+          console.log('tersangka data', response.data)
           dispatch(receive_tersangka_data(response.data))
         }
       })
@@ -359,11 +403,14 @@ export function deletetersangka(data, token, id) {
 
 // Proses barangbukti Edit and list
 
-export function get_bb_list(token, id = null) {
+export function get_bb_list(token, id = null, pnkp_id) {
   return dispatch => {
     let url = ''
     if (id) {
       url = `/api/bb-edit/${id}`
+    }
+    else if (pnkp_id){
+      url = `/api/tsk-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
     }
     else {
       url = `/api/bb-edit/`
@@ -432,7 +479,7 @@ export function get_bb_list_lkn(token, data) {
 
 export function get_lkn_detail(token, data) {
   return dispatch => {
-    let url = `/api/lkn-detail/?no_lkn__LKN=${data}`
+    let url = `/api/lkn-detail/${data}`
     return request(url, {
       method: 'GET',
       headers: {
@@ -440,7 +487,9 @@ export function get_lkn_detail(token, data) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then((response) => {
+        dispatch(receive_lkn_data(response.data))
+      })
   }
 }
 

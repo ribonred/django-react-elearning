@@ -8,19 +8,24 @@ const initialState = {
   lknData: [],
   lknCreated: false,
   penangkapanData: [],
+  penangkapanSelectedData: {},
   tersangkaTableData: [],
   tersangkaData: {},
   bbTableData: [],
   bbData: [],
   prosesIndex: []
 };
-
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
     case 'RECEIVE_LKN_TABLE_DATA':
       return {
         ...state,
         lknTableData: action.data,
+      };
+    case 'RECEIVE_LKN_DATA':
+      return {
+        ...state,
+        lknData: action.data,
       };
     case 'RECEIVE_PROSES':
       return {
@@ -31,6 +36,11 @@ const dashboard = (state = initialState, action) => {
       return {
         ...state,
         penangkapanData: action.data,
+      }
+    case 'RECEIVE_PENANGKAPAN_BY_ID':
+      return {
+        ...state,
+        penangkapanSelectedData: action.data,
       }
     case 'RECEIVE_TERSANGKA_TABLE_DATA':
       return {

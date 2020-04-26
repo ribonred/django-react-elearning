@@ -5,12 +5,13 @@ import FormGroup from '../../../ui-container/formGroup';
 
 const { Panel } = Collapse;
 
+const dropdown = [{value:'masuk', name:'masuk'},{value:'keluar', name:'keluar'}]
 const formData = [
   {label: 'tanggal_status', name: 'Tanggal Status', fieldName: 'tanggal_status', type:'date'},
   {label: 'waktu_status', name: 'Waktu Status', fieldName: 'waktu_status', type:'time'},
   {label: 'jumlah', name: 'Jumlah', fieldName: 'jumlah', type:'number'},
   {label: 'keterangan', name: 'Keterangan', fieldName: 'keterangan', type:'area'},
-  {label: 'status', name: 'Status', fieldName: 'status', type:'select', dropdown:['masuk','keluar']}
+  {label: 'status', name: 'Status', fieldName: 'status', type:'select', dropdown:dropdown}
 ]
 
 export default class FormStatusBarangBukti extends React.Component {
