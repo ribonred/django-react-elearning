@@ -16,7 +16,17 @@ from .models import (
     StatusTersangka,
 
 )
-from .serializer import BerkasLknApi, PenangkapanApi, TersangkaApi, ProsesPengadilanApi, TersangkaEditApi, BarangBuktiEdit, LknDetailAPi,CreateBarangBuktiByTsk
+from .serializer import (
+    BerkasLknApi,
+    PenangkapanApi,
+    TersangkaApi,
+    ProsesPengadilanApi,
+    TersangkaEditApi,
+    BarangBuktiEdit,
+    LknDetailAPi,
+    CreateBarangBuktiByTsk,
+    CreateTersangkaSerializer
+    )
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
@@ -208,6 +218,7 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     def get_permissions(self):
         permission_classes = []
         if self.action == 'create':
+            self.serializer_class = CreateTersangkaSerializer
             permission_classes = [IsAuthenticated]
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
