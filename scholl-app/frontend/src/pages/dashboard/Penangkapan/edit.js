@@ -4,13 +4,13 @@ import FormPenangkapan from '../../../component/form/penangkapan/penangkapan';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import ModalTersangka from './modal'
-import { getpenangkapan, editpenangkapan, get_tersangka_list, get_bb_list, createtersangka } from '../../../reduxActions/dashboard'
+import { getpenangkapan, editpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
-const dropdownTsk = [{value:'laki-laki', name:'laki-laki'}, {value:'perempuan', name:'perempuan'}];
-const dropdownBB = [{value:'narkotika', name:'narkotika'}, {value:'non_narkotika', name:'non_narkotika'}];
+const dropdownTsk = [{value:'laki-laki', name:'Laki-laki'}, {value:'perempuan', name:'Perempuan'}];
+const dropdownBB = [{value:'narkotika', name:'Narkotika'}, {value:'non narkotika', name:'Non Narkotika'}];
 const formDataTsk = [
   {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
   {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'number'},
@@ -18,11 +18,11 @@ const formDataTsk = [
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 const formDataBB = [
-  {label: 'nama_barang', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'sp_sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'tap_status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdownBB},
-  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdownBB},
+  {label: 'Nama Barang', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
+  {label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdownBB},
+  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: []},
 ]
 
 const tableFieldTsk = [
@@ -80,9 +80,9 @@ const tableFieldBB = [
 
 class EditPenangkapan extends Component {
     state = {
-      formBB:{},
-      formTsk:{},
+      form:{},
       isLoading: false,
+      dropdownChange: false
     }
 
     componentDidMount(){
@@ -102,38 +102,44 @@ class EditPenangkapan extends Component {
     // }
 
     onFormChange = (fieldName, e) => {
-      const form = {...this.state.formTsk};
+      const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if(!e.target){
           form[fieldName] = e
           this.setState({
-              formTsk: form,
+              form: form,
           })
         } else {
           form[fieldName] = e.target.value
           this.setState({
-            formTsk: form,
+            form: form,
           })
         }
-        console.log(this.state.formTsk[fieldName])
+        console.log(this.state.form[fieldName])
       }
     }
 
-    onsubmit = () => {
-      const { formTsk } = this.state
-      if (!formTsk['nama_tersangka'] || !formTsk['jenis_kelamin'] || !formTsk['umur']) {
-        alert('lengkapi form')
+    onsubmit = (action) => {
+      const { form } = this.state
+      if(action == 'Tambah Tersangka') {
+        if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
+          alert('lengkapi form')
+          this.setState({form: {}})
+        } else {
+          form['no_penangkapan_id'] = this.props.match.params.id
+          this.props.dispatch(createtersangka(get_token(), form))
+          this.setState({form: {}})
+        }
       } else {
-        formTsk['no_penangkapan_id'] = this.props.match.params.id
-        // formTsk['barangbuktitersangka'] = []
-        // form['statustersangka'] = []
-        let pnkpId = this.props.match.params.id
-        let formPnkp = this.props.penangkapanSelectedData
-        // let lknIdObj = {no_penangkapan_id: this.props.match.params.id}
-        // this.setState({form: {lknIdObj}})
-        // formPnkp.penangkapan_tersangka.push(form)
-        this.props.dispatch(createtersangka(get_token(), formTsk))
+        if (!form['nama_barang'] || !form['jenis_barang'] || !form['milik_tersangka_id']) {
+          alert('lengkapi form')
+          this.setState({form: {}})
+        } else {
+          this.props.dispatch(createtersangka(get_token(), form))
+          this.setState({form: {}})
+        }
       }
+      
     }
 
     renderBreadCrumb = () => {
@@ -158,6 +164,16 @@ class EditPenangkapan extends Component {
 
     render() {
         const { tersangkaTableDataByLkn, bbDataByPnkp } = this.props;
+        if(tersangkaTableDataByLkn.length > 0 && this.state.dropdownChange === false) {
+          tersangkaTableDataByLkn.map((data) => {
+            let dropdownData = {
+              value: data.id,
+              name: data.nama_tersangka
+            }
+            formDataBB[4]['dropdown'].push(dropdownData) 
+          })
+          this.setState({dropdownChange: true})
+        }
         const dataTersangka = tersangkaTableDataByLkn.map((data) => {
           return {
             ...data,
@@ -220,8 +236,6 @@ class EditPenangkapan extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log('BB', dashboard.bbDataByPnkp)
-  console.log('penangkapan', dashboard.penangkapanSelectedData)
   return { 
     penangkapanSelectedData: dashboard.penangkapanSelectedData,
     tersangkaTableDataByLkn: dashboard.tersangkaTableDataByLkn,

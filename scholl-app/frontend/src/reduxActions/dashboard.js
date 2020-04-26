@@ -535,7 +535,7 @@ export function deletebb(token, id) {
   }
 }
 
-export function createbb_by_tersangka(token, data) {
+export function create_bb_by_tersangka(token, data) {
   return dispatch => {
     return request(`/api/bb-edit/`, {
       method: 'POST',
@@ -543,7 +543,7 @@ export function createbb_by_tersangka(token, data) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    },data)
+    }, data)
       .then(response => console.log(response))
   }
   
