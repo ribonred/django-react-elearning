@@ -135,7 +135,7 @@ class EditPenangkapan extends Component {
           alert('lengkapi form')
           this.setState({form: {}})
         } else {
-          this.props.dispatch(createtersangka(get_token(), form))
+          this.props.dispatch(create_bb_by_tersangka(get_token(), form))
           this.setState({form: {}})
         }
       }
