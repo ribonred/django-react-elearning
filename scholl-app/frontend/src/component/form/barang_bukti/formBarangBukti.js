@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_bb_list } from '../../../reduxActions/dashboard';
+import { get_bb_list, editbb } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import MainForm from '../../../ui-container/mainFormContainer';
 import FormStatusBarangBukti from './formStatusBarangBukti';
@@ -58,8 +58,21 @@ class FormBarangBukti extends React.Component {
      }
   }
 
-  onsubmit = () => {
-
+  onsubmit = async() => {
+    this.setState({isLoading:true})
+    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.tersangkaId));
+    if(result === 'error'){
+      this.setState({ isError: true })
+      setTimeout(() => {
+        this.setState({ isError: false })
+      }, 200);
+    } else {
+      this.setState({ isCreated: true})
+      setTimeout(() => {
+        this.setState({ isCreated: false })
+      }, 200);
+    }
+    this.setState({isLoading:false})
   }
 
   getDefaultForm = () => {
