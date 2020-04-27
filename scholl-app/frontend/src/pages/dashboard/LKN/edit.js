@@ -79,7 +79,7 @@ class EditLkn extends Component {
 
     onsubmit = async() => {
       this.setState({ isLoading: true })
-      await this.props.dispatch(editLKN(get_token(), this.state.form, this.props.lknData[0].id))
+      await this.props.dispatch(editLKN(get_token(), this.state.form, this.props.lknData.id))
       if(!this.props.error){
         history.push('/dashboard/LKN')
       } else {
