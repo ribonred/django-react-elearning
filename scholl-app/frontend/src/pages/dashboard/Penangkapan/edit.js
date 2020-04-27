@@ -4,7 +4,7 @@ import FormPenangkapan from '../../../component/form/penangkapan/penangkapan';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import ModalTersangka from './modal'
-import { getpenangkapan, editpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka, deletetersangka, deletebb } from '../../../reduxActions/dashboard'
+import { getpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka, deletetersangka, deletebb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
@@ -114,7 +114,7 @@ class EditPenangkapan extends Component {
     async onSubmit(action){
       const { form } = this.state
       let pnkpId = this.props.match.params.id
-      if(action == 'Tambah Tersangka') {
+      if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
           alert('lengkapi form')
           this.setState({form: {}})
@@ -137,7 +137,7 @@ class EditPenangkapan extends Component {
           this.setState({ isLoading: false })
           this.setState({form: {}})
         }
-      } 
+      }
     }
 
     async onDelete(id, path){
@@ -152,7 +152,7 @@ class EditPenangkapan extends Component {
         this.setState({ isLoading: true })
         await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
         this.setState({ isLoading: false })
-      }   
+      }
     }
 
     renderBreadCrumb = () => {
@@ -184,9 +184,9 @@ class EditPenangkapan extends Component {
               value: data.id,
               name: data.nama_tersangka
             }
-            formDataBB[4]['dropdown'].push(dropdownData) 
+            formDataBB[4]['dropdown'].push(dropdownData)
+            return dropdownData
           })
-          console.log(formDataBB[4]['dropdown'])
         }
         const dataTersangka = tersangkaTableDataByLkn.map((data) => {
           return {
@@ -207,7 +207,7 @@ class EditPenangkapan extends Component {
             nama_tersangka: nama_tersangka,
           }
         })
-        
+
         return (
           <SideMenu selected="1">
             <Content style={{padding:'20px'}}>
@@ -252,7 +252,7 @@ class EditPenangkapan extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { 
+  return {
     penangkapanSelectedData: dashboard.penangkapanSelectedData,
     tersangkaTableDataByLkn: dashboard.tersangkaTableDataByLkn,
     bbDataByPnkp: dashboard.bbDataByPnkp

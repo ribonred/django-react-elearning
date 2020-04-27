@@ -59,7 +59,7 @@ class EditLkn extends Component {
       }
 
       getDefaultForm = () => {
-         this.setState({form: this.props.lknData[0]}, () => this.setState({ isDataChange: true}))
+         this.setState({form: this.props.lknData}, () => this.setState({ isDataChange: true}))
       }
 
      onFormChange = (fieldName, e) => {

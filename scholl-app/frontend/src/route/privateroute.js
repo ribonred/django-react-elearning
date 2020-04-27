@@ -11,12 +11,14 @@ class PrivateRoute extends React.Component{
 
   async componentDidMount(){
     const status = await this.props.dispatch(verify_token(localStorage.getItem("token")))
+    window.scrollTo(0, 0);
     this.setState({status})
   }
 
   async componentDidUpdate(newProps) {
     if (this.props.location.pathname !== newProps.location.pathname) {
       const status = await this.props.dispatch(verify_token(localStorage.getItem("token")))
+      window.scrollTo(0, 0);
       this.setState({status})
     }
   }
