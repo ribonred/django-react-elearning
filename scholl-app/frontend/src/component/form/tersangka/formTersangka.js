@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_tersangka_list } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, get_lkn_by_no_lkn } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import FormStatusTersangka from './formStatusTersangka';
 import FormProsesTersangka from './formProsesTersangka';
