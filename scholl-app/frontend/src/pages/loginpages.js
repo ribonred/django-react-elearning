@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginSide from './loginSide'
+import AuthContainerNew from '../ui-container/authContainerNew';
 import { message } from 'antd';
 import { request } from '../helper/requestHelper'
 import history from '../route/history';
@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        return <LoginSide userform='test' onFormChange={this.onFormChange} onsubmit={this.onsubmit}/>
+        return <AuthContainerNew onFormChange={this.onFormChange} onsubmit={this.onsubmit}/>
     }
 }
 
