@@ -444,7 +444,7 @@ export function edittersangka(data, token, id) {
   }
 }
 
-export function deletetersangka(data, token, id) {
+export function deletetersangka(token, id) {
   return dispatch => {
     return request(`/api/tsk-edit/${id}`, {
       method: 'DELETE',
