@@ -8,7 +8,7 @@ import TableView from '../../../component/table/tableFilterable'
 import { get_token } from '../../../helper/requestHelper';
 import SideMenu from '../../../component/sider';
 import LknFormView from '../../../component/lknform';
-import { get_lkn_by_no_lkn, getpenangkapan } from '../../../reduxActions/dashboard';
+import { get_lkn_by_no_lkn, getpenangkapan, deletepenangkapan } from '../../../reduxActions/dashboard';
 
 const { Content } = Layout;
 
@@ -59,7 +59,7 @@ class EditLkn extends Component {
       }
 
       getDefaultForm = () => {
-         this.setState({form: this.props.lknData[0]}, () => this.setState({ isDataChange: true}))
+         this.setState({form: this.props.lknData}, () => this.setState({ isDataChange: true}))
       }
 
      onFormChange = (fieldName, e) => {
@@ -79,12 +79,20 @@ class EditLkn extends Component {
 
     onsubmit = async() => {
       this.setState({ isLoading: true })
-      await this.props.dispatch(editLKN(get_token(), this.state.form, this.props.lknData[0].id))
+      await this.props.dispatch(editLKN(get_token(), this.state.form, this.props.lknData.id))
       if(!this.props.error){
         history.push('/dashboard/LKN')
       } else {
         this.openMessage()
       }
+      this.setState({ isLoading: false })
+    }
+
+    async onDelete(id){
+      await this.props.dispatch(deletepenangkapan(get_token(), id))
+      this.setState({ isLoading: true })
+      let noLkn = this.props.match.params.id;
+      await this.props.dispatch(getpenangkapan(get_token(), null, noLkn))
       this.setState({ isLoading: false })
     }
 
@@ -133,6 +141,7 @@ class EditLkn extends Component {
                     tableField={tableField}
                     tableData={this.props.penangkapanData || []}
                     isLoading={this.state.isLoading}
+                    onDelete={(id) => { this.onDelete(id); }}
                   />
                 )}
                 {!isDataChange && <Skeleton active />}

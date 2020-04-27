@@ -286,7 +286,7 @@ export function post_lkn_by_penyidik(token, data) {
 export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/?id=${id}`, {
+      const result = await request(`/api/lkn/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -444,7 +444,7 @@ export function edittersangka(data, token, id) {
   }
 }
 
-export function deletetersangka(data, token, id) {
+export function deletetersangka(token, id) {
   return dispatch => {
     return request(`/api/tsk-edit/${id}`, {
       method: 'DELETE',

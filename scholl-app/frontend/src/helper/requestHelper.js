@@ -50,10 +50,10 @@ export async function request(path, options, body) {
     requestObject = axios.get(`${baseUrl}${path}`, options, body)
   } else if (options.method === 'POST') {
     requestObject = axios.post(`${baseUrl}${path}`, body, options)
+  } else if (options.method === 'DELETE') {
+    requestObject = axios.delete(`${baseUrl}${path}`, options, body)
   } else {
-    console.log('oakoako',options)
     requestObject = axios.put(`${baseUrl}${path}`, body, options)
-
   }
 
 

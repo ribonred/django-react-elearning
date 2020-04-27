@@ -117,14 +117,13 @@ export default class TableView extends React.Component {
     });
   };
 
-  onDelete = (a,b) => {
-    alert(a)
-    console.log('delete',a)
+  onDelete = (a,b,c) => {
+    this.props.onDelete(a.id, b)
   }
 
   onEdit = (a,b) => {
-    alert(a)
-    console.log('edit',a)
+    console.log('record',a)
+    console.log('e',b)
   }
 
   applyDateFilter = (action) => {
@@ -188,7 +187,7 @@ export default class TableView extends React.Component {
               <a
               href="#!"
               style={{ marginRight: 16, color: 'red' }}
-              onClick={(e) => { this.onDelete(record, e); }}
+              onClick={(e) => { this.onDelete(record, path, e); }}
             >
               Delete <DeleteOutlined />
             </a>
@@ -227,12 +226,14 @@ export default class TableView extends React.Component {
     }) : []
     return (
       <div style={{padding:'15px'}}>
-        <div className="table-operations">
-          <DatePicker onChange={(i, e) => filter.startDate = e}/>
-          <DatePicker onChange={(i, e) => filter.endDate = e}/>
-          <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
-          <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
-        </div>
+        {this.props.applyDateFilter && (
+          <div className="table-operations">
+            <DatePicker onChange={(i, e) => filter.startDate = e}/>
+            <DatePicker onChange={(i, e) => filter.endDate = e}/>
+            <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
+            <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
+          </div>
+        )}
         <Table
           {...this.state}
           loading={this.props.isLoading}
