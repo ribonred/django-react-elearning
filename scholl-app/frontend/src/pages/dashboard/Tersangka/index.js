@@ -3,7 +3,7 @@ import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import { get_token } from '../../../helper/requestHelper';
-import { get_tersangka_list } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, deletetersangka } from '../../../reduxActions/dashboard';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
@@ -33,6 +33,13 @@ class TersangkaTable extends Component {
       isLoading: false,
     }
     async componentDidMount(){
+      this.setState({ isLoading: true })
+      await this.props.dispatch(get_tersangka_list(get_token()))
+      this.setState({ isLoading: false })
+    }
+
+    async onDelete(id){
+      await this.props.dispatch(deletetersangka(get_token(), id))
       this.setState({ isLoading: true })
       await this.props.dispatch(get_tersangka_list(get_token()))
       this.setState({ isLoading: false })
@@ -70,6 +77,7 @@ class TersangkaTable extends Component {
                     tableField={tableField}
                     tableData={dataTersangka}
                     isLoading={this.state.isLoading}
+                    onDelete={(id) => { this.onDelete(id); }}
                   />
                  </div>
                </Content>

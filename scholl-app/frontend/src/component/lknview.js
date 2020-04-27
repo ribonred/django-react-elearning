@@ -26,7 +26,6 @@ const statusTersangkaTableField = [
 ]
 
 const LknViewView = (props) => {
-  console.log('props', props.lkn)
   let noLkn          = ""
   let tanggal_dibuat = ""
   let noPenangkapan  = ""
@@ -46,34 +45,6 @@ const LknViewView = (props) => {
   } else {
     noLkn = props.lkn.LKN
     tanggal_dibuat  = props.lkn.tgl_dibuat
-
-    // error ndek props.lkn.penangkapan[0], soale aku ga ngerti ngopo kok ndek tek ku moco iku sebagai object duduk array, please advice mas
-    // noPenangkapan   = props.lkn.penangkapan[0].no_penangkapan
-    // tglPenangkapan  = props.lkn.penangkapan[0].tanggal_penangkapan
-    // jamPenangkapan  = props.lkn.penangkapan[0].jam_penangkapan
-    // fotoTersangka   = props.lkn.penangkapan[0].penangkapan_tersangka[0].foto
-    // jenisKelamin    = props.lkn.penangkapan[0].penangkapan_tersangka[0].jenis_kelamin
-    // umur            = props.lkn.penangkapan[0].penangkapan_tersangka[0].umur
-    // namaTersangka   = props.lkn.penangkapan[0].penangkapan_tersangka[0].nama_tersangka
-
-    // // map array of object
-    // barangBukti     = props.lkn.penangkapan[0].penangkapan_tersangka[0].barangbuktitersangka
-    // prosesTsk       = props.lkn.penangkapan[0].penangkapan_tersangka[0].prosestersangka.map((data, i) => (
-    //   <div>
-    //     <div style={{display: 'flex', flexDirection: 'row', verticalAlign: 'center', padding: '10px 10px 2px'}}>
-    //       <p style={{width: '9.58vw', margin: 0}}>{data.no_proses}</p>
-    //       <p style={{margin: 0}}>{data.keterangan}</p>
-    //     </div>
-    //     <div style={{borderTop: '1px solid #6d6d6d', opacity: '0.1'}}/>
-    //   </div>
-    // ))
-
-    // statusTsk       = props.lkn.penangkapan[0].penangkapan_tersangka[0].statustersangka.map((data,i) => (
-    //   <div>
-    //     <p>{data.waktu}</p>
-    //   </div>
-    // ))
-
   }
 
   if(props.lkn.penangkapan){
@@ -110,7 +81,7 @@ const LknViewView = (props) => {
                   </div>
 
                   <div style={{backgroundColor: 'white', width: '100vw', height: '42vh', marginLeft: '1vw', padding: '5px'}}>
-                    <Tabs style={{overflow: 'unset'}} defaultActiveKey='1'>
+                    <Tabs defaultActiveKey='1'>
                       <TabPane tab='Proses Tersangka' key='1'>
                         <Layout>
                         </Layout>
@@ -138,7 +109,6 @@ const LknViewView = (props) => {
   return (
     <Skeleton active />
   )
-
 };
 
 const styles = {
@@ -148,7 +118,6 @@ const styles = {
     boxShadow: '0px 0px 10px #dedede',
     opacity: '0,8',
     margin: '20px',
-    // width: '70vw'
   },
   penangkapanBox: {
     display: 'flex',
@@ -169,9 +138,6 @@ const styles = {
   fotoTersangkaBox: {
     width: '5cm',
     height: '6cm',
-  },
-  overflowY: {
-    'overflow-y':'scroll',
   },
   fotoTersangka: {
     width: '100%',

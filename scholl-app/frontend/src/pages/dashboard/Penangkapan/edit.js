@@ -4,7 +4,7 @@ import FormPenangkapan from '../../../component/form/penangkapan/penangkapan';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import ModalTersangka from './modal'
-import { getpenangkapan, editpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka } from '../../../reduxActions/dashboard'
+import { getpenangkapan, editpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka, deletetersangka, deletebb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
@@ -82,24 +82,16 @@ class EditPenangkapan extends Component {
     state = {
       form:{},
       isLoading: false,
-      dropdownChange: false
     }
 
-    componentDidMount(){
+    async componentDidMount(){
       this.setState({ isLoading: true })
       let pnkpId = this.props.match.params.id
-      this.props.dispatch(getpenangkapan(get_token(), pnkpId))
-      this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
-      this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
+      await this.props.dispatch(getpenangkapan(get_token(), pnkpId))
+      await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
+      await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
       this.setState({ isLoading: false })
     }
-
-    // componentDidUpdate(prevProps){
-    //   if(prevProps.tersangkaTableDataByLkn !== this.props.tersangkaTableDataByLkn) {
-    //     let pnkpId = this.props.match.params.id
-    //     this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
-    //   }
-    // }
 
     onFormChange = (fieldName, e) => {
       const form = {...this.state.form};
@@ -119,15 +111,19 @@ class EditPenangkapan extends Component {
       }
     }
 
-    onsubmit = (action) => {
+    async onSubmit(action){
       const { form } = this.state
+      let pnkpId = this.props.match.params.id
       if(action == 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
           alert('lengkapi form')
           this.setState({form: {}})
         } else {
           form['no_penangkapan_id'] = this.props.match.params.id
-          this.props.dispatch(createtersangka(get_token(), form))
+          await this.props.dispatch(createtersangka(get_token(), form))
+          this.setState({ isLoading: true })
+          await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
+          this.setState({ isLoading: false })
           this.setState({form: {}})
         }
       } else {
@@ -135,11 +131,28 @@ class EditPenangkapan extends Component {
           alert('lengkapi form')
           this.setState({form: {}})
         } else {
-          this.props.dispatch(create_bb_by_tersangka(get_token(), form))
+          await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
+          this.setState({ isLoading: true })
+          await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
+          this.setState({ isLoading: false })
           this.setState({form: {}})
         }
-      }
-      
+      } 
+    }
+
+    async onDelete(id, path){
+      let pnkpId = this.props.match.params.id
+      if(path === 'tersangka'){
+        await this.props.dispatch(deletetersangka(get_token(), id))
+        this.setState({ isLoading: true })
+        await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
+        this.setState({ isLoading: false })
+      } else if (path === 'barangbukti'){
+        await this.props.dispatch(deletebb(get_token(), id))
+        this.setState({ isLoading: true })
+        await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
+        this.setState({ isLoading: false })
+      }   
     }
 
     renderBreadCrumb = () => {
@@ -164,7 +177,8 @@ class EditPenangkapan extends Component {
 
     render() {
         const { tersangkaTableDataByLkn, bbDataByPnkp } = this.props;
-        if(tersangkaTableDataByLkn.length > 0 && this.state.dropdownChange === false) {
+        if(tersangkaTableDataByLkn.length > 0) {
+          formDataBB[4]['dropdown'] = []
           tersangkaTableDataByLkn.map((data) => {
             let dropdownData = {
               value: data.id,
@@ -172,7 +186,7 @@ class EditPenangkapan extends Component {
             }
             formDataBB[4]['dropdown'].push(dropdownData) 
           })
-          this.setState({dropdownChange: true})
+          console.log(formDataBB[4]['dropdown'])
         }
         const dataTersangka = tersangkaTableDataByLkn.map((data) => {
           return {
@@ -204,7 +218,7 @@ class EditPenangkapan extends Component {
                   title={'Tambah Tersangka'}
                   formData={formDataTsk}
                   onFormChange={this.onFormChange}
-                  onsubmit={this.onsubmit}
+                  onSubmit={(action) => { this.onSubmit(action); }}
                 />
                 <TableView
                   useId="true"
@@ -212,12 +226,13 @@ class EditPenangkapan extends Component {
                   tableField={tableFieldTsk}
                   tableData={dataTersangka}
                   isLoading={this.state.isLoading}
-                />
+                  onDelete={(id, path) => { this.onDelete(id, path); }}
+                  />
                 <ModalTersangka
                   title={'Tambah Barang - Bukti'}
                   formData={formDataBB}
                   onFormChange={this.onFormChange}
-                  onsubmit={this.onsubmit}
+                  onSubmit={(action) => { this.onSubmit(action); }}
                 />
                 <TableView
                     useId
@@ -225,6 +240,7 @@ class EditPenangkapan extends Component {
                     tableField={tableFieldBB}
                     tableData={dataBB}
                     isLoading={this.state.isLoading}
+                    onDelete={(id, path) => { this.onDelete(id, path); }}
                   />
                </div>
              </Content>

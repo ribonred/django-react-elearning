@@ -3,7 +3,7 @@ import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import { get_token } from '../../../helper/requestHelper';
-import { get_bb_list } from '../../../reduxActions/dashboard';
+import { get_bb_list, deletebb } from '../../../reduxActions/dashboard';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
@@ -51,6 +51,13 @@ class BarangBuktiTable extends Component {
       this.setState({ isLoading: false })
     }
 
+    async onDelete(id){
+      await this.props.dispatch(deletebb(get_token(), id))
+      this.setState({ isLoading: true })
+      await this.props.dispatch(get_bb_list(get_token()))
+      this.setState({ isLoading: false })
+    }
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>
@@ -88,6 +95,7 @@ class BarangBuktiTable extends Component {
                     tableField={tableField}
                     tableData={dataBB}
                     isLoading={this.state.isLoading}
+                    onDelete={(id) => { this.onDelete(id); }}
                   />
                  </div>
                </Content>
@@ -99,7 +107,6 @@ class BarangBuktiTable extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  // console.log(dashboard.bbTableData)
   return { bbTableData: dashboard.bbTableData }
 }
 

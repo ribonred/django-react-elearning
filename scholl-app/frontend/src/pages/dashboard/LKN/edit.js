@@ -8,7 +8,7 @@ import TableView from '../../../component/table/tableFilterable'
 import { get_token } from '../../../helper/requestHelper';
 import SideMenu from '../../../component/sider';
 import LknFormView from '../../../component/lknform';
-import { get_lkn_by_no_lkn, getpenangkapan } from '../../../reduxActions/dashboard';
+import { get_lkn_by_no_lkn, getpenangkapan, deletepenangkapan } from '../../../reduxActions/dashboard';
 
 const { Content } = Layout;
 
@@ -88,6 +88,14 @@ class EditLkn extends Component {
       this.setState({ isLoading: false })
     }
 
+    async onDelete(id){
+      await this.props.dispatch(deletepenangkapan(get_token(), id))
+      this.setState({ isLoading: true })
+      let noLkn = this.props.match.params.id;
+      await this.props.dispatch(getpenangkapan(get_token(), null, noLkn))
+      this.setState({ isLoading: false })
+    }
+
     renderLKNForm = () => {
       const { form, isLoading } = this.state;
       return (
@@ -133,6 +141,7 @@ class EditLkn extends Component {
                     tableField={tableField}
                     tableData={this.props.penangkapanData || []}
                     isLoading={this.state.isLoading}
+                    onDelete={(id) => { this.onDelete(id); }}
                   />
                 )}
                 {!isDataChange && <Skeleton active />}

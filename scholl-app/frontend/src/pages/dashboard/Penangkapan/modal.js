@@ -20,7 +20,7 @@ export default class ModalTersangka extends React.Component {
           ModalText: 'The modal will be closed after two seconds',
           confirmLoading: true,
         });
-        this.props.onsubmit(this.props.title)
+        this.props.onSubmit(this.props.title)
         if (!this.props.error){
             this.setState({
                 visible: false,
