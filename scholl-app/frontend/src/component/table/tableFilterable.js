@@ -227,12 +227,14 @@ export default class TableView extends React.Component {
     }) : []
     return (
       <div style={{padding:'15px'}}>
-        <div className="table-operations">
-          <DatePicker onChange={(i, e) => filter.startDate = e}/>
-          <DatePicker onChange={(i, e) => filter.endDate = e}/>
-          <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
-          <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
-        </div>
+        {this.props.applyDateFilter && (
+          <div className="table-operations">
+            <DatePicker onChange={(i, e) => filter.startDate = e}/>
+            <DatePicker onChange={(i, e) => filter.endDate = e}/>
+            <Button onClick={(action) => this.applyDateFilter('filter')}>Filter</Button>
+            <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
+          </div>
+        )}
         <Table
           {...this.state}
           loading={this.props.isLoading}
