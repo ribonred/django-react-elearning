@@ -6,6 +6,7 @@ const authContainerNew = (props) => {
   return (
     <div style={styles.container}>
       <img
+        alt='BNN'
         src={require("../assets/bnn_bintang_fix_max.png")}
         style={styles.image}
       />
@@ -24,6 +25,7 @@ const authContainerNew = (props) => {
           <Input
             placeholder="Masukan Username"
             style={{ borderRadius: "5px" }}
+            onChange={(event) => props.onFormChange('username', event)}
           />
           <p
             style={{
@@ -38,17 +40,16 @@ const authContainerNew = (props) => {
           <Input.Password
             placeholder="Masukan Password"
             style={{ borderRadius: "5px" }}
+            onChange={(event) => props.onFormChange('password', event)}
           />
         </Form>
 
-        <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 15px 5px 15px'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 15px 10px 15px'}}>
           <Checkbox style={{color: '#000000'}}>Ingat saya</Checkbox>
-          <a>Lupa Password</a>
         </div>
 
         <div>
-          <Button type='primary' style={{marginLeft: '15px', borderRadius: '5px'}}>Login</Button>
-          <Button type='primary' ghost style={{marginLeft: '15px', borderRadius: '5px'}}>Daftar</Button>
+          <Button type='primary' style={{marginLeft: '15px', borderRadius: '5px'}} onClick={()=>props.onsubmit()}>Login</Button>
         </div>
       </div>
     </div>

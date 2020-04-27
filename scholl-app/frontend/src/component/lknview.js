@@ -1,6 +1,5 @@
 import React from "react";
 import ViewContainer from "../ui-container/viewContainer";
-import TableView from './table/tableFilterable';
 import { Descriptions, Tabs, Skeleton, Layout } from "antd";
 
 const { TabPane } = Tabs
@@ -89,16 +88,6 @@ const tableFieldBarangBukti = [
 const LknViewView = (props) => {
   let noLkn          = ""
   let tanggal_dibuat = ""
-  let noPenangkapan  = ""
-  let tglPenangkapan = ""
-  let jamPenangkapan = ""
-  let fotoTersangka  = ""
-  let jenisKelamin   = ""
-  let umur           = ""
-  let namaTersangka  = ""
-  let barangBukti    = ""
-  let prosesTsk      = ""
-  let statusTsk      = ""
 
   if (!props.lkn) {
     noLkn          = ""
@@ -128,10 +117,10 @@ const LknViewView = (props) => {
                   <div style={styles.profilTersangkaBox}>
                     <div style={styles.fotoTersangkaBox}>
                     {
-                      fotoTersangka != null || fotoTersangka != '' || fotoTersangka != undefined ?
-                      (<img src='https://f1.pngfuel.com/png/455/507/814/person-silhouette-man-drawing-male-profile-of-a-person-female-face-png-clip-art-thumbnail.png' style={styles.fotoTersangka}/>)
+                      tsk.photo !== null || tsk.photo !== '' || tsk.photo !== undefined ?
+                      (<img alt='view' src='https://f1.pngfuel.com/png/455/507/814/person-silhouette-man-drawing-male-profile-of-a-person-female-face-png-clip-art-thumbnail.png' style={styles.fotoTersangka}/>)
                       :
-                      (<img src={{ uri: fotoTersangka }} style={styles.fotoTersangka}/>)
+                      (<img alt='view' src={{ uri: tsk.photo }} style={styles.fotoTersangka}/>)
                     }
                     </div>
                     <div style={{paddingTop: '10px'}}>
