@@ -60,7 +60,7 @@ class FormBarangBukti extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
-    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.tersangkaId));
+    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.barangBuktiId));
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {

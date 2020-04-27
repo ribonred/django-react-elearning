@@ -44,7 +44,7 @@ export default class FormProsesTersangka extends React.Component {
 
   render(){
       const rekam_jejak = [{value:'Masuk', name:'Masuk'}, {value:'Keluar', name:'Keluar'}]
-      const status_penahanan = [{value:'Diamankan', name:'Diamankan'}, {value:'Ditahan', name:'Ditahan'}]
+      const status_penahanan = [{value:'Di Amankan', name:'Diamankan'}, {value:'Di tahan', name:'Ditahan'}]
       const formData = [
         {label: 'Status Penahanan', name: 'Status Penahanan', dropdown: status_penahanan, fieldName: 'status_penahanan', type: 'select'},
         {label: 'Rekam Jejak', name: 'Rekam Jejak', dropdown: rekam_jejak, fieldName: 'rekam_jejak', type: 'select'},

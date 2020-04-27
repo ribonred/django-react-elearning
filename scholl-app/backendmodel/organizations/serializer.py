@@ -62,10 +62,15 @@ class ProsesTersangkaApi(serializers.ModelSerializer):
                   'jenis_proses', 'keterangan']
 
 
-class StatusTersangkaApi(serializers.ModelSerializer):
+class StatusTersangkaApi(WritableNestedModelSerializer):
     class Meta:
         model = StatusTersangka
-        fields = ('__all__')
+        fields = ["id","status_penahanan",
+                    "rekam_jejak",
+                    "tanggal",
+                    "waktu",
+                    "keterangan",
+                    "tersangka_id"]
 
 
 class TersangkaApi(WritableNestedModelSerializer):
