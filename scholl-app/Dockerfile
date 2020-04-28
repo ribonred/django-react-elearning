@@ -7,4 +7,5 @@ RUN pip install -r requirements.txt
 
 COPY . /code/
 
-RUN python manage.py defaultuseradmin
+
+EXPOSE 8000
