@@ -105,6 +105,13 @@ function receive_error(error) {
   }
 }
 
+export function collapsedSider(collapsed){
+  return {
+    type: "COLLAPSED_SIDER",
+    collapsed
+  }
+}
+
 function receive_lkn_created_successfull() {
   return {
     type: "RECEIVE_LKN_CREATED_SUCCESSFULL",
@@ -410,7 +417,7 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       .then((response) => {
         if(id){
           dispatch(receive_tersangka_data(response.data))
-        } 
+        }
         else if (pnkp_id) {
           dispatch(receive_tersangka_table_by_no_lkn(response.data))
         }
@@ -432,7 +439,7 @@ export function edittersangka(data, token, id) {
       }
     },data)
     .then(response => {
-  
+
       if(response instanceof Error){
         throw Error
       }
@@ -494,10 +501,10 @@ export function get_bb_list(token, id = null, pnkp_id) {
     .then((response) => {
       if(id){
         dispatch(receive_bb_data(response.data))
-      } 
+      }
       else if(pnkp_id){
         dispatch(receive_bb_data_by_pnkp(response.data))
-      } 
+      }
       else {
         dispatch(receive_bb_table(response.data))
       }
@@ -548,7 +555,7 @@ export function create_bb_by_tersangka(token, data) {
     }, data)
       .then(response => console.log(response))
   }
-  
+
 }
 
 
