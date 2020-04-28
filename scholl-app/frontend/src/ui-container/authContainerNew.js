@@ -70,7 +70,7 @@ const styles = {
   },
   image: {
     height: "20%",
-    width: "12%",
+    width: "auto",
     display: "block",
   },
   box: {
