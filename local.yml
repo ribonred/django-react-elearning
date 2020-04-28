@@ -2,7 +2,7 @@ version: '3'
 services:
     django:
         build: ./scholl-app
-        command: sh entrypoint.sh
+        command: python manage.py runserver 0.0.0.0:8000
         env_file: ./scholl-app/.env
         volumes:
         - ./scholl-app:/code
@@ -10,22 +10,14 @@ services:
         - "8000:8000"
     react:
         stdin_open: true
-        image: node
+        build: ./scholl-app/frontend
         tty: true
-        working_dir: /frontend
         environment:
             - NODE_ENV=development
         command:
-            sh entrypoint.sh
+            npm start
         volumes:
         - ./scholl-app/frontend:/frontend
         - /frontend/node_modules
-    nginx:
-        image: nginx:latest
         ports:
-            - 80:8080
-        volumes:
-            - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./scholl-app/frontend/build:/var/www/frontend # maps frontend build inside nginx
-        depends_on:
-            - django
+        - "3000:3000"
