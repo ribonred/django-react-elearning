@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Skeleton } from 'antd';
+import { connect } from 'react-redux';
+import { collapsedSider } from '../reduxActions/dashboard';
 import { FolderOpenOutlined, SolutionOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import history from '../route/history';
 const { Sider, Content } = Layout;
 
-export default class SideMenu extends Component {
+class SideMenu extends Component {
     state = {
-      collapsed: false,
       isCollapsed: false,
     };
 
     onCollapse = collapsed => {
-      this.setState({ collapsed });
+      this.props.dispatch(collapsedSider(collapsed))
       setTimeout(() => { this.setState({ isCollapsed: collapsed}) }, 200);
     };
 
@@ -28,7 +29,7 @@ export default class SideMenu extends Component {
 
     renderSideMenu = () => {
       return (
-        <Sider style={styles.linearGradientBackground} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+        <Sider style={styles.linearGradientBackground} collapsible collapsed={this.props.isSiderCollapse} onCollapse={this.onCollapse}>
          <Menu style={styles.linearGradientBackground} mode="inline" defaultSelectedKeys={this.props.selected || '1'}>
            <Menu.Item key="1" onClick={() => history.push("/dashboard/lkn")}>
              <FolderOpenOutlined />
@@ -56,11 +57,12 @@ export default class SideMenu extends Component {
     }
 
     render() {
-        const siderCollapseSize = this.state.isCollapsed ? '80px' : '200px'
+        const siderCollapseSize = this.state.isCollapsed ? '80px' : '200px';
+
         return (
-          <Layout>
+          <Layout style={{height:'100%'}}>
             {this.renderSideMenu()}
-            <Layout style={{overflow: 'visible', marginLeft: this.state.collapsed ? siderCollapseSize :'200px'}}>
+            <Layout style={{overflow: 'visible', height:'100%', marginLeft: this.props.isSiderCollapse ? siderCollapseSize :'200px'}}>
               {this.props.children}
             </Layout>
           </Layout>
@@ -77,9 +79,16 @@ const styles = {
   linearGradientBackground: {
     backgroundImage: 'linear-gradient(#4F6575, #0CA2E7)',
     overflow: 'auto',
-    height: '100vh',
+    height: '100%',
     maxWidth: '200px',
     position: 'fixed',
     left: 0,
   }
 }
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return { isSiderCollapse: dashboard.isSiderCollapse }
+}
+
+export default connect(mapStateToProps)(SideMenu)

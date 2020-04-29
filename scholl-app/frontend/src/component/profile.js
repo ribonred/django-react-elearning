@@ -12,7 +12,7 @@ export default class Profile extends React.Component {
   };
   render(){
     return (
-      <div style={{position:'absolute', right:45}}>
+      <div style={{position:'relative', float:'right'}}>
         <span className="avatar-item">
           <Badge dot>
             <Avatar size="large" shape="square" icon={<UserOutlined />} />

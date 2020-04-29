@@ -12,6 +12,7 @@ const initialState = {
   tersangkaTableData: [],
   tersangkaTableDataByLkn: [],
   tersangkaData: {},
+  isSiderCollapse: false,
   bbTableData: [],
   bbData: [],
   bbDataByPnkp: [],
@@ -19,6 +20,11 @@ const initialState = {
 };
 const dashboard = (state = initialState, action) => {
   switch (action.type) {
+    case 'COLLAPSED_SIDER':
+      return {
+        ...state,
+        isSiderCollapse: action.collapsed,
+      }
     case 'RECEIVE_LKN_TABLE_DATA':
       return {
         ...state,

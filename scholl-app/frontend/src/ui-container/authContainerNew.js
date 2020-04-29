@@ -70,7 +70,11 @@ const styles = {
   },
   image: {
     height: "20%",
-    width: "12%",
+<<<<<<< HEAD
+    // width: "12%"
+=======
+>>>>>>> master
+    width: "auto",
     display: "block",
   },
   box: {
