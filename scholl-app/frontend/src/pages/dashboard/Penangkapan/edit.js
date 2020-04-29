@@ -116,7 +116,7 @@ class EditPenangkapan extends Component {
       let pnkpId = this.props.match.params.id
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
-          alert('lengkapi form')
+          alert('lengkapi form tersangka')
           this.setState({form: {}})
         } else {
           form['no_penangkapan_id'] = this.props.match.params.id
@@ -127,8 +127,8 @@ class EditPenangkapan extends Component {
           this.setState({form: {}})
         }
       } else {
-        if (!form['nama_barang'] || !form['jenis_barang'] || !form['milik_tersangka_id']) {
-          alert('lengkapi form')
+        if (!this.state.form['nama_barang'] || !this.state.form['jenis_barang'] || !this.state.form['milik_tersangka_id']) {
+          alert('lengkapi form barang bukti')
           this.setState({form: {}})
         } else {
           await this.props.dispatch(create_bb_by_tersangka(get_token(), form))

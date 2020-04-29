@@ -52,7 +52,7 @@ class ProsesPengadilanApi(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class ProsesTersangkaApi(serializers.ModelSerializer):
+class ProsesTersangkaApi(WritableNestedModelSerializer):
     jenis_proses = serializers.PrimaryKeyRelatedField(
         queryset=ProsesPengadilan.objects.all())
 

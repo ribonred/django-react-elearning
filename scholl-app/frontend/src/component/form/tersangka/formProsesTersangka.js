@@ -2,12 +2,19 @@ import React from 'react'
 import { Button, Collapse } from 'antd';
 import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
 import FormGroup from '../../../ui-container/formGroup';
+import { get_proses } from '../../../reduxActions/dashboard'
+import { get_token } from '../../../helper/requestHelper';
+import { connect } from 'react-redux';
 
 const { Panel } = Collapse;
 
-export default class FormProsesTersangka extends React.Component {
+class FormProsesTersangka extends React.Component {
   state = {
     form:this.props.defaultValue
+  }
+
+  async componentDidMount(){
+    await this.props.dispatch(get_proses(get_token()))
   }
 
   onFormChange = (fieldName, e, index) => {
@@ -43,12 +50,17 @@ export default class FormProsesTersangka extends React.Component {
   }
 
   render(){
-      const jenis_proses = [{value:1, name:'pengadilan satu'}, {value:2, name:'pengadilan dua'}]
+      const jenis_proses = []
       const formData = [
         {label: 'Jenis Proses', name: 'Jenis Proses', dropdown: jenis_proses, fieldName: 'jenis_proses', type: 'select'},
         {label: 'No Proses', name: 'No Proses', fieldName: 'no_proses'},
-        {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'}
+        {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'},
       ]
+      if (this.props.prosesIndex.length > 0){
+        this.props.prosesIndex.map((data) => {
+          jenis_proses.push({value:data.id, name:data.nama_proses})
+        })
+      }
       return (
         <Collapse style={{margin:'7px'}}>
           <Panel header="PROSES TERSANGKA" key="1">
@@ -77,3 +89,12 @@ export default class FormProsesTersangka extends React.Component {
       );
   }
 };
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    prosesIndex: dashboard.prosesIndex,
+  }
+}
+
+export default connect(mapStateToProps)(FormProsesTersangka)

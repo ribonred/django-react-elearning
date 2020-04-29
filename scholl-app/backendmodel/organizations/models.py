@@ -79,7 +79,7 @@ class ProsesPengadilan(models.Model):
 
 class ProsesTersangka(BaseTimeStampModel):
     proses_tersangka = models.ForeignKey(
-        Tersangka, on_delete=models.CASCADE, related_name='prosestersangka')
+        Tersangka, on_delete=models.CASCADE, related_name='prosestersangka', null=True, blank=True)
     no_proses = models.CharField(max_length=255)
     jenis_proses = models.ForeignKey(
         ProsesPengadilan, on_delete=models.CASCADE, related_name='proses_pengadilan')
