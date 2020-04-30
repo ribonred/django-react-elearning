@@ -15,7 +15,7 @@ export default class ModalTersangka extends React.Component {
             </Button>
             <Modal
               title={this.props.title}
-              onCancel={() => this.props.hideModal}
+              onCancel={this.props.hideModal}
               visible={this.props.visible}
               footer={[]}
             >
