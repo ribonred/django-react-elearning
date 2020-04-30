@@ -15,27 +15,6 @@ export default class ModalTersangka extends React.Component {
         });
       };
 
-      handleOk = () => {
-        this.setState({
-          ModalText: 'The modal will be closed after two seconds',
-          confirmLoading: true,
-        });
-        this.props.onSubmit(this.props.title)
-        if (!this.props.error){
-            this.setState({
-                visible: false,
-                confirmLoading: false,
-            });
-        }
-      };
-
-      handleCancel = () => {
-        console.log('Clicked cancel button');
-        this.setState({
-          visible: false,
-        });
-      };
-
       render() {
         const { visible, confirmLoading } = this.state;
         return (
@@ -45,14 +24,19 @@ export default class ModalTersangka extends React.Component {
             </Button>
             <Modal
               title={this.props.title}
+              onCancel={() => this.setState({visible: false})}
               visible={visible}
-              onOk={this.handleOk}
+              footer={[]}
               confirmLoading={confirmLoading}
-              onCancel={this.handleCancel}
             >
                 <FormGroup
                     formData={this.props.formData}
-                    defaultValue={[]}
+                    onSubmit={() => {
+                      const result = this.props.onSubmit(this.props.title)
+                      if(result === 'success'){
+                        this.setState({visible: false})
+                      }
+                    }}
                     onFormChange={this.props.onFormChange}
                 />
             </Modal>

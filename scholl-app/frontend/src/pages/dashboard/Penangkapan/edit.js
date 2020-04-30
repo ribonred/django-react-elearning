@@ -6,6 +6,7 @@ import SideMenu from '../../../component/sider';
 import ModalTersangka from './modal'
 import { getpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka, deletetersangka, deletebb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
+import history from '../../../route/history';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
@@ -117,25 +118,23 @@ class EditPenangkapan extends Component {
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
           alert('lengkapi form tersangka')
-          this.setState({form: {}})
         } else {
           form['no_penangkapan_id'] = this.props.match.params.id
           await this.props.dispatch(createtersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
           this.setState({ isLoading: false })
-          this.setState({form: {}})
+          return 'success'
         }
       } else {
         if (!this.state.form['nama_barang'] || !this.state.form['jenis_barang'] || !this.state.form['milik_tersangka_id']) {
           alert('lengkapi form barang bukti')
-          this.setState({form: {}})
         } else {
           await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
           this.setState({ isLoading: false })
-          this.setState({form: {}})
+          return 'success'
         }
       }
     }

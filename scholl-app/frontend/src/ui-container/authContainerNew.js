@@ -70,10 +70,6 @@ const styles = {
   },
   image: {
     height: "20%",
-<<<<<<< HEAD
-    // width: "12%"
-=======
->>>>>>> master
     width: "auto",
     display: "block",
   },
