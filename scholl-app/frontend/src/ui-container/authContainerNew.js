@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import Background from "../assets/background.png";
+import Background_1 from "../assets/background_1.png"
 
 const authContainerNew = (props) => {
   return (
@@ -60,7 +61,7 @@ const styles = {
   container: {
     display: "flex",
     flexDirection: "column",
-    backgroundImage: `url(${Background})`,
+    backgroundImage: `url(${Background_1})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     height: "100vh",
