@@ -99,7 +99,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <Upload {...uploadProps}>
+            <Upload {...uploadProps} onChange={(e) => props.onFormChange(data.fieldName, e)}>
               <Button>
                 <UploadOutlined />
               </Button>

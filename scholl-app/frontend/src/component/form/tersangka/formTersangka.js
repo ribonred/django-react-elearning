@@ -21,6 +21,7 @@ class FormTersangka extends React.Component {
     isCreated: false,
     isDataChange: false,
     isError: false,
+    imageChange: false,
   }
 
   async componentDidMount(){
@@ -48,26 +49,48 @@ class FormTersangka extends React.Component {
   }
 
   onFormChange = (fieldName, e) => {
+    // console.log(fieldName, e.file.originFileObj)
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
-       if(!e.target){
+      if (e.file){
+        this.setState({imageChange: true})
+        form[fieldName] = e.file.originFileObj
+         this.setState({
+             form: form,
+         })
+      } else if(!e.target){
          form[fieldName] = e
          this.setState({
              form: form,
          })
-       } else {
-         form[fieldName] = e.target.value
-         this.setState({
-            form: form,
-         })
-       }
+      } else {
+        form[fieldName] = e.target.value
+        this.setState({
+          form: form,
+        })
+      }
      }
   }
 
   onsubmit = async() => {
     this.setState({isLoading:true})
     console.log(this.state.form)
-    const result= await this.props.dispatch(edittersangka(this.state.form, get_token(), this.props.tersangkaId));
+    
+    const data = new FormData();
+    if(this.state.form.foto && this.state.imageChange){
+      data.append("foto", this.state.form.foto);
+    }
+    data.set("id", this.state.form.id);
+    data.set("jenis_kelamin", this.state.form.jenis_kelamin);
+    data.set("nama_tersangka", this.state.form.nama_tersangka);
+    data.set("umur", this.state.form.umur);
+    data.set("no_penangkapan_id", this.state.form.no_penangkapan_id);
+    data.set("prosestersangka", this.state.form.prosestersangka);
+    data.set("statustersangka", this.state.form.statustersangka);
+    for (var pair of data.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+  }
+    const result= await this.props.dispatch(edittersangka(data, get_token(), this.props.tersangkaId));
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {

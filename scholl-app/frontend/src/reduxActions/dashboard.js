@@ -434,7 +434,7 @@ export function edittersangka(data, token, id) {
     return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     },data)

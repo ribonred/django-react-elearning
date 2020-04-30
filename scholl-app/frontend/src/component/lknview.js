@@ -118,10 +118,10 @@ const LknViewView = (props) => {
                   <div style={styles.profilTersangkaBox}>
                     <div style={styles.fotoTersangkaBox}>
                     {
-                      tsk.photo !== null || tsk.photo !== '' || tsk.photo !== undefined ?
+                      tsk.foto == null || tsk.foto == '' || tsk.foto == undefined ?
                       (<img alt='view' src='https://f1.pngfuel.com/png/455/507/814/person-silhouette-man-drawing-male-profile-of-a-person-female-face-png-clip-art-thumbnail.png' style={styles.fotoTersangka}/>)
                       :
-                      (<img alt='view' src={{ uri: tsk.photo }} style={styles.fotoTersangka}/>)
+                      (<img alt='view' src={tsk.foto} style={styles.fotoTersangka}/>)
                     }
                     </div>
                     <div style={{paddingTop: '10px'}}>
