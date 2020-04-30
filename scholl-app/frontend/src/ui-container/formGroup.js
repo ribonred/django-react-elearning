@@ -8,12 +8,18 @@ const dateFormat = 'YYYY-MM-DD';
 const { Option } = Select;
 const { TextArea } = Input;
 
+
 const FormGroup = (props) => {
     const [componentSize, setComponentSize] = useState('medium');
     const [form] = Form.useForm();
     const onFormLayoutChange = ({ size }) => {
       setComponentSize(size);
     };
+
+    const onSubmit = () => {
+      props.onSubmit();
+      setTimeout(() => { form.resetFields() }, 2000);
+    }
 
     const uploadProps = {
       name: 'fileList',
@@ -69,10 +75,11 @@ const FormGroup = (props) => {
             rules={[{ required: true, message: `Masukkan ${data.label} dibuat form!` }]}
           >
             <Select
+              allowClear
               style={{ width: 200 }}
               placeholder={`pilih ${data.label}`}
               defaultValue={props.defaultValue && props.defaultValue[data.fieldName]
-                ? props.defaultValue[data.fieldName] : ''}
+                ? props.defaultValue[data.fieldName] : null}
               onChange={(e) => props.onFormChange(data.fieldName, e)}
             >
               {data.dropdown.map((opsi) =>
@@ -149,6 +156,7 @@ const FormGroup = (props) => {
           labelCol={{
             span: 12,
           }}
+          onFinish={onSubmit}
           wrapperCol={{
             span: 20,
           }}
@@ -161,6 +169,11 @@ const FormGroup = (props) => {
         >
             {FormList}
             {props.children}
+            {props.onSubmit && (
+              <Button type='primary' onClick={onSubmit}>
+                submit
+              </Button>
+            )}
         </Form>
     );
 };

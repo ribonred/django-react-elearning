@@ -1,7 +1,7 @@
 import React from "react";
 import ViewContainer from "../ui-container/viewContainer";
 import { Descriptions, Tabs, Skeleton, Layout } from "antd";
-import TableView from "../component/table/tableFilterable"
+import TableView from './table/tableFilterable';
 
 const { TabPane } = Tabs
 
