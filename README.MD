@@ -156,3 +156,7 @@ pip uninstall channels-redis
 pip uninstall channels # Successfully uninstalled channels-2.1.5
 pip install channels 
 ```
+# RUN DOCKER LOCALY
+```sh
+docker-compose -f local.yml up -d
+```
