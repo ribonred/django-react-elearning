@@ -99,7 +99,12 @@ class EditPenangkapan extends Component {
     onFormChange = (fieldName, e) => {
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
-        if(!e.target){
+        if (e.file){
+          form[fieldName] = e.file.originFileObj
+          this.setState({
+              form: form,
+          })
+        }else if(!e.target){
           form[fieldName] = e
           this.setState({
               form: form,
@@ -164,7 +169,18 @@ class EditPenangkapan extends Component {
           return 'false'
         } else {
           form['no_penangkapan_id'] = this.props.match.params.id
-          await this.props.dispatch(createtersangka(get_token(), form))
+          const data = new FormData();
+          if(form.foto){
+            data.append("foto", form.foto);
+          }
+          data.set("jenis_kelamin", form.jenis_kelamin);
+          data.set("nama_tersangka", form.nama_tersangka);
+          data.set("umur", form.umur);
+          data.set("no_penangkapan_id", form.no_penangkapan_id);
+          for (var pair of data.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+          }
+          await this.props.dispatch(createtersangka(get_token(), data))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
           this.setState({ isLoading: false})

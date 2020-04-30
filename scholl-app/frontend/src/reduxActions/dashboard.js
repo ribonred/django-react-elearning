@@ -470,7 +470,7 @@ export function createtersangka(token, data) {
     return request('/api/tsk-edit/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     },data)
