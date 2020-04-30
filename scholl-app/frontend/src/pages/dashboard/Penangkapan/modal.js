@@ -5,37 +5,24 @@ import FormGroup from '../../../ui-container/formGroup'
 export default class ModalTersangka extends React.Component {
       state = {
         ModalText: 'Content of the modal',
-        visible: false,
-        confirmLoading: false,
       };
-
-      showModal = () => {
-        this.setState({
-          visible: true,
-        });
-      };
-
+    
       render() {
-        const { visible, confirmLoading } = this.state;
         return (
           <div>
-            <Button type="primary" onClick={this.showModal}>
+            <Button type="primary" onClick={this.props.showModal}>
               {this.props.title}
             </Button>
             <Modal
               title={this.props.title}
-              onCancel={() => this.setState({visible: false})}
-              visible={visible}
+              onCancel={() => this.props.hideModal}
+              visible={this.props.visible}
               footer={[]}
-              confirmLoading={confirmLoading}
             >
                 <FormGroup
                     formData={this.props.formData}
-                    onSubmit={() => {
-                      const result = this.props.onSubmit(this.props.title)
-                      if(result === 'success'){
-                        this.setState({visible: false})
-                      }
+                    onSubmit={async() => {
+                      this.props.onSubmit(this.props.title)
                     }}
                     onFormChange={this.props.onFormChange}
                 />

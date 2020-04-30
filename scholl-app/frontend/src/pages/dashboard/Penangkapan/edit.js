@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Breadcrumb, message } from 'antd';
 import FormPenangkapan from '../../../component/form/penangkapan/penangkapan';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import ModalTersangka from './modal'
 import { getpenangkapan, get_tersangka_list, get_bb_list, createtersangka, create_bb_by_tersangka, deletetersangka, deletebb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
-import history from '../../../route/history';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
@@ -79,10 +78,13 @@ const tableFieldBB = [
   }
 ]
 
+const key='error';
 class EditPenangkapan extends Component {
     state = {
       form:{},
       isLoading: false,
+      showBBModal: false,
+      showTskModal: false,
     }
 
     async componentDidMount(){
@@ -112,28 +114,77 @@ class EditPenangkapan extends Component {
       }
     }
 
+    openErrorMessage = () => {
+      message.loading({ content: 'Loading...', key });
+      setTimeout(() => {
+        message.error({ content: `Submit Gagal, Tolong Lengkapi Required Field`, key, duration: 4 });
+      }, 1000);
+    };
+
+    openSuccessMessage = () => {
+      message.loading({ content: 'Loading...', key });
+      setTimeout(() => {
+        message.success({ content: `berkas berhasil dibuat`, key, duration: 4 });
+      }, 1000);
+    }
+
+    showModal = (action) => {
+      if(action === 'tersangka'){
+        this.setState({
+          showTskModal: true,
+        });
+      }
+      if(action === 'barangbukti'){
+        this.setState({
+          showBBModal: true,
+        });
+      }
+    };
+
+    hideModal = (action) => {
+      if(action === 'tersangka'){
+        this.setState({
+          showTskModal: false,
+        });
+      }
+      if(action === 'barangbukti'){
+        this.setState({
+          showBBModal: false,
+        });
+      }
+    };
+
     async onSubmit(action){
       const { form } = this.state
       let pnkpId = this.props.match.params.id
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
-          alert('lengkapi form tersangka')
+          this.setState({form:{}})
+          this.openErrorMessage()
+          return 'false'
         } else {
           form['no_penangkapan_id'] = this.props.match.params.id
           await this.props.dispatch(createtersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
-          this.setState({ isLoading: false })
-          return 'success'
+          this.setState({ isLoading: false})
+          this.openSuccessMessage();
+          this.hideModal('tersangka')
+          this.setState({form:{}})
         }
       } else {
         if (!this.state.form['nama_barang'] || !this.state.form['jenis_barang'] || !this.state.form['milik_tersangka_id']) {
-          alert('lengkapi form barang bukti')
+          this.openErrorMessage()
+          this.setState({form:{}})
+          return 'false'
         } else {
           await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
-          this.setState({ isLoading: false })
+          this.openSuccessMessage();
+          this.hideModal('barangbukti')
+          this.setState({ isLoading: false})
+          this.setState({form:{}})
           return 'success'
         }
       }
@@ -216,6 +267,10 @@ class EditPenangkapan extends Component {
                 <ModalTersangka
                   title={'Tambah Tersangka'}
                   formData={formDataTsk}
+                  isSuccess={this.state.isSuccess}
+                  showModal={() => this.showModal('tersangka')}
+                  hideModal={() => this.hideModal('tersangka')}
+                  visible={this.state.showTskModal}
                   onFormChange={this.onFormChange}
                   onSubmit={(action) => { this.onSubmit(action); }}
                 />
@@ -230,6 +285,10 @@ class EditPenangkapan extends Component {
                 <ModalTersangka
                   title={'Tambah Barang - Bukti'}
                   formData={formDataBB}
+                  showModal={() => this.showModal('barangbukti')}
+                  hideModal={() => this.hideModal('barangbukti')}
+                  visible={this.state.showBBModal}
+                  isSuccess={this.state.isSuccess}
                   onFormChange={this.onFormChange}
                   onSubmit={(action) => { this.onSubmit(action); }}
                 />

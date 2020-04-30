@@ -226,6 +226,7 @@ export function fetchalluser(token, id = null) {
         }
       })
       if(id) {
+        console.log('data', result.data)
         dispatch(receive_user_data(result.data))
       } else {
         dispatch(receive_user_table(result.data))

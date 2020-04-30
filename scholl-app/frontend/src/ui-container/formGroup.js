@@ -18,7 +18,7 @@ const FormGroup = (props) => {
 
     const onSubmit = () => {
       props.onSubmit();
-      form.resetFields();
+      setTimeout(() => { form.resetFields() }, 2000);
     }
 
     const uploadProps = {
