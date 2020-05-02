@@ -32,6 +32,7 @@ const FormGroup = (props) => {
           console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
+          props.onFormChange('foto', info)
           message.success(`${info.file.name} file uploaded successfully`);
         } else if (info.file.status === 'error') {
           message.error(`${info.file.name} file upload failed.`);
@@ -106,7 +107,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <Upload {...uploadProps} onChange={(e) => props.onFormChange(data.fieldName, e)}>
+            <Upload {...uploadProps}>
               <Button>
                 <UploadOutlined />
               </Button>

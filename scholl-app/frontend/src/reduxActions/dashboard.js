@@ -435,6 +435,29 @@ export function edittersangka(data, token, id) {
     return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    },data)
+    .then(response => {
+
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
+  }
+}
+
+export function edittersangkafoto(data, token, id) {
+  return dispatch => {
+    console.log('reducer', data)
+    return request(`/api/tsk-edit/${id}/`, {
+      method: 'PUT',
+      headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_tersangka_list, edittersangka } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, edittersangka, edittersangkafoto } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import FormStatusTersangka from './formStatusTersangka';
 import FormProsesTersangka from './formProsesTersangka';
@@ -49,15 +49,14 @@ class FormTersangka extends React.Component {
   }
 
   onFormChange = (fieldName, e) => {
-    // console.log(fieldName, e.file.originFileObj)
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
       if (e.file){
-        this.setState({imageChange: true})
-        form[fieldName] = e.file.originFileObj
-         this.setState({
-             form: form,
-         })
+        const formData = new FormData()
+        formData.set("nama_tersangka", this.state.form.nama_tersangka);
+        formData.set("jenis_kelamin", this.state.form.jenis_kelamin);
+        formData.append("foto", e.file.originFileObj);
+        this.props.dispatch(edittersangkafoto(formData, get_token(), this.props.tersangkaId));
       } else if(!e.target){
          form[fieldName] = e
          this.setState({
@@ -74,22 +73,8 @@ class FormTersangka extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
-    console.log(this.state.form)
-    
-    const data = new FormData();
-    if(this.state.form.foto && this.state.imageChange){
-      data.append("foto", this.state.form.foto);
-    }
-    data.set("id", this.state.form.id);
-    data.set("jenis_kelamin", this.state.form.jenis_kelamin);
-    data.set("nama_tersangka", this.state.form.nama_tersangka);
-    data.set("umur", this.state.form.umur);
-    data.set("no_penangkapan_id", this.state.form.no_penangkapan_id);
-    data.set("prosestersangka", this.state.form.prosestersangka);
-    data.set("statustersangka", this.state.form.statustersangka);
-    for (var pair of data.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-  }
+    let data = this.state.form
+    delete data.foto
     const result= await this.props.dispatch(edittersangka(data, get_token(), this.props.tersangkaId));
     if(result === 'error'){
       this.setState({ isError: true })
