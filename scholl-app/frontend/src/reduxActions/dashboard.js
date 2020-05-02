@@ -188,7 +188,8 @@ export function registeruser(token, data) {
 }
 
 export function edituser(token, data, id) {
-  return dispatch => {
+  return dispatch => 
+  { 
     return request(`/api/users/${id}/`, {
       method: 'PUT',
       headers: {

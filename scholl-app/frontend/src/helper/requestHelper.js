@@ -54,6 +54,7 @@ export async function request(path, options, body) {
     requestObject = axios.delete(`${baseUrl}${path}`, options, body)
   } else {
     requestObject = axios.put(`${baseUrl}${path}`, body, options)
+    
   }
 
 
