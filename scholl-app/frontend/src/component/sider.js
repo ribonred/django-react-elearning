@@ -60,14 +60,10 @@ class SideMenu extends Component {
     }
 
     render() {
-        let siderCollapseSize = this.state.isCollapsed ? '80px' : '200px';
-        if(this.props.isSiderCollapse){
-          siderCollapseSize = '80px';
-        }
         return (
           <Layout style={{height:'100%'}}>
             {this.renderSideMenu()}
-            <Layout style={{overflow: 'visible', height:'100%', marginLeft: this.props.isSiderCollapse ? siderCollapseSize :'200px'}}>
+            <Layout style={{height:'100%', marginLeft: this.props.isSiderCollapse ? '80px' :'200px'}}>
               {this.props.children}
             </Layout>
           </Layout>
