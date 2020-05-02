@@ -12,7 +12,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication, BaseJS
 from rest_framework_jwt.views import ObtainJSONWebToken
 from rest_framework_jwt.settings import api_settings
 from django.http import Http404
-
+from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 
 
 class IsManager(BasePermission):
@@ -28,6 +28,7 @@ class IsManager(BasePermission):
 class ApiUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserRegistrations
+    parser_class = (FileUploadParser,)
 
     def get_object(self):
         obj = User.objects.get(id=self.kwargs['pk'])
@@ -48,6 +49,29 @@ class ApiUserView(viewsets.ModelViewSet):
 
     def post(self, request, format=None):
         serializer = UserRegistrations(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = User.objects.get(pk=kwargs['pk'])
+            serializer = ApiUser(instance=instance,data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                instance.set_password(serializer.data.get('password'))
+                instance.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                print("success",success.data)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(error.data)
+            return error
+        except User.DoesNotExist:
+            serializer = ApiUser(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

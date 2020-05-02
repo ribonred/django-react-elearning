@@ -5,13 +5,13 @@ import MainForm from '../../../ui-container/mainFormContainer';
 import FormStatusBarangBukti from './formStatusBarangBukti';
 import { get_token } from '../../../helper/requestHelper';
 
-const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non_narkotika', name:'non_narkotika'}];
+const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non narkotika', name:'non narkotika'}];
 
 const formData = [
-  {label: 'nama_barang', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'sp_sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'tap_status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'jenis_barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown},
+  {label: 'Nama Barang', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
+  {label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown},
 ]
 
 class FormBarangBukti extends React.Component {
