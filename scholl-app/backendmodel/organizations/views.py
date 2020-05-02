@@ -76,8 +76,10 @@ class BerkasLknView(viewsets.ModelViewSet):
     
     
     def get_queryset(self):
-        queryset = self.queryset
-        query_set = queryset.filter(penyidik=self.request.user)
+        user = self.request.user
+        query_set = self.queryset
+        if not user.is_superuser:
+            query_set = query_set.filter(penyidik=self.request.user)
         return query_set
 
     def get_permissions(self):
