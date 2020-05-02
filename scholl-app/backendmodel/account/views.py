@@ -52,3 +52,26 @@ class ApiUserView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = User.objects.get(pk=kwargs['pk'])
+            serializer = ApiUser(instance=instance,data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                instance.set_password(serializer.data.get('password'))
+                instance.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                print("success",success.data)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(error.data)
+            return error
+        except User.DoesNotExist:
+            serializer = ApiUser(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
