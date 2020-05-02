@@ -60,7 +60,7 @@ class ProsesPengadilanApi(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class ProsesTersangkaApi(WritableNestedModelSerializer):
+class ProsesTersangkaApi(serializers.ModelSerializer):
     jenis_proses = serializers.PrimaryKeyRelatedField(
         queryset=ProsesPengadilan.objects.all())
 
@@ -92,6 +92,14 @@ class TersangkaApi(WritableNestedModelSerializer):
         fields = ['id', 'no_penangkapan_id', 'nama_tersangka', 'umur', 'jenis_kelamin',
                   'foto', 'statustersangka', 'barangbuktitersangka']
 
+class PenangkapanEditApi(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = Penangkapan
+        fields = ('id','no_penangkapan',
+                  'tanggal_penangkapan', 'jam_penangkapan')
+
 
 class PenangkapanApi(WritableNestedModelSerializer):
     penangkapan_tersangka = TersangkaApi(
@@ -112,8 +120,8 @@ class TersangkaEditApi(WritableNestedModelSerializer):
     class Meta:
         model = Tersangka
         fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
-                  'foto', 'no_penangkapan_id', 'statustersangka', 'prosestersangka']
-        depth = 2
+                  'foto', 'statustersangka', 'prosestersangka']
+        # depth = 2
 
 
 class BarangBuktiEdit(WritableNestedModelSerializer):
