@@ -12,7 +12,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication, BaseJS
 from rest_framework_jwt.views import ObtainJSONWebToken
 from rest_framework_jwt.settings import api_settings
 from django.http import Http404
-
+from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 
 
 class IsManager(BasePermission):
@@ -28,6 +28,7 @@ class IsManager(BasePermission):
 class ApiUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserRegistrations
+    parser_class = (FileUploadParser,)
 
     def get_object(self):
         obj = User.objects.get(id=self.kwargs['pk'])
