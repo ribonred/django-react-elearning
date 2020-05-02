@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework import status
 from rest_framework.views import APIView
@@ -26,7 +26,9 @@ from .serializer import (
     LknDetailAPi,
     CreateBarangBuktiByTsk,
     CreateTersangkaSerializer,
-    BerkasLknListApi
+    BerkasLknListApi,
+    PenangkapanEditApi
+
     )
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -128,6 +130,7 @@ class PenangkapanView(viewsets.ModelViewSet):
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            self.serializer_class = PenangkapanEditApi
             permission_classes = [IsAuthenticated]
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticated]
@@ -206,6 +209,7 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     serializer_class = TersangkaEditApi
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['no_penangkapan_id__id']
+    parser_class = (FormParser, MultiPartParser)
 
 
 
@@ -246,8 +250,10 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
             if serializer.is_valid():
                 serializer.save()
                 success = Response(serializer.data,status=status.HTTP_200_OK)
+                print(success.data)
                 return success
             error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(error.data)
             return error
         except Tersangka.DoesNotExist:
             serializer = TersangkaEditApi(data=request.data)
