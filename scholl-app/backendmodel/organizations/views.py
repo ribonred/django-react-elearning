@@ -25,7 +25,8 @@ from .serializer import (
     BarangBuktiEdit,
     LknDetailAPi,
     CreateBarangBuktiByTsk,
-    CreateTersangkaSerializer
+    CreateTersangkaSerializer,
+    BerkasLknListApi
     )
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -85,6 +86,7 @@ class BerkasLknView(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
+            self.serializer_class = BerkasLknListApi
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
             permission_classes = [IsAuthenticated]
         elif self.action == 'destroy':

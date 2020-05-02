@@ -3,8 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from .manager import AppUserManager
 import uuid
-
-
+from django.utils import timezone
 def usermanagerprofile(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
@@ -12,7 +11,7 @@ def usermanagerprofile(instance, filename):
 
 
 class BaseTimeStampModel(models.Model):
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(default=timezone.now,editable=False)
     updated = models.DateTimeField(auto_now_add=True)
 
 

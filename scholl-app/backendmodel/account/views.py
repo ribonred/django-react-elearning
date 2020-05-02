@@ -38,7 +38,7 @@ class ApiUserView(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes = [AllowAny]
         elif self.action == 'list':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [IsManager]
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
             self.serializer_class =ApiUser
             permission_classes = [IsManager,IsAuthenticated]

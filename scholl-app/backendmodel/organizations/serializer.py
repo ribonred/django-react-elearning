@@ -19,6 +19,14 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 
 
+
+class BerkasLknListApi(serializers.ModelSerializer):
+    class Meta:
+        model = BerkasLKN
+        fields = ('__all__')
+        depth = 1
+
+
 class BerkasLknApi(serializers.ModelSerializer):
     penyidik = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
