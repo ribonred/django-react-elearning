@@ -58,7 +58,7 @@ class CreateLKN extends Component {
     openMessage = () => {
       message.loading({ content: 'Loading...', key });
       setTimeout(() => {
-        message.error({ content: this.props.error, key, duration: 4 });
+        message.error({ content: 'Lengkapi Required Field dan No LKN Harus Unik', key, duration: 4 });
       }, 1000);
     };
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Breadcrumb, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { get_token } from '../../../helper/requestHelper';
+import history from '../../../route/history';
 import { connect } from 'react-redux';
 import TableView from '../../../component/table/tableFilterable';
 import { fetchalluser } from '../../../reduxActions/dashboard';
@@ -32,6 +33,13 @@ class PenyidikTable extends Component {
       this.setState({ isLoading: true })
       await this.props.dispatch(fetchalluser(get_token()))
       this.setState({ isLoading: false })
+    }
+
+    componentWillMount(){
+      const isAdmin = localStorage.getItem('role') === '2'
+      if(!isAdmin){
+        history.push('/dashboard')
+      }
     }
 
     renderBreadCrumb = () => {

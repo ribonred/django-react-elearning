@@ -28,6 +28,7 @@ class SideMenu extends Component {
     }
 
     renderSideMenu = () => {
+      const isAdmin = localStorage.getItem('role') === '2'
       return (
         <Sider style={styles.linearGradientBackground} collapsible collapsed={this.props.isSiderCollapse} onCollapse={this.onCollapse}>
          <Menu style={styles.linearGradientBackground} mode="inline" defaultSelectedKeys={this.props.selected || '1'}>
@@ -35,10 +36,12 @@ class SideMenu extends Component {
              <FolderOpenOutlined />
              <span className="nav-text">LKN</span>
            </Menu.Item>
-           <Menu.Item key="2" onClick={() => history.push("/dashboard/penyidik")}>
-             <TeamOutlined />
-             <span className="nav-text">Penyidik</span>
-           </Menu.Item>
+           {isAdmin && (
+             <Menu.Item key="2" onClick={() => history.push("/dashboard/penyidik")}>
+                <TeamOutlined />
+                <span className="nav-text">Penyidik</span>
+              </Menu.Item>
+           )}
            <Menu.Item key="3" onClick={() => history.push("/dashboard/tersangka")}>
              <UserOutlined />
              <span className="nav-text">Tersangka</span>
@@ -57,8 +60,10 @@ class SideMenu extends Component {
     }
 
     render() {
-        const siderCollapseSize = this.state.isCollapsed ? '80px' : '200px';
-
+        let siderCollapseSize = this.state.isCollapsed ? '80px' : '200px';
+        if(this.props.isSiderCollapse){
+          siderCollapseSize = '80px';
+        }
         return (
           <Layout style={{height:'100%'}}>
             {this.renderSideMenu()}

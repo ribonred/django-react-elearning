@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
+import history from '../../../route/history';
 import FormPenyidik from '../../../component/form/penyidik/penyidik';
 
 const { Content } = Layout;
 
 class EditPenyidik extends Component {
+    componentWillMount(){
+      const isAdmin = localStorage.getItem('role') === '2'
+      if(!isAdmin){
+        history.push('/dashboard')
+      }
+    }
+
     renderBreadCrumb = () => {
       return (
         <Breadcrumb>

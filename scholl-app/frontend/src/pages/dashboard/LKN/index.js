@@ -18,7 +18,7 @@ const tableField = [
   },
   {
     title: 'Nama Penyidik',
-    dataIndex: 'penyidik',
+    dataIndex: 'nama_penyidik',
     sorter: true,
     search: true,
   },
@@ -65,6 +65,17 @@ class LKNTable extends Component {
     }
 
     render() {
+        let lknTable = this.props.lknTableData
+        if(lknTable.length > 0 && lknTable[0].penyidik){
+          lknTable = lknTable.map(data => {
+            const nama_depan = data.penyidik.nama_depan ? data.penyidik.nama_depan : '';
+            const nama_belakang = data.penyidik.nama_belakang ? data.penyidik.nama_belakang : '';
+            return {
+              ...data,
+              nama_penyidik:  nama_depan+ ' ' +nama_belakang
+            }  
+          })
+        }
         return (
           <SideMenu>
             <Layout>
@@ -79,7 +90,7 @@ class LKNTable extends Component {
                     isNotAllowTo={['delete']}
                     onDelete={(id) => this.props.dispatch()}
                     tableField={tableField}
-                    tableData={this.props.lknTableData}
+                    tableData={lknTable}
                     isLoading={this.state.isLoading}
                     applyDateFilter={(e) => { this.applyDateFilter(e); }}
                   />
