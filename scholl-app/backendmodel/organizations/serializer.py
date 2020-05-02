@@ -120,8 +120,8 @@ class TersangkaEditApi(WritableNestedModelSerializer):
     class Meta:
         model = Tersangka
         fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
-                  'foto', 'statustersangka', 'prosestersangka']
-        # depth = 2
+                  'foto','no_penangkapan_id', 'statustersangka', 'prosestersangka']
+        depth = 2
 
 
 class BarangBuktiEdit(WritableNestedModelSerializer):
