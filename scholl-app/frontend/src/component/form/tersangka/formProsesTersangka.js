@@ -1,12 +1,19 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createprosestersangka, getprosestersangka, createstatustersangka, getstatustersangka } from '../../../reduxActions/dashboard'
+import { createprosestersangka, getprosestersangka } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
 class FormProsesTersangka extends React.Component {
   state = {
-    form:{}
+    form:{},
+    isLoading: false,
+  }
+
+  async componentDidMount(){
+    this.setState({isLoading:true})
+    await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    this.setState({isLoading:false})
   }
 
   onFormChange = (fieldName, e) => {
@@ -39,6 +46,7 @@ class FormProsesTersangka extends React.Component {
 
   onSubmit = async (action) => {
     const { form } = this.state;
+    this.setState({isLoading:true})
     const formData = new FormData();
     const keys = Object.keys(form);
     keys.map((key) => {
@@ -50,6 +58,7 @@ class FormProsesTersangka extends React.Component {
     }
     await this.props.dispatch(createprosestersangka(get_token(), formData))
     await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    this.setState({isLoading:false})
   }
 
   render(){
@@ -75,7 +84,11 @@ class FormProsesTersangka extends React.Component {
       return (
         <ModalWithTablePreview 
           formTitle='FORM PROSES TERSANGKA'
+          isNotAllowTo={['view']}
+          tableData={this.props.prosesTersangka}
+          isLoading={this.state.isLoading}
           title='PROSES TERSANGKA'
+          tableField={[]}
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}
@@ -87,7 +100,7 @@ class FormProsesTersangka extends React.Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    bbDataByPnkp: dashboard.bbDataByPnkp
+    prosesTersangka: dashboard.prosesTersangka
   }
 }
 

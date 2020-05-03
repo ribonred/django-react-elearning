@@ -3,9 +3,47 @@ import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 import { createstatusbb, getstatusbb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
+
+const tableFieldStatusBarangBukti = [
+  {
+    title: 'Jumlah',
+    dataIndex: 'jumlah',
+  },
+  {
+    title: 'Satuan',
+    dataIndex: 'satuan',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Tanggal Status',
+    dataIndex: 'tanggal_status',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Waktu Status',
+    dataIndex: 'waktu_status',
+    sorter: true,
+    search: true,
+  }
+]
+
+
 class FormProsesTersangka extends React.Component {
   state = {
-    form:{}
+    form:{},
+    isLoading: false
+  }
+
+  async componentDidMount(){
+    this.setState({isLoading: true})
+    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId)) 
+    this.setState({isLoading: false})
   }
 
   onFormChange = (fieldName, e) => {
@@ -33,9 +71,10 @@ class FormProsesTersangka extends React.Component {
   onSubmit = async() => {
     const { form } = this.state;
     form['barang_bukti_id'] = this.props.barangBuktiId
-    console.log('this state', form)
+    this.setState({isLoading:true})
     await this.props.dispatch(createstatusbb(get_token(), form))
-    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId)) 
+    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
+    this.setState({isLoading:false})
   }
 
   render(){
@@ -53,7 +92,11 @@ class FormProsesTersangka extends React.Component {
       return (
         <ModalWithTablePreview 
           formTitle='FORM STATUS BARANG BUKTI'
+          isNotAllowTo={['view']}
+          tableData={this.props.bbDataByPnkp}
+          isLoading={this.state.isLoading}
           title='PROSES BARANG BUKTI'
+          tableField={tableFieldStatusBarangBukti}
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}

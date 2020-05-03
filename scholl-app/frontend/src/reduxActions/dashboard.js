@@ -14,6 +14,20 @@ function receive_lkn_data(data) {
   }
 }
 
+function receive_statusbb(data) {
+  return {
+    type: "RECEIVE_STATUS_BB",
+    data
+  }
+}
+
+function receive_status_tersangka(data){
+  return {
+    type: "RECEIVE_STATUS_TERSANGKA",
+    data
+  }
+}
+
 function receive_proses(data) {
   return {
     type: "RECEIVE_PROSES",
@@ -351,7 +365,6 @@ export function getpenangkapan(token, id = null, LKN = null) {
       }
     })
       .then(response => {
-        console.log('response', response.data)
         if(LKN){
           dispatch(receive_penangkapan_by_no_lkn(response.data))
         } else if(id){
@@ -583,8 +596,6 @@ export function create_bb_by_tersangka(token, data) {
 
 }
 
-
-
 // LKN all detail view
 
 //LKN GET ALL OR LIST VIEW
@@ -658,7 +669,7 @@ export function getprosestersangka(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then(response => console.log('proses', response.data))
   }
 }
 
@@ -685,7 +696,7 @@ export function getstatustersangka(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then(response => dispatch(receive_status_tersangka(response.data)))
   }
 }
 
@@ -712,6 +723,6 @@ export function getstatusbb(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log(response))
+      .then(response => dispatch(receive_statusbb(response.data)))
   }
 }
