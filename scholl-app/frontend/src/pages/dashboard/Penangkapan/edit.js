@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, message } from 'antd';
+import { Layout, Breadcrumb, message, Space } from 'antd';
 import FormPenangkapan from '../../../component/form/penangkapan/penangkapan';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
@@ -9,7 +9,7 @@ import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
-const dropdownTsk = [{value:'laki-laki', name:'Laki-laki'}, {value:'perempuan', name:'Perempuan'}];
+const dropdownTsk = [];
 const dropdownBB = [{value:'narkotika', name:'Narkotika'}, {value:'non narkotika', name:'Non Narkotika'}];
 const formDataTsk = [
   {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
@@ -18,11 +18,20 @@ const formDataTsk = [
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 const formDataBB = [
-  {label: 'Nama Barang', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdownBB},
-  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: []},
+  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
+  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'JENIS BB', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'disabled', value:'narkotika'},
+  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'TAP STATUS', name: 'Tap Status', fieldName: 'tap_status'},
+  {label: 'NOMOR LAB', name: 'Tap Status', fieldName: 'nomor_lab'},
+]
+const formDataBBNon = [
+  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
+  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'JENIS BB', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'disabled', value:'non narkotika'},
+  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
 ]
 
 const tableFieldTsk = [
@@ -84,6 +93,7 @@ class EditPenangkapan extends Component {
       form:{},
       isLoading: false,
       showBBModal: false,
+      showBBModalNon: false,
       showTskModal: false,
     }
 
@@ -144,6 +154,11 @@ class EditPenangkapan extends Component {
           showBBModal: true,
         });
       }
+      if(action === 'barangbukti non'){
+        this.setState({
+          showBBModalNon: true,
+        });
+      }
     };
 
     hideModal = (action) => {
@@ -155,6 +170,11 @@ class EditPenangkapan extends Component {
       if(action === 'barangbukti'){
         this.setState({
           showBBModal: false,
+        });
+      }
+      if(action === 'barangbukti non'){
+        this.setState({
+          showBBModalNon: false,
         });
       }
     };
@@ -188,17 +208,36 @@ class EditPenangkapan extends Component {
           this.hideModal('tersangka')
           this.setState({form:{}})
         }
-      } else {
-        if (!this.state.form['nama_barang'] || !this.state.form['jenis_barang'] || !this.state.form['milik_tersangka_id']) {
+      } else if (action === 'Tambah BB Narkotika') {
+        if (!this.state.form['nama_barang'] || !this.state.form['milik_tersangka_id']) {
           this.openErrorMessage()
           this.setState({form:{}})
           return 'false'
         } else {
+          form['jenis_barang'] = 'narkotika'
+          console.log('narkotika', form);
           await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
           this.openSuccessMessage();
           this.hideModal('barangbukti')
+          this.setState({ isLoading: false})
+          this.setState({form:{}})
+          return 'success'
+        }
+      } else {
+        if (!this.state.form['nama_barang'] || !this.state.form['milik_tersangka_id']) {
+          this.openErrorMessage()
+          this.setState({form:{}})
+          return 'false'
+        } else {
+          form['jenis_barang'] = 'non narkotika'
+          console.log('non narkotika', form);
+          await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
+          this.setState({ isLoading: true })
+          await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))
+          this.openSuccessMessage();
+          this.hideModal('barangbukti non')
           this.setState({ isLoading: false})
           this.setState({form:{}})
           return 'success'
@@ -244,13 +283,13 @@ class EditPenangkapan extends Component {
     render() {
         const { tersangkaTableDataByLkn, bbDataByPnkp } = this.props;
         if(tersangkaTableDataByLkn.length > 0) {
-          formDataBB[4]['dropdown'] = []
+          dropdownTsk.length = 0;
           tersangkaTableDataByLkn.map((data) => {
             let dropdownData = {
               value: data.id,
               name: data.nama_tersangka
             }
-            formDataBB[4]['dropdown'].push(dropdownData)
+            dropdownTsk.push(dropdownData)
             return dropdownData
           })
         }
@@ -297,17 +336,29 @@ class EditPenangkapan extends Component {
                   tableData={dataTersangka}
                   isLoading={this.state.isLoading}
                   onDelete={(id, path) => { this.onDelete(id, path); }}
-                  />
-                <ModalTersangka
-                  title={'Tambah Barang - Bukti'}
-                  formData={formDataBB}
-                  showModal={() => this.showModal('barangbukti')}
-                  hideModal={() => this.hideModal('barangbukti')}
-                  visible={this.state.showBBModal}
-                  isSuccess={this.state.isSuccess}
-                  onFormChange={this.onFormChange}
-                  onSubmit={(action) => { this.onSubmit(action); }}
                 />
+                <Space>
+                  <ModalTersangka
+                    title={'Tambah BB Narkotika'}
+                    formData={formDataBB}
+                    showModal={() => this.showModal('barangbukti')}
+                    hideModal={() => this.hideModal('barangbukti')}
+                    visible={this.state.showBBModal}
+                    isSuccess={this.state.isSuccess}
+                    onFormChange={this.onFormChange}
+                    onSubmit={(action) => { this.onSubmit(action); }}
+                  />
+                  <ModalTersangka
+                    title={'Tambah BB Non Narkotika'}
+                    formData={formDataBBNon}
+                    showModal={() => this.showModal('barangbukti non')}
+                    hideModal={() => this.hideModal('barangbukti non')}
+                    visible={this.state.showBBModalNon}
+                    isSuccess={this.state.isSuccess}
+                    onFormChange={this.onFormChange}
+                    onSubmit={(action) => { this.onSubmit(action); }}
+                  />
+                </Space>
                 <TableView
                     useId
                     path="barangbukti"
