@@ -4,6 +4,27 @@ import { createprosestersangka, getprosestersangka } from '../../../reduxActions
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
+const tableFieldStatusTersangka = [
+  {
+    title: 'Jenis Proses',
+    dataIndex: 'jenis_proses',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'SP_HAN',
+    dataIndex: 'sp_han',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Keterangan',
+    dataIndex: 'keterangan',
+    sorter: true,
+    search: true,
+  },
+]
+
 class FormProsesTersangka extends React.Component {
   state = {
     form:{},
@@ -13,6 +34,7 @@ class FormProsesTersangka extends React.Component {
   async componentDidMount(){
     this.setState({isLoading:true})
     await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    console.log('ter', this.props.tersangkaId)
     this.setState({isLoading:false})
   }
 
@@ -44,7 +66,7 @@ class FormProsesTersangka extends React.Component {
     console.log('form', form)
   }
 
-  onSubmit = async (action) => {
+  onSubmit = async () => {
     const { form } = this.state;
     this.setState({isLoading:true})
     const formData = new FormData();
@@ -58,6 +80,7 @@ class FormProsesTersangka extends React.Component {
     }
     await this.props.dispatch(createprosestersangka(get_token(), formData))
     await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    console.log('ter', this.props.tersangkaId)
     this.setState({isLoading:false})
   }
 
@@ -81,14 +104,25 @@ class FormProsesTersangka extends React.Component {
       }
 
       formData.push({label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'})
+      
+      let prosesTersangka = []
+      if(this.props.prosesTersangka.length > 0){
+        prosesTersangka = this.props.prosesTersangka.map(data => {
+          return {
+            ...data,
+            jenis_proses: jenis_proses_drop.find(item => data.jenis_proses === Number(item.value)).name
+          }
+        })
+      }
+
       return (
         <ModalWithTablePreview 
           formTitle='FORM PROSES TERSANGKA'
           isNotAllowTo={['view']}
-          tableData={this.props.prosesTersangka}
+          tableData={prosesTersangka || []}
           isLoading={this.state.isLoading}
           title='PROSES TERSANGKA'
-          tableField={[]}
+          tableField={tableFieldStatusTersangka || []}
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}

@@ -93,7 +93,7 @@ class FormProsesTersangka extends React.Component {
         <ModalWithTablePreview 
           formTitle='FORM STATUS BARANG BUKTI'
           isNotAllowTo={['view']}
-          tableData={this.props.bbDataByPnkp}
+          tableData={this.props.bbStatus}
           isLoading={this.state.isLoading}
           title='PROSES BARANG BUKTI'
           tableField={tableFieldStatusBarangBukti}
@@ -108,7 +108,7 @@ class FormProsesTersangka extends React.Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    bbDataByPnkp: dashboard.bbDataByPnkp
+    bbStatus: dashboard.bbStatus
   }
 }
 

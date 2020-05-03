@@ -7,6 +7,7 @@ const initialState = {
   prosesTersangka: [],
   error: false,
   lknData: [],
+  bbStatus: [],
   lknCreated: false,
   penangkapanData: [],
   statusTersangkaDataByPnkp: [],
@@ -78,6 +79,11 @@ const dashboard = (state = initialState, action) => {
         bbData: action.data,
       };
     case 'RECEIVE_STATUS_BB':
+      return {
+        ...state,
+        bbStatus: action.data,
+      };
+    case 'RECEIVE_BB_DATA_BY_PNKP':
       return {
         ...state,
         bbDataByPnkp: action.data,

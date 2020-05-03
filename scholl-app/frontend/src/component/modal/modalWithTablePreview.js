@@ -15,6 +15,7 @@ export default class modalWithTablePreview extends React.Component {
             {`ADD ${this.props.formTitle}`}
           </Button>
           <TableView
+            useId
             path={this.props.title}
             isNotAllowTo={this.props.isNotAllowTo}
             isLoading={this.props.isLoading}

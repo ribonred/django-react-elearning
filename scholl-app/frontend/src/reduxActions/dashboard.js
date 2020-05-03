@@ -21,6 +21,13 @@ function receive_statusbb(data) {
   }
 }
 
+function receive_proses_tersangka(data){
+  return {
+    type: "RECEIVE_PROSES_TERSANGKA",
+    data,
+  }
+}
+
 function receive_status_tersangka(data){
   return {
     type: "RECEIVE_STATUS_TERSANGKA",
@@ -677,7 +684,7 @@ export function getprosestersangka(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => console.log('proses', response.data))
+      .then(response => dispatch(receive_proses_tersangka(response.data)))
   }
 }
 
