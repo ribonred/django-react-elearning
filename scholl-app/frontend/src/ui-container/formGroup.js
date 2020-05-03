@@ -3,7 +3,7 @@ import { Form, message, Dropdown, TimePicker, Input, InputNumber, DatePicker, Se
 import { UploadOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'DD-MM-YYYY';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -65,7 +65,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan ${data.label} dibuat form!` }]}
           >
-            <DatePicker defaultValue={defaultDate} onChange={(i, e) => props.onFormChange(data.fieldName, e)}/>
+            <DatePicker defaultValue={defaultDate} format={dateFormat} onChange={(i, e) => props.onFormChange(data.fieldName, e)}/>
           </Form.Item>
         )
       } else if(data.type === 'select'){

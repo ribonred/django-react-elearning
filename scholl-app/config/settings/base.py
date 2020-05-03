@@ -131,7 +131,8 @@ USE_TZ = False
 AUTH_USER_MODEL = 'core.User'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DATE_FORMAT' : '%d-%m-%Y',
+    'DATE_FORMAT' : "%d-%m-%Y",
+    'DATE_INPUT_FORMATS':["%d-%m-%Y"],
     'DATETIME_FORMAT': "%d-%m-%Y,%H/%M",
     'DATETIME_INPUT_FORMATS': "%d-%m-%Y,%H-%M",
     'DEFAULT_PERMISSION_CLASSES': (
@@ -183,7 +184,7 @@ JWT_AUTH = {
 
 }
 TIME_INPUT_FORMATS = ['%H:%M']
-DATE_FORMAT = '%d-%m-%Y'
+# DATE_FORMAT = '%d-%m-%Y'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
