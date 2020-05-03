@@ -5,15 +5,6 @@ import MainForm from '../../../ui-container/mainFormContainer';
 import FormStatusBarangBukti from './formStatusBarangBukti';
 import { get_token } from '../../../helper/requestHelper';
 
-const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non narkotika', name:'non narkotika'}];
-
-const formData = [
-  {label: 'Nama Barang', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown},
-]
-
 class FormBarangBukti extends React.Component {
   state = {
     form:{},
@@ -79,6 +70,20 @@ class FormBarangBukti extends React.Component {
   }
 
   render(){
+    const dropdown = [{value:'narkotika', name:'narkotika'}, {value:'non narkotika', name:'non narkotika'}];
+
+    let formData = [
+      {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+      {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+      {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+    ]
+
+    if(this.state.form.jenis_barang === 'narkotika'){
+      formData.push({label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'})
+      formData.push({label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'})
+    }
+
+    formData.push({label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown})
       return (
         <React.Fragment>
           <MainForm
