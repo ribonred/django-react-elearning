@@ -70,7 +70,7 @@ const styles = {
     justifyContent: "center",
   },
   image: {
-    height: "20%",
+    height: "30%",
     width: "auto",
     display: "block",
   },

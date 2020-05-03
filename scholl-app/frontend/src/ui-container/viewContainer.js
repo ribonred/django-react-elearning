@@ -9,7 +9,10 @@ const styles = {
     padding: '15px',
   },
   contentLayout: {
+    display: 'flex',
     padding: '10px',
+    justifyContent: 'center',
+    alignItems: 'center'
   } ,
   header: {
     borderRadius:'5px',
@@ -23,6 +26,7 @@ const styles = {
 }
 
 const ViewContainer = (props) => {
+  console.log('props view container', props)
     return (
     <div style={styles.container}>
           <Layout style={styles.innerLayout}>
