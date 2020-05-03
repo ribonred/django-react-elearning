@@ -27,7 +27,9 @@ from .serializer import (
     CreateBarangBuktiByTsk,
     CreateTersangkaSerializer,
     BerkasLknListApi,
-    PenangkapanEditApi
+    PenangkapanEditApi,
+    ProsesTersangkaApi,
+    StatusTersangkaApi
 
     )
 from rest_framework import viewsets
@@ -202,6 +204,123 @@ class ProsesPengadilanView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProsesTersangkaView(viewsets.ModelViewSet):
+    queryset = ProsesTersangka.objects.all()
+    serializer_class = ProsesTersangkaApi
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [' proses_tersangka__no_penangkapan_id','proses_tersangka']
+    parser_class = (FormParser, MultiPartParser)
+
+
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset
+        queryset = ProsesTersangka.objects.all()
+        if not user.is_superuser:
+            queryset = ProsesTersangka.objects.filter(
+                proses_tersangka__no_penangkapan_id__no_lkn__penyidik=self.request.user.id)
+        return queryset
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [AllowAny]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def post(self, request, format=None):
+        serializer = ProsesTersangkaApi(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = ProsesTersangka.objects.get(pk=kwargs['pk'])
+            serializer = ProsesTersangkaApi(instance=instance,data=request.data)
+            
+            if serializer.is_valid():
+                serializer.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                print(success.data)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(error.data)
+            return error
+        except ProsesTersangka.DoesNotExist:
+            serializer = ProsesTersangkaApi(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class StatusTersangkaView(viewsets.ModelViewSet):
+    queryset = StatusTersangka.objects.all()
+    serializer_class = StatusTersangkaApi
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['tersangka_id__no_penangkapan_id','tersangka_id']
+    parser_class = (FormParser, MultiPartParser)
+
+
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset
+        queryset = StatusTersangka.objects.all()
+        if not user.is_superuser:
+            queryset = StatusTersangka.objects.filter(
+                tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user.id)
+        return queryset
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [AllowAny]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def post(self, request, format=None):
+        serializer = StatusTersangkaApi(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = StatusTersangka.objects.get(pk=kwargs['pk'])
+            serializer = StatusTersangkaApi(instance=instance,data=request.data)
+            
+            if serializer.is_valid():
+                serializer.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                print(success.data)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(error.data)
+            return error
+        except StatusTersangka.DoesNotExist:
+            serializer = StatusTersangkaApi(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class TersangkaEditDetailView(viewsets.ModelViewSet):

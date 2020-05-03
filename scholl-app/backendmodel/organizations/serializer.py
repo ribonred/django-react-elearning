@@ -66,19 +66,30 @@ class ProsesTersangkaApi(serializers.ModelSerializer):
 
     class Meta:
         model = ProsesTersangka
-        fields = ['id', 'proses_tersangka', 'no_proses',
-                  'jenis_proses', 'keterangan']
+        fields = [
+            'id',
+            'proses_tersangka',
+            'sp_han',
+            'sp_han_doc',
+            'tap_han',
+           ' tap_han_doc',
+            'surat_perpanjangan_han',
+            'surat_perpanjangan_han_doc',
+            'jenis_proses',
+            'keterangan']
 
 
 class StatusTersangkaApi(WritableNestedModelSerializer):
     class Meta:
         model = StatusTersangka
-        fields = ["id","status_penahanan",
-                    "rekam_jejak",
-                    "tanggal",
-                    "waktu",
-                    "keterangan",
-                    "tersangka_id"]
+        fields = [
+            "id",
+            "status_penahanan",
+            "rekam_jejak",
+            "tanggal",
+            "waktu",
+            "keterangan",
+            "tersangka_id"]
 
 
 class TersangkaApi(WritableNestedModelSerializer):
@@ -98,7 +109,7 @@ class PenangkapanEditApi(serializers.ModelSerializer):
     class Meta:
         model = Penangkapan
         fields = ('id','no_penangkapan',
-                  'tanggal_penangkapan', 'jam_penangkapan')
+                  'tanggal_penangkapan', 'masa_berakhir_penangkapan')
 
 
 class PenangkapanApi(WritableNestedModelSerializer):
@@ -108,19 +119,15 @@ class PenangkapanApi(WritableNestedModelSerializer):
     class Meta:
         model = Penangkapan
         fields = ('id', 'no_lkn', 'no_penangkapan',
-                  'tanggal_penangkapan', 'jam_penangkapan', 'penangkapan_tersangka')
+                  'tanggal_penangkapan', 'masa_berakhir_penangkapan', 'penangkapan_tersangka')
 
 
 class TersangkaEditApi(WritableNestedModelSerializer):
-    statustersangka = StatusTersangkaApi(
-        many=True, required=False, allow_null=True)
-    prosestersangka = ProsesTersangkaApi(
-        many=True, required=False, allow_null=True)
 
     class Meta:
         model = Tersangka
         fields = ['id',  'nama_tersangka', 'umur', 'jenis_kelamin',
-                  'foto','no_penangkapan_id', 'statustersangka', 'prosestersangka']
+                  'foto','no_penangkapan_id']
         depth = 2
 
 
@@ -183,7 +190,7 @@ class PenangkapanApiDetail(WritableNestedModelSerializer):
     class Meta:
         model = Penangkapan
         fields = ('id', 'no_penangkapan',
-                  'tanggal_penangkapan', 'jam_penangkapan', 'penangkapan_tersangka',)
+                  'tanggal_penangkapan', 'masa_berakhir_penangkapan', 'penangkapan_tersangka',)
 
 
 class LknDetailAPi(WritableNestedModelSerializer):

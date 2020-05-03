@@ -12,7 +12,8 @@ from backendmodel.organizations.views import (
     ProsesPengadilanView,
     TersangkaEditDetailView,
     BarangBuktiEditView,
-    LknDetailApiView
+    LknDetailApiView,
+    ProsesTersangkaView
 )
 router = routers.DefaultRouter()
 router.register(r'users', ApiUserView)
@@ -21,6 +22,7 @@ router.register(r'pnkp', PenangkapanView)
 router.register(r'tersangka', TersangkaView)
 router.register(r'proses', ProsesPengadilanView)
 router.register(r'tsk-edit', TersangkaEditDetailView)
+router.register(r'tsk-proses', ProsesTersangkaView)
 router.register(r'bb-edit', BarangBuktiEditView)
 router.register(r'lkn-detail', LknDetailApiView)
 # router.register(r'companydiv', CompanyDivisionView)
