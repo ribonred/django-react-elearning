@@ -5,9 +5,9 @@ import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 
 const formData = [
-  {label: 'No Penangkapan', name: 'No Penangkapan', fieldName: 'no_penangkapan'},
-  {label: 'Tanggal Penangkapan', name: 'Tanggal Penangkapan', fieldName: 'tanggal_penangkapan', type: 'date'},
-  {label: 'Jam Penangkapan', name: 'Jam Penangkapan', fieldName: 'jam_penangkapan', type: 'time'},
+  {label: 'SP KAP', name: 'No Penangkapan', fieldName: 'no_penangkapan'},
+  {label: 'TANGGAL PENANGKAPAN', name: 'Tanggal Penangkapan', fieldName: 'tanggal_penangkapan', type: 'date'},
+  {label: 'MASA BERAKHIR PENANGKAPAN', name: 'Masa Berakhir Penangkapan', fieldName: 'masa_berakhir_penangkapan', type: 'date'},
 ]
 
 class FormPenangkapan extends React.Component {
