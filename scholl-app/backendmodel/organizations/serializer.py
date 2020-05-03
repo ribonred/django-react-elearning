@@ -72,11 +72,12 @@ class ProsesTersangkaApi(serializers.ModelSerializer):
             'sp_han',
             'sp_han_doc',
             'tap_han',
-           ' tap_han_doc',
+            'tap_han_doc',
             'surat_perpanjangan_han',
             'surat_perpanjangan_han_doc',
             'jenis_proses',
             'keterangan']
+        
 
 
 class StatusTersangkaApi(WritableNestedModelSerializer):

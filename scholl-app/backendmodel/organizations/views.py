@@ -209,7 +209,7 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
     queryset = ProsesTersangka.objects.all()
     serializer_class = ProsesTersangkaApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = [' proses_tersangka__no_penangkapan_id','proses_tersangka']
+    filterset_fields = ['proses_tersangka__no_penangkapan_id__no_penangkapan','proses_tersangka']
     parser_class = (FormParser, MultiPartParser)
 
 

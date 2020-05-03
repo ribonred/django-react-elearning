@@ -95,7 +95,7 @@ class ProsesTersangka(BaseTimeStampModel):
     keterangan = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'{self.proses_tersangka.nama_tersangka}||{self.no_proses} || {self.jenis_proses.nama_proses}'
+        return f'{self.proses_tersangka.nama_tersangka}||{self.sp_han} || {self.jenis_proses.nama_proses}'
 
 
 class BarangBukti(BaseTimeStampModel):
