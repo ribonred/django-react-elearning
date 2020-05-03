@@ -35,12 +35,6 @@ class FormBarangBukti extends React.Component {
     }
   }
 
-  updateStatusBarangBukti = (statusForm) => {
-    const form = {...this.state.form};
-    form.statusbarangbukti = statusForm.filter(data => data!==null && data!==undefined);
-    this.setState({form: form})
-  }
-
   onFormChange = (fieldName, e) => {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
@@ -55,6 +49,11 @@ class FormBarangBukti extends React.Component {
             form: form,
          })
        }
+     } else {
+      form[fieldName]=null
+      this.setState({
+        form: form,
+      })
      }
   }
 
@@ -81,20 +80,21 @@ class FormBarangBukti extends React.Component {
 
   render(){
       return (
-        <MainForm
-          title={'Edit Form Barang Bukti'}
-          messageTitle='Barang Bukti'
-          isError={this.state.isError}
-          isDataChange={this.state.isDataChange}
-          defaultValue={this.state.form}
-          isCreated={this.state.isCreated}
-          isLoading={this.state.isLoading}
-          onFormChange={this.onFormChange}
-          formData={formData}
-          onsubmit={this.onsubmit}
-        >
-          <FormStatusBarangBukti defaultValue={this.state.form.statusbarangbukti} updateStatusBarangBukti={(statusForm) => this.updateStatusBarangBukti(statusForm)}/>
-        </MainForm>
+        <React.Fragment>
+          <MainForm
+            title={'Edit Form Barang Bukti'}
+            messageTitle='Barang Bukti'
+            isError={this.state.isError}
+            isDataChange={this.state.isDataChange}
+            defaultValue={this.state.form}
+            isCreated={this.state.isCreated}
+            isLoading={this.state.isLoading}
+            onFormChange={this.onFormChange}
+            formData={formData}
+            onsubmit={this.onsubmit}
+          />
+          <FormStatusBarangBukti />
+        </React.Fragment>
       );
   }
 };
