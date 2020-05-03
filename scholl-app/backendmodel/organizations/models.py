@@ -19,7 +19,7 @@ class Penangkapan(BaseTimeStampModel):
     no_penangkapan = models.CharField(max_length=255,unique=True)
     tanggal_penangkapan = models.DateField(
         null=True, blank=True)
-    jam_penangkapan = models.TimeField(null=True, blank=True)
+    masa_berakhir_penangkapan = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f'/ {self.no_penangkapan}'
@@ -46,9 +46,13 @@ class Tersangka(BaseTimeStampModel):
 class StatusTersangka(BaseTimeStampModel):
     T = 'Di tahan'
     A = 'Di Amankan'
+    TAT = 'TAT'
+    S = 'Selesai'
     status = (
         (T, 'Di tahan'),
-        (A, 'Di Amankan')
+        (A, 'Di Amankan'),
+        (TAT, 'TAT'),
+        (S, 'Selesai')
     )
     K = 'Keluar'
     M = 'Masuk'
@@ -80,7 +84,12 @@ class ProsesPengadilan(models.Model):
 class ProsesTersangka(BaseTimeStampModel):
     proses_tersangka = models.ForeignKey(
         Tersangka, on_delete=models.CASCADE, related_name='prosestersangka', null=True, blank=True)
-    no_proses = models.CharField(max_length=255)
+    sp_han = models.CharField(max_length=255)
+    sp_han_doc = models.FileField(upload_to='dokumen/sphan', null=True, blank=True)
+    tap_han = models.CharField(max_length=255, null=True, blank=True)
+    tap_han_doc = models.FileField(upload_to='dokumen/taphan', null=True, blank=True)
+    surat_perpanjangan_han = models.CharField(max_length=255, null=True, blank=True)
+    surat_perpanjangan_han_doc = models.FileField(upload_to='dokumen/perpanjanghan', null=True, blank=True)
     jenis_proses = models.ForeignKey(
         ProsesPengadilan, on_delete=models.CASCADE, related_name='proses_pengadilan')
     keterangan = models.CharField(max_length=255)
@@ -100,7 +109,9 @@ class BarangBukti(BaseTimeStampModel):
         Tersangka, on_delete=models.CASCADE, related_name='barangbuktitersangka', blank=True, null=True)
     nama_barang = models.CharField(max_length=255, blank=True, null=True)
     sp_sita = models.CharField(max_length=255, blank=True, null=True)
+    tap_sita = models.CharField(max_length=255, blank=True, null=True)
     tap_status = models.CharField(max_length=255, blank=True, null=True)
+    nomor_lab = models.CharField(max_length=255, blank=True, null=True)
     jenis_barang = models.CharField(
         max_length=255, choices=jenis, blank=True, null=True)
 
