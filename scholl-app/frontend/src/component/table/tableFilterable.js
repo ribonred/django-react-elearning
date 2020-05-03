@@ -144,8 +144,21 @@ export default class TableView extends React.Component {
     if (xScroll) {
       scroll.x = '100vw';
     }
+    
+    const tableDataWithKey = this.props.tableData ? this.props.tableData.map((data, index) => {
+      return {
+        ...data,
+        key:index
+      }
+    }) : []
 
-    const column = this.props.tableField.map(data => {
+    const number = [{
+      title: 'Nomor',
+      key: 'index',
+      render : (text, record, index) => tableDataWithKey.indexOf(record) + 1
+    }]
+
+    const column = number.concat(this.props.tableField.map(data => {
       const isSearchable = data.search === true
         ? this.getColumnSearchProps(data.dataIndex) : {};
       const isSortable = data.sorting === true
@@ -159,7 +172,8 @@ export default class TableView extends React.Component {
         ...isSortable,
         ...isWithDropdown,
       }
-    })
+    }))
+
 
     const { useId } = this.props;
     let isEditAllowed = true;
@@ -218,12 +232,7 @@ export default class TableView extends React.Component {
       tableColumns[0].fixed = true;
       tableColumns[tableColumns.length - 1].fixed = 'right';
     }
-    const tableDataWithKey = this.props.tableData ? this.props.tableData.map((data, index) => {
-      return {
-        ...data,
-        key:index
-      }
-    }) : []
+    
     return (
       <div style={{padding:'15px'}}>
         {this.props.applyDateFilter && (

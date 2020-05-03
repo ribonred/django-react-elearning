@@ -1,10 +1,10 @@
 import React from 'react'
 import { get_tersangka_list, edittersangka, edittersangkafoto } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
-import FormStatusTersangka from './formStatusTersangka';
-import FormProsesTersangka from './formProsesTersangka';
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
+import FormStatusTersangka from './formStatusTersangka';
+import FormProsesTersangka from './formProsesTersangka';
 
 const dropdown = [{value:'laki-laki', name:'laki-laki'}, {value:'perempuan', name:'perempuan'}];
 const formData = [
@@ -34,18 +34,6 @@ class FormTersangka extends React.Component {
     if(this.props.tersangkaData !== prevProps.tersangkaData){
       this.getDefaultForm()
     }
-  }
-
-  updateStatusTersangka = (statusForm) => {
-    const form = {...this.state.form};
-    form.statustersangka = statusForm.filter(data => data!==null && data!==undefined);
-    this.setState({form: form})
-  }
-
-  updateProsesTersangka = (prosesForm) => {
-    const form = {...this.state.form};
-    form.prosestersangka = prosesForm.filter(data => data!==null && data!==undefined);
-    this.setState({form: form})
   }
 
   onFormChange = (fieldName, e) => {
@@ -95,42 +83,23 @@ class FormTersangka extends React.Component {
   }
 
   render(){
-    let tersangkaIdDefaultStatus = []
-    let  tersangkaIdDefaultProses = []
-
-    if (this.state.form.id){
-      tersangkaIdDefaultStatus = this.state.form.statustersangka.map( data => {
-        return {
-          ...data,
-          tersangka_id:Number(this.props.tersangkaId)
-        }
-      } )
-      tersangkaIdDefaultProses = this.state.form.prosestersangka.map( data => {
-        return {
-          ...data,
-          tersangka_id:Number(this.props.tersangkaId)
-        }
-      } )
-    }
-
-
-
       return (
-        <MainForm
-          title={'Edit Form Tersangka'}
-          messageTitle='Tersangka'
-          isError={this.state.isError}
-          isDataChange={this.state.isDataChange}
-          defaultValue={this.state.form}
-          isCreated={this.state.isCreated}
-          isLoading={this.state.isLoading}
-          onFormChange={this.onFormChange}
-          formData={formData}
-          onsubmit={this.onsubmit}
-        >
-          <FormStatusTersangka tersangkaId={this.props.tersangkaId} defaultValue={tersangkaIdDefaultStatus || []} updateStatusTersangka={(statusForm) => this.updateStatusTersangka(statusForm)}/>
-          <FormProsesTersangka tersangkaId={this.props.tersangkaId} defaultValue={tersangkaIdDefaultProses || []} updateProsesTersangka={(prosesForm) => this.updateProsesTersangka(prosesForm)}/>
-        </MainForm>
+        <React.Fragment>
+          <MainForm
+            title={'Edit Form Tersangka'}
+            messageTitle='Tersangka'
+            isError={this.state.isError}
+            isDataChange={this.state.isDataChange}
+            defaultValue={this.state.form}
+            isCreated={this.state.isCreated}
+            isLoading={this.state.isLoading}
+            onFormChange={this.onFormChange}
+            formData={formData}
+            onsubmit={this.onsubmit}
+          />
+          <FormProsesTersangka/>
+          <FormStatusTersangka/>         
+        </React.Fragment>
       );
   }
 };

@@ -39,7 +39,7 @@ class SideMenu extends Component {
            {isAdmin && (
              <Menu.Item key="2" onClick={() => history.push("/dashboard/penyidik")}>
                 <TeamOutlined />
-                <span className="nav-text">Penyidik</span>
+                <span className="nav-text">Admin</span>
               </Menu.Item>
            )}
            <Menu.Item key="3" onClick={() => history.push("/dashboard/tersangka")}>
