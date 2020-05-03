@@ -1,100 +1,65 @@
 import React from 'react'
-import { Button, Collapse } from 'antd';
-import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
-import FormGroup from '../../../ui-container/formGroup';
-import { get_proses } from '../../../reduxActions/dashboard'
-import { get_token } from '../../../helper/requestHelper';
-import { connect } from 'react-redux';
+import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 
-const { Panel } = Collapse;
-
-class FormProsesTersangka extends React.Component {
+export default class FormProsesTersangka extends React.Component {
   state = {
-    form:this.props.defaultValue
+    form:{}
   }
 
-  async componentDidMount(){
-    await this.props.dispatch(get_proses(get_token()))
-  }
-
-  onFormChange = (fieldName, e, index) => {
-     const formObj = {...this.state.form[index]};
-     const form = [...this.state.form];
-     if(!e.target){
-         formObj[fieldName] = e
-         form[index] = formObj
-         this.setState({
-             form: form,
-         })
-     } else {
-         formObj[fieldName] = e.target.value
-         form[index] = formObj
-         this.setState({
+  onFormChange = (fieldName, e) => {
+    const form = {...this.state.form};
+    if(e!==null && e!==undefined){
+      if(!e.target){
+        form[fieldName]=e
+        this.setState({
             form: form,
-         })
-     }
-     this.props.updateProsesTersangka(form)
+        })
+      } else {
+        form[fieldName]=e.target.value
+        this.setState({
+            form: form,
+        })
+      }
+    } else {
+      form[fieldName]=null
+      this.setState({
+        form: form,
+      })
+    }
   }
 
-  addStatus = () => {
-    const forms = [...this.state.form]
-    forms.push({})
-    this.setState({form: forms})
-  }
-
-  removeStatus = (removedIndex) => {
-    const forms = [...this.state.form];
-    delete forms[removedIndex]
-    this.setState({form: forms});
-    this.props.updateProsesTersangka(forms)
+  onSubmit = () => {
+    console.log('this state', this.state.form)
   }
 
   render(){
-      const jenis_proses = []
-      const formData = [
-        {label: 'Jenis Proses', name: 'Jenis Proses', dropdown: jenis_proses, fieldName: 'jenis_proses', type: 'select'},
-        {label: 'No Proses', name: 'No Proses', fieldName: 'no_proses'},
-        {label: 'keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'},
+      const { jenis_proses } = this.state.form;
+      const jenis_proses_drop = [{value:"pengadilan satu", name:'Pengadilan Satu'}, {value:"pengadilan dua", name:'Pengadilan Dua'}, {value:"kejati", name:'Kejati'}]
+      let formData = [
+        {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select'},
+        {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
+        {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]
-      if (this.props.prosesIndex.length > 0){
-        this.props.prosesIndex.map((data) => {
-          jenis_proses.push({value:data.id, name:data.nama_proses})
-        })
+
+      if(jenis_proses === 'pengadilan satu' || jenis_proses === 'pengadilan dua'){
+        formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
+        formData.push({label: 'DOKUMEN TAP HAN', name: 'DOKUMEN TAP HAN', fieldName: 'tap_han_doc', type: 'upload'})
       }
+
+      if(jenis_proses === 'kejati'){
+        formData.push({label: 'SURAT PERPANJANGAN HAN', name: 'SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han'})
+        formData.push({label: 'DOKUMEN SURAT PERPANJANGAN HAN', name: 'DOKUMEN SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han_doc', type: 'upload'})
+      }
+
+      formData.push({label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'})
       return (
-        <Collapse style={{margin:'7px'}}>
-          <Panel header="PROSES TERSANGKA" key="1">
-            <Button type="primary" style={{margin:'10px'}} onClick={() => this.addStatus()} icon={<PlusSquareOutlined />}>
-              Add Status Tersangka
-            </Button>
-            {this.state.form.map((data, index) => (
-              data!==null && data!==undefined && (
-                <Collapse key={index} style={{margin:'10px'}}>
-                <Panel header="Form Proses Tersangka" key={index}>
-                  <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
-                    Hapus Form
-                  </Button>
-                  <FormGroup
-                    formData={formData}
-                    key={index}
-                    onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                    defaultValue={this.state.form[index]}
-                  />
-                </Panel>
-              </Collapse>
-            )
-            ))}
-          </Panel>
-        </Collapse>
+        <ModalWithTablePreview 
+          formTitle='FORM PROSES TERSANGKA'
+          title='PROSES TERSANGKA'
+          onSubmit={this.onSubmit}
+          onFormChange={this.onFormChange}
+          formData={formData}
+        />
       );
   }
 };
-
-function mapStateToProps(state) {
-  const { dashboard } = state
-  return {
-    prosesIndex: dashboard.prosesIndex,
-  }
-}
-
-export default connect(mapStateToProps)(FormProsesTersangka)

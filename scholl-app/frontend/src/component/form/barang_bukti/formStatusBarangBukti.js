@@ -1,82 +1,65 @@
 import React from 'react'
-import { Button, Collapse } from 'antd';
-import { PlusSquareOutlined, CloseOutlined } from '@ant-design/icons';
-import FormGroup from '../../../ui-container/formGroup';
+import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 
-const { Panel } = Collapse;
-
-export default class FormProsesBarangBukti extends React.Component {
+export default class FormProsesTersangka extends React.Component {
   state = {
-    form:this.props.defaultValue
+    form:{}
   }
 
-  onFormChange = (fieldName, e, index) => {
-     const formObj = {...this.state.form[index]};
-     const form = [...this.state.form];
-     if(!e.target){
-         formObj[fieldName] = e
-         form[index] = formObj
-         this.setState({
-             form: form,
-         })
-     } else {
-         formObj[fieldName] = e.target.value
-         form[index] = formObj
-         this.setState({
+  onFormChange = (fieldName, e) => {
+    const form = {...this.state.form};
+    if(e!==null && e!==undefined){
+      if(!e.target){
+        form[fieldName]=e
+        this.setState({
             form: form,
-         })
-     }
-     this.props.updateStatusBarangBukti(form)
+        })
+      } else {
+        form[fieldName]=e.target.value
+        this.setState({
+            form: form,
+        })
+      }
+    } else {
+      form[fieldName]=null
+      this.setState({
+        form: form,
+      })
+    }
   }
 
-  addStatus = () => {
-    const forms = [...this.state.form]
-    forms.push({})
-    this.setState({form: forms})
-  }
-
-  removeStatus = (removedIndex) => {
-    const forms = [...this.state.form];
-    delete forms[removedIndex]
-    this.setState({form: forms});
-    this.props.updateStatusBarangBukti(forms)
+  onSubmit = () => {
+    console.log('this state', this.state.form)
   }
 
   render(){
-      const status = [{value:'Masuk', name:'Masuk'}, {value:'Keluar', name:'Keluar'}]
-      const formData = [
-        {label: 'Jumlah', name: 'Jumlah', fieldName: 'jumlah'},
-        {label: 'Status', name: 'Status', dropdown: status, fieldName: 'status', type: 'select'},
-        {label: 'Tanggal Status', name: 'Tanggal Status', fieldName: 'tanggal_status', type:'date'},
-        {label: 'Waktu', name: 'Waktu Status', fieldName: 'waktu_status', type: 'time'},
-        {label: 'Keterangan', name: 'keterangan', fieldName: 'keterangan', type: 'area'}
+      const { jenis_proses } = this.state.form;
+      const jenis_proses_drop = [{value:"pengadilan satu", name:'Pengadilan Satu'}, {value:"pengadilan dua", name:'Pengadilan Dua'}, {value:"kejati", name:'Kejati'}]
+      let formData = [
+        {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select'},
+        {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
+        {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]
 
+      if(jenis_proses === 'pengadilan satu' || jenis_proses === 'pengadilan dua'){
+        formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
+        formData.push({label: 'DOKUMEN TAP HAN', name: 'DOKUMEN TAP HAN', fieldName: 'tap_han_doc', type: 'upload'})
+      }
+
+      if(jenis_proses === 'kejati'){
+        formData.push({label: 'SURAT PERPANJANGAN HAN', name: 'SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han'})
+        formData.push({label: 'DOKUMEN SURAT PERPANJANGAN HAN', name: 'DOKUMEN SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han_doc', type: 'upload'})
+      }
+
+      formData.push({label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'})
       return (
-        <Collapse style={{margin:'7px'}}>
-          <Panel header="STATUS BARANG BUKTI" key="1">
-            <Button type="primary" style={{margin:'10px'}} onClick={() => this.addStatus()} icon={<PlusSquareOutlined />}>
-              Add Status Barang Bukti
-            </Button>
-            {this.state.form.map((data, index) => (
-              data!==null && data!==undefined && (
-                <Collapse key={index} style={{margin:'10px'}}>
-                <Panel header="Form Status Barang Bukti" key={index}>
-                  <Button type="danger" style={{margin:'10px'}} onClick={() => this.removeStatus(index)} icon={<CloseOutlined />}>
-                    Hapus Form
-                  </Button>
-                  <FormGroup
-                    formData={formData}
-                    key={index}
-                    onFormChange={(fieldName, e) => this.onFormChange(fieldName, e, index)}
-                    defaultValue={this.state.form[index]}
-                  />
-                </Panel>
-              </Collapse>
-            )
-            ))}
-          </Panel>
-        </Collapse>
+        <ModalWithTablePreview 
+          formTitle='FORM STATUS BARANG BUKTI'
+          title='PROSES BARANG BUKTI'
+          onSubmit={this.onSubmit}
+          onFormChange={this.onFormChange}
+          formData={formData}
+        />
       );
   }
 };

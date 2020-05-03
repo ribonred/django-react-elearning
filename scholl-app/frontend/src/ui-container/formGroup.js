@@ -131,7 +131,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <TextArea defaultValue={props.defaultValue[data.fieldName]} onChange={(e) => props.onFormChange(data.fieldName, e)} rows={5} />
+            <TextArea defaultValue={props.defaultValue && props.defaultValue[data.fieldName]} onChange={(e) => props.onFormChange(data.fieldName, e)} rows={5} />
           </Form.Item>
         )
       } else if(data.type === 'disabled'){
