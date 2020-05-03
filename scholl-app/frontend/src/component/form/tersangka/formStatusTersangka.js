@@ -1,7 +1,10 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
+import { createprosestersangka, getprosestersangka, createstatustersangka, getstatustersangka } from '../../../reduxActions/dashboard'
+import { get_token } from '../../../helper/requestHelper';
+import { connect } from 'react-redux';
 
-export default class FormStatusTersangka extends React.Component {
+class FormStatusTersangka extends React.Component {
   state = {
     form:this.props.defaultValue
   }
@@ -27,8 +30,12 @@ export default class FormStatusTersangka extends React.Component {
       })
     }
   }
-  onSubmit = () => {
-    console.log('this state', this.state.form)
+  onSubmit = async () => {
+    const { form } = this.state;
+    form['tersangka_id'] = this.props.tersangkaId;
+    console.log('this state', form)
+    await this.props.dispatch(createstatustersangka(get_token(), form))
+    await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
   }
 
   render(){
@@ -53,3 +60,12 @@ export default class FormStatusTersangka extends React.Component {
       );
   }
 };
+
+function mapStateToProps(state) {
+  const { dashboard } = state
+  return {
+    bbDataByPnkp: dashboard.bbDataByPnkp
+  }
+}
+
+export default connect(mapStateToProps)(FormStatusTersangka)

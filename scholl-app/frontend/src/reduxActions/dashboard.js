@@ -634,3 +634,57 @@ export function get_proses(token) {
     .then((response) => {dispatch(receive_proses(response.data))})
   }
 }
+
+//proses tersangka
+export function createprosestersangka(token, data) {
+  return dispatch => {
+    return request('/api/tsk-proses/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    },data)
+      .then(response => console.log(response))
+  }
+}
+
+export function getprosestersangka(token, id) {
+  return dispatch => {
+    return request(`/api/tsk-proses/?proses_tersangka=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
+//status tersangka
+export function createstatustersangka(token, data) {
+  return dispatch => {
+    return request('/api/tsk-status/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    },data)
+      .then(response => console.log(response))
+  }
+}
+
+export function getstatustersangka(token, id) {
+  return dispatch => {
+    return request(`/api/tsk-status/?tersangka_id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}

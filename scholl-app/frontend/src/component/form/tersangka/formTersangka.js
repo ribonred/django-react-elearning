@@ -97,8 +97,8 @@ class FormTersangka extends React.Component {
             formData={formData}
             onsubmit={this.onsubmit}
           />
-          <FormProsesTersangka/>
-          <FormStatusTersangka/>         
+          <FormProsesTersangka tersangkaId={this.props.tersangkaId}/>
+          <FormStatusTersangka tersangkaId={this.props.tersangkaId}/>         
         </React.Fragment>
       );
   }

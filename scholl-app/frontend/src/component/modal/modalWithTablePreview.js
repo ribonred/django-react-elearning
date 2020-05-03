@@ -29,7 +29,7 @@ export default class modalWithTablePreview extends React.Component {
               <FormGroup
                 formData={this.props.formData || []}
                 onSubmit={async() => {
-                  await this.props.onSubmit()
+                  await this.props.onSubmit(this.props.title)
                 }}
                 onFormChange={this.props.onFormChange}
               />
