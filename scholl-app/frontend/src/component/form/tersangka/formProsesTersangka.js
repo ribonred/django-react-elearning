@@ -17,7 +17,7 @@ class FormProsesTersangka extends React.Component {
         this.setState({
             form: form,
         })
-      }else if(!e.target){
+      } else if(!e.target){
         form[fieldName]=e
         this.setState({
             form: form,

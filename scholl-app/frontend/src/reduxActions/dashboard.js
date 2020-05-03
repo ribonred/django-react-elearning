@@ -436,7 +436,7 @@ export function edittersangka(data, token, id) {
     return request(`/api/tsk-edit/${id}/`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     },data)
@@ -679,6 +679,33 @@ export function createstatustersangka(token, data) {
 export function getstatustersangka(token, id) {
   return dispatch => {
     return request(`/api/tsk-status/?tersangka_id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
+//status bb
+export function createstatusbb(token, data) {
+  return dispatch => {
+    return request('/api/bb-status/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    },data)
+      .then(response => console.log(response))
+  }
+}
+
+export function getstatusbb(token, id) {
+  return dispatch => {
+    return request(`/api/bb-status/?barang_bukti_id=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
