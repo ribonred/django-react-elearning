@@ -9,7 +9,10 @@ const styles = {
     padding: '15px',
   },
   contentLayout: {
+    display: 'flex',
     padding: '10px',
+    justifyContent: 'center',
+    alignItems: 'center'
   } ,
   header: {
     borderRadius:'5px',

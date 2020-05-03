@@ -192,7 +192,9 @@ const styles = {
     display: 'flex',
     marginTop: '15px',
     flexDirection: 'row',
-    width: '75vw'
+    width: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   profilTersangkaBox: {
     display: 'flex',

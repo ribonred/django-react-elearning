@@ -39,12 +39,11 @@ class FormTersangka extends React.Component {
   onFormChange = (fieldName, e) => {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
-      if (e.file){
-        const formData = new FormData()
-        formData.set("nama_tersangka", this.state.form.nama_tersangka);
-        formData.set("jenis_kelamin", this.state.form.jenis_kelamin);
-        formData.append("foto", e.file.originFileObj);
-        this.props.dispatch(edittersangkafoto(formData, get_token(), this.props.tersangkaId));
+      if(e.file){
+        form[fieldName]=e.file.originFileObj
+        this.setState({
+            form: form,
+        })
       } else if(!e.target){
          form[fieldName] = e
          this.setState({
@@ -61,9 +60,13 @@ class FormTersangka extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
-    let data = this.state.form
-    delete data.foto
-    const result= await this.props.dispatch(edittersangka(data, get_token(), this.props.tersangkaId));
+    const { form } = this.state;
+    const formData = new FormData();
+    const keys = Object.keys(form);
+    keys.map((key) => {
+      formData.append(key, form[key]);
+    })
+    const result= await this.props.dispatch(edittersangka(formData, get_token(), this.props.tersangkaId));
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {
@@ -97,8 +100,8 @@ class FormTersangka extends React.Component {
             formData={formData}
             onsubmit={this.onsubmit}
           />
-          <FormProsesTersangka/>
-          <FormStatusTersangka/>         
+          <FormProsesTersangka tersangkaId={this.props.tersangkaId}/>
+          <FormStatusTersangka tersangkaId={this.props.tersangkaId}/>         
         </React.Fragment>
       );
   }

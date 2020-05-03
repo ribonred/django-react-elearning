@@ -98,7 +98,7 @@ class FormBarangBukti extends React.Component {
             formData={formData}
             onsubmit={this.onsubmit}
           />
-          <FormStatusBarangBukti />
+          <FormStatusBarangBukti barangBuktiId={this.props.barangBuktiId}/>
         </React.Fragment>
       );
   }

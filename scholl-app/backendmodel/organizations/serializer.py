@@ -133,13 +133,13 @@ class TersangkaEditApi(WritableNestedModelSerializer):
 
 
 class BarangBuktiEdit(WritableNestedModelSerializer):
-    statusbarangbukti = StatusBarangBuktiApi(
-        many=True, required=False, allow_null=True)
+    # statusbarangbukti = StatusBarangBuktiApi(
+    #     many=True, required=False, allow_null=True)
 
     class Meta:
         model = BarangBukti
-        fields = ['id', 'nama_barang',
-                  'sp_sita', 'tap_status', 'jenis_barang', 'statusbarangbukti', 'milik_tersangka_id']
+        fields = ['id','milik_tersangka_id' ,'nama_barang',
+                  'sp_sita','tap_sita', 'tap_status','nomor_lab', 'jenis_barang']
 
         depth = 3
 
