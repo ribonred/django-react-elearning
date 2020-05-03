@@ -14,25 +14,25 @@ const { Content } = Layout;
 
 const tableField = [
   {
-    title: 'No.LKN',
+    title: 'NO LKN',
     dataIndex: 'no_lkn',
     sorter: true,
     search: true,
   },
   {
-    title: 'No Penangkapan',
+    title: 'SP KAP',
     dataIndex: 'no_penangkapan',
     sorter: true,
     search: true,
   },
   {
-    title: 'Tanggal Penangkapan',
+    title: 'TANGGAL PENANGKAPAN',
     dataIndex: 'tanggal_penangkapan',
     sorter: true,
   },
   {
-    title: 'Jam Penangkapan',
-    dataIndex: 'jam_penangkapan',
+    title: 'MASA BERAKHIR PENANGKAPAN',
+    dataIndex: 'masa_berakhir_penangkapan',
     sorter: true,
   }
 ]
