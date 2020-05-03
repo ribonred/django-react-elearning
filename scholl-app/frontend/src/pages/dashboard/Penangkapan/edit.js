@@ -10,11 +10,12 @@ import TableView from '../../../component/table/tableFilterable'
 
 const { Content } = Layout;
 const dropdownTsk = [];
+const dropdown = [{value:'laki-laki', name:'Laki-laki'}, {value:'perempuan', name:'Perempuan'}];
 const dropdownBB = [{value:'narkotika', name:'Narkotika'}, {value:'non narkotika', name:'Non Narkotika'}];
 const formDataTsk = [
   {label: 'Nama Tersangka', name: 'Nama Tersangka', fieldName: 'nama_tersangka'},
   {label: 'Umur', name: 'Umur', fieldName: 'umur', type: 'number'},
-  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdownTsk, type: 'select'},
+  {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
 const formDataBB = [
