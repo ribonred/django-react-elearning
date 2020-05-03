@@ -125,13 +125,13 @@ const LknViewView = (props) => {
                     }
                     </div>
                     <div style={{paddingTop: '10px'}}>
-                      <p style={{fontSize: 16, textAlign: 'center', verticalAlign: 'middle', margin: 0, fontWeight: 'bold', fontFamily: 'Roboto'}}>{tsk.nama_tersangka}</p>
-                      <p style={{fontSize: 12, textAlign: 'center', verticalAlign: 'middle', margin: 0}}>{tsk.jenis_kelamin.toUpperCase()}</p>
-                      <p style={{fontSize: 12, textAlign: 'center', verticalAlign: 'middle', margin: 0}}>{tsk.umur} Tahun</p>
+                      <p style={styles.namaTersangka}>{tsk.nama_tersangka}</p>
+                      <p style={styles.keteranganTersangka}>{tsk.jenis_kelamin.toUpperCase()}</p>
+                      <p style={styles.keteranganTersangka}>{tsk.umur} Tahun</p>
                     </div>
                   </div>
 
-                  <div style={{backgroundColor: 'white', width: '100vw', height: '42vh', marginLeft: '1vw', padding: '5px'}}>
+                  <div style={styles.tabTersangka}>
                     <Tabs defaultActiveKey='1'>
                       <TabPane tab='Proses Tersangka' key='1'>
                         <div style={styles.detailBoxPenangkapan}>
@@ -175,7 +175,7 @@ const LknViewView = (props) => {
     )
   }
 
-  return (
+  return ( 
     <Skeleton active />
   )
 };
@@ -216,6 +216,27 @@ const styles = {
   detailBoxPenangkapan: {
     height: '270px',
     overflowY: 'scroll'
+  },
+  namaTersangka: {
+    fontSize: 16,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    margin: 0,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto'
+  },
+  keteranganTersangka: {
+    fontSize: 12,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    margin: 0
+  },
+  tabTersangka: {
+    backgroundColor: 'white',
+    width: '57vw',
+    height: '42vh',
+    marginLeft: '1vw',
+    padding: '5px'
   }
 }
 
