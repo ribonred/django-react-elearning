@@ -524,15 +524,23 @@ export function get_bb_list(token, id = null, pnkp_id) {
       }
     })
     .then((response) => {
-      if(id){
-        dispatch(receive_bb_data(response.data))
+      if (response instanceof Error){
+        throw Error
+      } else {
+        if(id){
+          dispatch(receive_bb_data(response.data))
+        }
+        else if(pnkp_id){
+          dispatch(receive_bb_data_by_pnkp(response.data))
+        }
+        else {
+          dispatch(receive_bb_table(response.data))
+        }
       }
-      else if(pnkp_id){
-        dispatch(receive_bb_data_by_pnkp(response.data))
-      }
-      else {
-        dispatch(receive_bb_table(response.data))
-      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
     })
   }
 }
