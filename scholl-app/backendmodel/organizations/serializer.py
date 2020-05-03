@@ -40,8 +40,8 @@ class BerkasLknApi(serializers.ModelSerializer):
 class StatusBarangBuktiApi(serializers.ModelSerializer):
     class Meta:
         model = StatusBarangBukti
-        fields = ['id', 'tanggal_status', 'waktu_status',
-                  'jumlah', 'keterangan', 'status']
+        fields = ['id','barang_bukti_id', 'tanggal_status', 'waktu_status',
+                  'jumlah','satuan', 'keterangan', 'status']
 
 
 class BarangBuktiApi(WritableNestedModelSerializer):
@@ -159,7 +159,7 @@ class CreateBarangBuktiByTsk(WritableNestedModelSerializer):
     class Meta:
         model = BarangBukti
         fields = ['id','milik_tersangka_id' ,'nama_barang',
-                  'sp_sita', 'tap_status', 'jenis_barang']
+                  'sp_sita','tap_sita', 'tap_status','nomor_lab', 'jenis_barang']
 
 class BarangBuktiDetailApi(WritableNestedModelSerializer):
     statusbarangbukti = StatusBarangBuktiApi(

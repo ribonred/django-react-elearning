@@ -29,7 +29,8 @@ from .serializer import (
     BerkasLknListApi,
     PenangkapanEditApi,
     ProsesTersangkaApi,
-    StatusTersangkaApi
+    StatusTersangkaApi,
+    StatusBarangBuktiApi
 
     )
 from rest_framework import viewsets
@@ -355,7 +356,7 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def post(self, request, format=None):
-        serializer = Tersangka(data=request.data)
+        serializer = CreateTersangkaSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -431,7 +432,62 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
-        serializer = BarangBukti(data=request.data)
+        serializer = CreateBarangBuktiByTsk(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StatusBarangBuktiView(viewsets.ModelViewSet):
+    queryset = StatusBarangBukti.objects.all()
+    serializer_class = StatusBarangBuktiApi
+    filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
+    
+    
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset
+        queryset = StatusBarangBukti.objects.all()
+        if not user.is_superuser:
+            queryset = StatusBarangBukti.objects.filter(
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user)
+        return queryset
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [AllowAny]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def update(self, request, *args, **kwargs):
+        try:
+            instance = StatusBarangBukti.objects.get(pk=kwargs['pk'])
+            serializer = StatusBarangBuktiApi(instance=instance,data=request.data)
+            
+            if serializer.is_valid():
+                serializer.save()
+                success = Response(serializer.data,status=status.HTTP_200_OK)
+                return success
+            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return error
+        except StatusBarangBukti.DoesNotExist:
+            serializer = StatusBarangBuktiApi(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, format=None):
+        serializer = StatusBarangBuktiApi(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

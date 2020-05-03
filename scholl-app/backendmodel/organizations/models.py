@@ -126,12 +126,23 @@ class StatusBarangBukti(BaseTimeStampModel):
         (K, 'Keluar'),
         (M, 'Masuk')
     )
+
+    GRAM = 'gram'
+    KG = 'Kg'
+    PCS = 'PCS'
+
+    satuan_bb = (
+        (GRAM, 'gram'),
+        (KG, 'Kg'),
+        (PCS,'PCS')
+    )
     barang_bukti_id = models.ForeignKey(
         BarangBukti, on_delete=models.CASCADE, related_name='statusbarangbukti')
     tanggal_status = models.DateField(null=True, blank=True)
     waktu_status = models.TimeField(null=True, blank=True)
     jumlah = models.DecimalField(
         decimal_places=2, null=True, blank=True, max_digits=5)
+    satuan =  models.CharField(max_length=255, choices=satuan_bb)
     keterangan = models.TextField(null=True, blank=True)
     status = models.CharField(
         max_length=20, blank=True, null=True, choices=status_bb)
