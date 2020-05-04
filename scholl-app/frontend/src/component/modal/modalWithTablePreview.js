@@ -15,7 +15,10 @@ export default class modalWithTablePreview extends React.Component {
             {`ADD ${this.props.formTitle}`}
           </Button>
           <TableView
+            useId
             path={this.props.title}
+            isNotAllowTo={this.props.isNotAllowTo}
+            isLoading={this.props.isLoading}
             tableField={this.props.tableField || []}
             tableData={this.props.tableData || []}
             isLoading={this.props.isLoading}
@@ -30,6 +33,7 @@ export default class modalWithTablePreview extends React.Component {
                 formData={this.props.formData || []}
                 onSubmit={async() => {
                   await this.props.onSubmit(this.props.title)
+                  this.setState({visible: false})
                 }}
                 onFormChange={this.props.onFormChange}
               />

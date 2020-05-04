@@ -1,12 +1,45 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createprosestersangka, getprosestersangka, createstatustersangka, getstatustersangka } from '../../../reduxActions/dashboard'
+import { createstatustersangka, getstatustersangka } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
+const tableFieldStatusTersangka = [
+  {
+    title: 'Status Penahanan',
+    dataIndex: 'status_penahanan',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Rekam Jejak',
+    dataIndex: 'rekam_jejak',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Tanggal',
+    dataIndex: 'tanggal',
+    sorter: true,
+    search: true,
+  },
+  {
+    title: 'Waktu Status',
+    dataIndex: 'waktu',
+    sorter: true,
+  }
+]
+
 class FormStatusTersangka extends React.Component {
   state = {
-    form:this.props.defaultValue
+    form:this.props.defaultValue,
+    isLoading: false,
+  }
+
+  async componentDidMount(){
+    this.setState({isLoading:true})
+    await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+    this.setState({isLoading:false})
   }
 
   onFormChange = (fieldName, e) => {
@@ -31,11 +64,12 @@ class FormStatusTersangka extends React.Component {
     }
   }
   onSubmit = async () => {
+    this.setState({isLoading:true})
     const { form } = this.state;
     form['tersangka_id'] = this.props.tersangkaId;
-    console.log('this state', form)
     await this.props.dispatch(createstatustersangka(get_token(), form))
     await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+    this.setState({isLoading:false})
   }
 
   render(){
@@ -48,11 +82,15 @@ class FormStatusTersangka extends React.Component {
         {label: 'Waktu', name: 'Waktu', fieldName: 'waktu', type: 'time'},
         {label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'},
       ]
-
+      console.log('status', this.props.statusTersangkaDataByPnkp)
       return (
         <ModalWithTablePreview 
           formTitle='FORM STATUS TERSANGKA'
+          isNotAllowTo={['view']}
+          tableData={this.props.statusTersangkaDataByPnkp}
+          isLoading={this.state.isLoading}
           title='STATUS TERSANGKA'
+          tableField={tableFieldStatusTersangka}
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}
@@ -64,7 +102,7 @@ class FormStatusTersangka extends React.Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    bbDataByPnkp: dashboard.bbDataByPnkp
+    statusTersangkaDataByPnkp: dashboard.statusTersangkaDataByPnkp
   }
 }
 

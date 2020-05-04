@@ -4,10 +4,13 @@ const initialState = {
   lknTableData:[],
   userTableData:[],
   userData: [],
+  prosesTersangka: [],
   error: false,
   lknData: [],
+  bbStatus: [],
   lknCreated: false,
   penangkapanData: [],
+  statusTersangkaDataByPnkp: [],
   penangkapanSelectedData: {},
   tersangkaTableData: [],
   tersangkaTableDataByLkn: [],
@@ -75,10 +78,25 @@ const dashboard = (state = initialState, action) => {
         ...state,
         bbData: action.data,
       };
+    case 'RECEIVE_STATUS_BB':
+      return {
+        ...state,
+        bbStatus: action.data,
+      };
     case 'RECEIVE_BB_DATA_BY_PNKP':
       return {
         ...state,
         bbDataByPnkp: action.data,
+      };
+    case 'RECEIVE_STATUS_TERSANGKA':
+      return {
+        ...state,
+        statusTersangkaDataByPnkp: action.data,
+      };
+    case 'RECEIVE_PROSES_TERSANGKA':
+      return {
+        ...state,
+        prosesTersangka: action.data,
       };
     case 'RECEIVE_USER_TABLE_DATA':
       return {
