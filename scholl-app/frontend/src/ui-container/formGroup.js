@@ -32,7 +32,6 @@ const FormGroup = (props) => {
           console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
-          // props.onFormChange('foto', info)
           message.success(`${info.file.name} file uploaded successfully`);
         } else if (info.file.status === 'error') {
           message.error(`${info.file.name} file upload failed.`);
@@ -57,8 +56,12 @@ const FormGroup = (props) => {
           </Form.Item>
         )
       } else if(data.type === 'date'){
-        const defaultDate = props.defaultValue && props.defaultValue[data.fieldName]
-          ? moment(new Date(props.defaultValue[data.fieldName]), dateFormat) : ''
+        var defaultDate = '';
+        if (props.defaultValue && props.defaultValue[data.fieldName]){
+          var dateParts = props.defaultValue[data.fieldName].split("-");
+          var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+          defaultDate = moment(dateObject);
+        }
         return (
           <Form.Item
             key={data.fieldName}

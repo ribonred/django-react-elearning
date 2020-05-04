@@ -184,7 +184,7 @@ JWT_AUTH = {
 
 }
 TIME_INPUT_FORMATS = ['%H:%M']
-# DATE_FORMAT = '%d-%m-%Y'
+DATE_FORMAT = "%d-%m-%Y"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 

@@ -37,19 +37,19 @@ const formDataBBNon = [
 
 const tableFieldTsk = [
   {
-    title: 'No.LKN',
+    title: 'NO LKN',
     dataIndex: 'LKN',
     sorter: true,
     search: true,
   },
   {
-    title: 'No. Penangkapan',
+    title: 'SP KAP',
     dataIndex: 'no_penangkapan',
     sorter: true,
     search: true,
   },
   {
-    title: 'Nama',
+    title: 'NAMA',
     dataIndex: 'nama_tersangka',
     sorter: true,
     search: true,
@@ -57,25 +57,25 @@ const tableFieldTsk = [
 ]
 const tableFieldBB = [
   {
-    title: 'No.LKN',
+    title: 'NO LKN',
     dataIndex: 'LKN',
     sorter: true,
     search: true,
   },
   {
-    title: 'No. Penangkapan',
+    title: 'SP KAP',
     dataIndex: 'no_penangkapan',
     sorter: true,
     search: true,
   },
   {
-    title: 'Nama Tersangka',
+    title: 'TERSANGKA',
     dataIndex: 'nama_tersangka',
     sorter: true,
     search: true,
   },
   {
-    title: 'Nama BB',
+    title: 'BB',
     dataIndex: 'nama_barang',
     sorter: true,
     search: true,

@@ -101,7 +101,7 @@ class TersangkaView extends Component {
       }
       let dataStatus = tersangkaData.statustersangka
         let dataProses = tersangkaData.prosestersangka;
-        if(prosesIndex.length > 0 && tersangkaData.id){
+        if(prosesIndex.length > 0 && tersangkaData.id && dataProses > 0){
           dataProses = dataProses.map((data) => {
             return {
               ...data,
