@@ -1,9 +1,9 @@
 import React from 'react'
 import ViewContainer from '../ui-container/viewContainer';
-
 import { Descriptions } from 'antd';
 
 const DescriptionView = (props) => {
+    console.log('props description', props)
     var DescriptionList = ''
     if(props.data) {
         DescriptionList = props.data.map((data) => {
@@ -15,7 +15,7 @@ const DescriptionView = (props) => {
 
     return (
         <ViewContainer>
-            <Descriptions title={props.title}>
+            <Descriptions title={props.title} >
                 {DescriptionList}
             </Descriptions>
         </ViewContainer>

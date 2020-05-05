@@ -26,7 +26,7 @@ const styles = {
 }
 
 const ViewContainer = (props) => {
-  console.log('props view container', props)
+  // console.log('props view container', props.children)
     return (
     <div style={styles.container}>
           <Layout style={styles.innerLayout}>
