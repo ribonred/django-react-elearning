@@ -1,6 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 import { createstatustersangka, getstatustersangka } from '../../../reduxActions/dashboard'
+import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -31,15 +32,34 @@ const tableFieldStatusTersangka = [
 ]
 
 class FormStatusTersangka extends React.Component {
+  //TODO CHANGE isDATACHANGE to false AFTER IT CAN GET CORRECT GET API CALL
   state = {
     form:this.props.defaultValue,
     isLoading: false,
+    isCreated: false,
+    isDataChange: true,
+    isError: false,
   }
 
   async componentDidMount(){
     this.setState({isLoading:true})
-    await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+    if(this.props.edit){
+      //TODO GET CORRECT STATUS DATA HERE
+    } else {
+      await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+    }
     this.setState({isLoading:false})
+  }
+
+  componentDidUpdate(prevProps){
+    //TODO IF SUCCESS GET DATA , GIVE STATE statusTersangkaData in reducer Value from API CALL
+    if(this.props.statusTersangkaData !== prevProps.statusTersangkaData){
+      this.getDefaultForm()
+    }
+  }
+
+  getDefaultForm = () => {
+    this.setState({form: this.props.statusTersangkaData}, () => this.setState({ isDataChange: true}))
   }
 
   onFormChange = (fieldName, e) => {
@@ -63,13 +83,38 @@ class FormStatusTersangka extends React.Component {
       })
     }
   }
+
   onSubmit = async () => {
-    this.setState({isLoading:true})
-    const { form } = this.state;
-    form['tersangka_id'] = this.props.tersangkaId;
-    await this.props.dispatch(createstatustersangka(get_token(), form))
-    await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
-    this.setState({isLoading:false})
+    if(this.props.edit){
+      this.setState({isLoading:true})
+      // const { form } = this.state;
+      // const formData = new FormData();
+      // TODO GIVE CORRECT API CALL HERE
+      // const keys = Object.keys(form);
+      // keys.map((key) => {
+      //   formData.append(key, form[key]);
+      // })
+      const result= 'GIVE API CALL HERE'
+      if(result === 'error'){
+        this.setState({ isError: true })
+        setTimeout(() => {
+          this.setState({ isError: false })
+        }, 200);
+      } else {
+        this.setState({ isCreated: true})
+        setTimeout(() => {
+          this.setState({ isCreated: false })
+        }, 200);
+      }
+      this.setState({isLoading:false})
+    } else {
+      this.setState({isLoading:true})
+      const { form } = this.state;
+      form['tersangka_id'] = this.props.tersangkaId;
+      await this.props.dispatch(createstatustersangka(get_token(), form))
+      await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+      this.setState({isLoading:false})
+    }
   }
 
   render(){
@@ -82,9 +127,27 @@ class FormStatusTersangka extends React.Component {
         {label: 'Waktu', name: 'Waktu', fieldName: 'waktu', type: 'time'},
         {label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'},
       ]
-      console.log('status', this.props.statusTersangkaDataByPnkp)
+
+      if(this.props.edit){
+        return (
+          <MainForm
+            title={'Edit Form Status Tersangka'}
+            messageTitle='Status Tersangka'
+            isError={this.state.isError}
+            isDataChange={this.state.isDataChange}
+            defaultValue={this.state.form}
+            isCreated={this.state.isCreated}
+            isLoading={this.state.isLoading}
+            onFormChange={this.onFormChange}
+            formData={formData}
+            onsubmit={this.onsubmit}
+          />
+        )
+      }
+
       return (
         <ModalWithTablePreview 
+          path='status_tersangka'
           formTitle='FORM STATUS TERSANGKA'
           isNotAllowTo={['view']}
           tableData={this.props.statusTersangkaDataByPnkp}
@@ -102,7 +165,8 @@ class FormStatusTersangka extends React.Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    statusTersangkaDataByPnkp: dashboard.statusTersangkaDataByPnkp
+    statusTersangkaDataByPnkp: dashboard.statusTersangkaDataByPnkp,
+    statusTersangkaData: dashboard.statusTersangkaData,
   }
 }
 

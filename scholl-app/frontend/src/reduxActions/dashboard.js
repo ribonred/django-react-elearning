@@ -232,57 +232,54 @@ export function edituser(token, data, id) {
 
 export function fetchalluser(token, id = null) {
   return async dispatch => {
-    try {
-      let url = ''
-      if (id) {
-        url = `/api/users/${id}`
+    let url = ''
+    if (id) {
+      url = `/api/users/${id}`
+    }
+    else {
+      url = `/api/users/`
+    }
+    const result = await request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
-      else {
-        url = `/api/users/`
-      }
-      const result = await request(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      if(id) {
-        console.log('data', result.data)
-        dispatch(receive_user_data(result.data))
-      } else {
-        dispatch(receive_user_table(result.data))
-      }
-    } catch (e) {
-      console.log(e)
+    })
+    if(result instanceof Error){
+      return
+    }
+    if(id) {
+      dispatch(receive_user_data(result.data))
+    } else {
+      dispatch(receive_user_table(result.data))
     }
   }
 }
 // LKN CRUD
 export function get_lkn_by_penyidik(token, id = null, filter = null) {
   return async dispatch => {
-    try {
-      let url = ''
-      if (id) {
-        url = `/api/lkn/${id}`
-      }
-      else if (filter){
-        url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
-      }
-      else {
-        url = `/api/lkn/`
-      }
-      const result = await request(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      dispatch(receive_lkn_table(result.data))
-    } catch (e) {
-      console.log(e)
+    let url = ''
+    if (id) {
+      url = `/api/lkn/${id}`
     }
+    else if (filter){
+      url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
+    }
+    else {
+      url = `/api/lkn/`
+    }
+    const result = await request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return
+    }
+    dispatch(receive_lkn_table(result.data))
   }
 }
 
@@ -323,6 +320,9 @@ export function get_lkn_by_no_lkn(token, id) {
           'Authorization': `Bearer ${token}`
         }
       })
+      if(result instanceof Error){
+        return
+      }
       dispatch(receive_lkn_by_no_lkn(result.data))
     } catch (e) {
       console.log(e)
@@ -372,12 +372,17 @@ export function getpenangkapan(token, id = null, LKN = null) {
       }
     })
       .then(response => {
+        if(response instanceof Error){
+          return
+        }
         if(LKN){
           dispatch(receive_penangkapan_by_no_lkn(response.data))
         } else if(id){
           dispatch(receive_penangkapan_by_id(response.data))
         }
-
+      })
+      .catch(error => {
+        console.log(error)
       })
   }
 }
@@ -437,6 +442,9 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
+        if(response instanceof Error){
+          return
+        }
         if(id){
           dispatch(receive_tersangka_data(response.data))
         }
@@ -461,7 +469,6 @@ export function edittersangka(data, token, id) {
       }
     },data)
     .then(response => {
-
       if(response instanceof Error){
         throw Error
       }
@@ -484,7 +491,6 @@ export function edittersangkafoto(data, token, id) {
       }
     },data)
     .then(response => {
-
       if(response instanceof Error){
         throw Error
       }
@@ -641,6 +647,9 @@ export function get_lkn_detail(token, data) {
       }
     })
       .then((response) => {
+        if(response instanceof Error){
+          return
+        }
         dispatch(receive_lkn_data(response.data))
       })
   }
@@ -657,7 +666,12 @@ export function get_proses(token) {
         'Authorization': `Bearer ${token}`
       }
     })
-    .then((response) => {dispatch(receive_proses(response.data))})
+    .then((response) => {
+      if(response instanceof Error){
+        return
+      }
+      dispatch(receive_proses(response.data))
+    })
   }
 }
 
@@ -684,7 +698,12 @@ export function getprosestersangka(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_proses_tersangka(response.data)))
+      .then(response => {
+        if(response instanceof Error){
+          return
+        }
+        dispatch(receive_proses_tersangka(response.data))
+      })
   }
 }
 
@@ -711,7 +730,12 @@ export function getstatustersangka(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_status_tersangka(response.data)))
+      .then(response => {
+        if(response instanceof Error){
+          return
+        }
+        dispatch(receive_status_tersangka(response.data))
+      })
   }
 }
 
@@ -738,6 +762,11 @@ export function getstatusbb(token, id) {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_statusbb(response.data)))
+      .then(response => {
+        if(response instanceof Error){
+          return
+        }
+        dispatch(receive_statusbb(response.data))
+      })
   }
 }

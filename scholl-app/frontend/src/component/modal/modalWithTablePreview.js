@@ -16,12 +16,11 @@ export default class modalWithTablePreview extends React.Component {
           </Button>
           <TableView
             useId
-            path={this.props.title}
+            path={this.props.path}
             isNotAllowTo={this.props.isNotAllowTo}
             isLoading={this.props.isLoading}
             tableField={this.props.tableField || []}
             tableData={this.props.tableData || []}
-            isLoading={this.props.isLoading}
           />
           <Modal
             title={this.props.formTitle}

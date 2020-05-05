@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_tersangka_list, edittersangka, edittersangkafoto } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, edittersangka } from '../../../reduxActions/dashboard';
 import { connect } from 'react-redux';
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
