@@ -31,7 +31,7 @@ class EditBarangBukti extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <FormStatusBarangBukti edit />
+                  <FormStatusBarangBukti id={this.props.match.params.id} edit />
                  </div>
                </Content>
              </Layout>

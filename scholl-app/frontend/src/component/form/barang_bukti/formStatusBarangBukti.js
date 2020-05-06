@@ -1,7 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 import MainForm from '../../../ui-container/mainFormContainer';
-import { createstatusbb, getstatusbb } from '../../../reduxActions/dashboard'
+import { createstatusbb, getstatusbb, editstatusbb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -36,19 +36,18 @@ const tableFieldStatusBarangBukti = [
 
 
 class FormProsesTersangka extends React.Component {
-  //TODO CHANGE isDATACHANGE to false AFTER IT CAN GET CORRECT GET API CALL
   state = {
     form:{},
     isLoading: false,
     isCreated: false,
-    isDataChange: true,
+    isDataChange: false,
     isError: false,
   }
 
   async componentDidMount(){
     this.setState({isLoading: true})
     if(this.props.edit){
-      //TODO GET CORRECT DATA FROM API CALL THERE
+      await this.props.dispatch(getstatusbb(get_token(), null, this.props.id))
     } else {
       await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
     }
@@ -56,14 +55,13 @@ class FormProsesTersangka extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    //TODO IF SUCCESS GET DATA , GIVE STATE statusBBData in reducer Value from API CALL
     if(this.props.statusBBData !== prevProps.statusBBData){
       this.getDefaultForm()
     }
   }
 
-  getDefaultForm = () => {
-    this.setState({form: this.props.statusBBData}, () => this.setState({ isDataChange: true}))
+  getDefaultForm = async () => {
+    await this.setState({form: this.props.statusBBData}, () => this.setState({ isDataChange: true}))
   }
 
 
@@ -92,14 +90,8 @@ class FormProsesTersangka extends React.Component {
   onSubmit = async() => {
     if(this.props.edit){
       this.setState({isLoading:true})
-      // const { form } = this.state;
-      // const formData = new FormData();
-      // TODO GIVE CORRECT API CALL HERE
-      // const keys = Object.keys(form);
-      // keys.map((key) => {
-      //   formData.append(key, form[key]);
-      // })
-      const result= 'GIVE API CALL HERE'
+      const { form } = this.state;
+      const result= await this.props.dispatch(editstatusbb(get_token(), form, this.props.id))
       if(result === 'error'){
         this.setState({ isError: true })
         setTimeout(() => {
@@ -147,7 +139,7 @@ class FormProsesTersangka extends React.Component {
             isLoading={this.state.isLoading}
             onFormChange={this.onFormChange}
             formData={formData}
-            onsubmit={this.onsubmit}
+            onsubmit={this.onSubmit}
           />
         )
       }

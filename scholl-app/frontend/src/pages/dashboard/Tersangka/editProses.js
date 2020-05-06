@@ -29,7 +29,7 @@ class EditTersangka extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <FormProsesTersangka edit/>
+                  <FormProsesTersangka id={this.props.match.params.id} edit/>
                  </div>
                </Content>
              </Layout>

@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createprosestersangka, getprosestersangka, get_proses } from '../../../reduxActions/dashboard'
+import { createprosestersangka, getprosestersangka, get_proses, editprosestersangka } from '../../../reduxActions/dashboard'
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
@@ -27,12 +27,11 @@ const tableFieldStatusTersangka = [
 ]
 
 class FormProsesTersangka extends React.Component {
-  //TODO CHANGE isDATACHANGE to false AFTER IT CAN GET CORRECT GET API CALL
   state = {
     form:{},
     isLoading: false,
     isCreated: false,
-    isDataChange: true,
+    isDataChange: false,
     isError: false,
   }
 
@@ -40,7 +39,7 @@ class FormProsesTersangka extends React.Component {
     this.setState({ isLoading: true })
     await this.props.dispatch(get_proses(get_token()))
     if(this.props.edit){
-      //TODO GET CORRECT DATA THERE
+      await this.props.dispatch(getprosestersangka(get_token(), null, this.props.id))
     } else {
       await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
     }
@@ -48,14 +47,13 @@ class FormProsesTersangka extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    //TODO IF SUCCESS GET DATA , GIVE STATE prosesTersangkaData in reducer Value from API CALL
     if(this.props.prosesTersangkaData !== prevProps.prosesTersangkaData){
       this.getDefaultForm()
     }
   }
 
-  getDefaultForm = () => {
-    this.setState({form: this.props.prosesTersangkaData}, () => this.setState({ isDataChange: true}))
+  getDefaultForm = async () => {
+    await this.setState({form: this.props.prosesTersangkaData}, () => this.setState({ isDataChange: true}))
   }
 
   onFormChange = (fieldName, e) => {
@@ -88,14 +86,22 @@ class FormProsesTersangka extends React.Component {
   onSubmit = async () => {
     if(this.props.edit){
       this.setState({isLoading:true})
-      // const { form } = this.state;
-      // const formData = new FormData();
-      // TODO GIVE CORRECT API CALL HERE
-      // const keys = Object.keys(form);
-      // keys.map((key) => {
-      //   formData.append(key, form[key]);
-      // })
-      const result= 'GIVE API CALL HERE'
+      const { form } = this.state;
+      const formData = new FormData();
+      const keys = Object.keys(form);
+      keys.map((key) => {
+        if(key == 'sp_han_doc' || key == 'tap_han_doc' || key == 'surat_perpanjangan_han_doc'){
+          if(form[key] && form[key].uid){
+            formData.append(key, form[key]);
+          }
+        } else {
+          formData.append(key, form[key]);
+        }
+      })
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      const result = await this.props.dispatch(editprosestersangka(get_token(), formData, this.props.id))
       if(result === 'error'){
         this.setState({ isError: true })
         setTimeout(() => {
@@ -118,8 +124,8 @@ class FormProsesTersangka extends React.Component {
       })
       formData.append('proses_tersangka', this.props.tersangkaId)
       for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
       }
-      console.log(pair[0]+ ', ' + pair[1]); 
       await this.props.dispatch(createprosestersangka(get_token(), formData))
       await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
       this.setState({isLoading:false})
@@ -179,7 +185,7 @@ class FormProsesTersangka extends React.Component {
             isLoading={this.state.isLoading}
             onFormChange={this.onFormChange}
             formData={formData}
-            onsubmit={this.onsubmit}
+            onsubmit={this.onSubmit}
           />
         )
       }
