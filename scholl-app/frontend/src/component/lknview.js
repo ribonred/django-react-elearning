@@ -54,12 +54,11 @@ const tableFieldProses = [
     search: true,
   },
   {
-    title: 'Keterangan',
-    dataIndex: 'keterangan',
-    longtext: true,
+    title: 'Jenis Proses',
+    dataIndex: 'jenis_proses',
     sorter: true,
     search: true,
-  }
+  },
 ]
 
 const tableFieldBarangBukti = [
