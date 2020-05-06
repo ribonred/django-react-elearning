@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import DescriptionView from '../../../ui-container/description';
 import ImageView from '../../../component/image/imagePreview';
-import { get_tersangka_list, get_proses } from '../../../reduxActions/dashboard';
+import { get_tersangka_list, get_proses, getstatustersangka, getprosestersangka } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
@@ -73,6 +73,8 @@ class TersangkaView extends Component {
       let noTsk= this.props.match.params.id;
       await this.props.dispatch(get_proses(get_token()))
       await this.props.dispatch(get_tersangka_list(get_token(), noTsk))
+      await this.props.dispatch(getstatustersangka(get_token(), noTsk))
+      await this.props.dispatch(getprosestersangka(get_token(), noTsk))
       this.setState({ isLoading: false })
     }
     renderBreadCrumb = () => {
@@ -90,8 +92,8 @@ class TersangkaView extends Component {
     }
 
     render() {
-      const { tersangkaData, prosesIndex } = this.props;
-      let dataTersangka = [];
+      const { tersangkaData, prosesIndex, statusTersangkaDataByPnkp, prosesTersangka } = this.props;
+      var dataTersangka = [];
       if (tersangkaData.id) {
         dataTersangka = [
           {label: 'Nama', value: tersangkaData.nama_tersangka},
@@ -100,8 +102,8 @@ class TersangkaView extends Component {
           {label: 'Foto', value: tersangkaData.foto},
         ];
       }
-      let dataStatus = tersangkaData.statustersangka
-        let dataProses = tersangkaData.prosestersangka;
+        var dataStatus = statusTersangkaDataByPnkp;
+        var dataProses = prosesTersangka;
         if(prosesIndex.length > 0 && tersangkaData.id && dataProses > 0){
           dataProses = dataProses.map((data) => {
             return {
@@ -145,7 +147,11 @@ class TersangkaView extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { tersangkaData: dashboard.tersangkaData, prosesIndex: dashboard.prosesIndex }
+  return { tersangkaData: dashboard.tersangkaData, 
+    prosesIndex: dashboard.prosesIndex,
+    statusTersangkaDataByPnkp: dashboard.statusTersangkaDataByPnkp,
+    prosesTersangka: dashboard.prosesTersangka
+  }
 }
 
 const styles = {

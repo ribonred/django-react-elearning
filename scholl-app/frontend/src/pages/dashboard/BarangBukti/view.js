@@ -3,7 +3,7 @@ import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import DescriptionView from '../../../ui-container/description';
-import { get_bb_list } from '../../../reduxActions/dashboard';
+import { get_bb_list, getstatusbb } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
 
@@ -49,6 +49,7 @@ class BarangBuktiView extends Component {
       this.setState({ isLoading: true })
       let noBB = this.props.match.params.id;
       await this.props.dispatch(get_bb_list(get_token(), noBB))
+      await this.props.dispatch(getstatusbb(get_token(), noBB))
       this.setState({ isLoading: false })
     }
 
@@ -67,7 +68,7 @@ class BarangBuktiView extends Component {
     }
 
     render() {
-      const { bbData } = this.props;
+      const { bbData, bbStatus } = this.props;
       let dataTersangka = []
       let dataBB = []
       if (bbData.milik_tersangka_id) {
@@ -84,7 +85,7 @@ class BarangBuktiView extends Component {
           {label: 'Tap Status', value: bbData.tap_status},
         ];
       }
-      let dataStatus = bbData.statusbarangbukti
+      let dataStatus = bbStatus;
 
         return (
           <SideMenu selected="4">
@@ -118,7 +119,7 @@ class BarangBuktiView extends Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   console.log(dashboard.bbData)
-  return { bbData: dashboard.bbData }
+  return { bbData: dashboard.bbData, bbStatus: dashboard.bbStatus }
 }
 
 const styles = {

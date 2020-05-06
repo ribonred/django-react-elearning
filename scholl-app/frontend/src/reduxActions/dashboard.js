@@ -840,11 +840,11 @@ export function createstatusbb(token, data) {
   }
 }
 
-export function getstatusbb(token, tsk_id, status_id) {
+export function getstatusbb(token, bb_id, status_id) {
   return dispatch => {
     let url = ''
-    if (tsk_id) {
-      url = `/api/bb-status/?barang_bukti_id=${tsk_id}`
+    if (bb_id) {
+      url = `/api/bb-status/?barang_bukti_id=${bb_id}`
     }
     else {
       url = `/api/bb-status/${status_id}`
@@ -860,7 +860,7 @@ export function getstatusbb(token, tsk_id, status_id) {
       if(response instanceof Error){
         return
       } else {
-        if (tsk_id) {
+        if (bb_id) {
           dispatch(receive_statusbb(response.data))
         } else {
           dispatch(receive_statusbb_data(response.data))

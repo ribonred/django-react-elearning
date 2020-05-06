@@ -21,13 +21,13 @@ class tableNew extends Component {
                     if(data.link){
                       return (
                         <td style={styles.tableContent}>
-                           <a>{item[data.dataIndex].substring(0, 20)}</a>
+                           <a>{item[data.dataIndex] ? item[data.dataIndex].substring(0, 20) : 'no data'}</a>
                         </td>
                       )
                     } else if(data.longText){
                         return (
                           <td style={{ width: "35%", padding: "8px", textAlign: "left", borderBottom: "1px solid #ddd" }}>
-                            {item[data.dataIndex].substring(0, 20).substring(0, 100)} ...
+                            {item[data.dataIndex] ? item[data.dataIndex].substring(0, 20).substring(0, 100) : 'no item'} ...
                           </td>
                         )
                     } else {
