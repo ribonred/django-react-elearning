@@ -1,7 +1,7 @@
 import React from "react";
 import ViewContainer from "../ui-container/viewContainer";
 import { Descriptions, Tabs, Skeleton } from "antd";
-import TableView from './table/tableFilterable';
+import TableView from './table/tableView';
 
 const { TabPane } = Tabs
 
@@ -21,6 +21,7 @@ const tableFieldStatus = [
   {
     title: 'Keterangan',
     dataIndex: 'keterangan',
+    longtext: true,
     sorter: true,
     search: true,
   },
@@ -40,20 +41,22 @@ const tableFieldStatus = [
 
 const tableFieldProses = [
   {
-    title: 'No Proses',
-    dataIndex: 'no_proses',
+    title: 'SP.HAN',
+    dataIndex: 'sp_han',
     sorter: true,
     search: true,
   },
   {
-    title: 'Jenis Proses',
-    dataIndex: 'jenis_proses',
+    title: 'Dokumen SP.HAN',
+    dataIndex: 'sp_han_doc',
+    link: true,
     sorter: true,
     search: true,
   },
   {
     title: 'Keterangan',
     dataIndex: 'keterangan',
+    longtext: true,
     sorter: true,
     search: true,
   }
@@ -148,7 +151,6 @@ const LknViewView = (props) => {
                         <div style={styles.detailBoxPenangkapan}>
                         <TableView
                           path="status tersangka"
-                          isNotAllowTo={['view','edit','delete']}
                           tableField={tableFieldStatus}
                           tableData={tsk.statustersangka}
                         />

@@ -3,6 +3,7 @@ import { Layout, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import SideMenu from '../../../component/sider';
 import DescriptionView from '../../../ui-container/description';
+import ImageView from '../../../component/image/imagePreview';
 import { get_tersangka_list, get_proses } from '../../../reduxActions/dashboard';
 import { get_token } from '../../../helper/requestHelper';
 import TableView from '../../../component/table/tableFilterable'
@@ -109,7 +110,6 @@ class TersangkaView extends Component {
             }
           })
         }
-
         return (
           <SideMenu selected="3">
             <Layout>
@@ -120,6 +120,7 @@ class TersangkaView extends Component {
                     title="Data Tersangka"
                     data={dataTersangka}
                   />
+                  <ImageView image={dataTersangka}/>
                   <TableView
                     path="status tersangka"
                     isNotAllowTo={['view','edit','delete']}

@@ -145,13 +145,12 @@ class FormProsesTersangka extends React.Component {
         {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
         {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]
-
-      if(jenis_proses === '1' || jenis_proses === '2'){
+      if(jenis_proses === 1 || jenis_proses === 2){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
         formData.push({label: 'DOKUMEN TAP HAN', name: 'DOKUMEN TAP HAN', fieldName: 'tap_han_doc', type: 'upload'})
       }
 
-      if(jenis_proses === '3'){
+      if(jenis_proses === 3){
         formData.push({label: 'SURAT PERPANJANGAN HAN', name: 'SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han'})
         formData.push({label: 'DOKUMEN SURAT PERPANJANGAN HAN', name: 'DOKUMEN SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han_doc', type: 'upload'})
       }
