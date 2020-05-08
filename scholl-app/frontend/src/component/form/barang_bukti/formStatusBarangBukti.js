@@ -1,6 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createstatusbb, getstatusbb } from '../../../reduxActions/dashboard'
+import MainForm from '../../../ui-container/mainFormContainer';
+import { createstatusbb, getstatusbb, editstatusbb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -37,14 +38,32 @@ const tableFieldStatusBarangBukti = [
 class FormProsesTersangka extends React.Component {
   state = {
     form:{},
-    isLoading: false
+    isLoading: false,
+    isCreated: false,
+    isDataChange: false,
+    isError: false,
   }
 
   async componentDidMount(){
     this.setState({isLoading: true})
-    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId)) 
+    if(this.props.edit){
+      await this.props.dispatch(getstatusbb(get_token(), null, this.props.id))
+    } else {
+      await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
+    }
     this.setState({isLoading: false})
   }
+
+  componentDidUpdate(prevProps){
+    if(this.props.statusBBData !== prevProps.statusBBData){
+      this.getDefaultForm()
+    }
+  }
+
+  getDefaultForm = async () => {
+    await this.setState({form: this.props.statusBBData}, () => this.setState({ isDataChange: true}))
+  }
+
 
   onFormChange = (fieldName, e) => {
     const form = {...this.state.form};
@@ -69,12 +88,30 @@ class FormProsesTersangka extends React.Component {
   }
 
   onSubmit = async() => {
-    const { form } = this.state;
-    form['barang_bukti_id'] = this.props.barangBuktiId
-    this.setState({isLoading:true})
-    await this.props.dispatch(createstatusbb(get_token(), form))
-    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
-    this.setState({isLoading:false})
+    if(this.props.edit){
+      this.setState({isLoading:true})
+      const { form } = this.state;
+      const result= await this.props.dispatch(editstatusbb(get_token(), form, this.props.id))
+      if(result === 'error'){
+        this.setState({ isError: true })
+        setTimeout(() => {
+          this.setState({ isError: false })
+        }, 200);
+      } else {
+        this.setState({ isCreated: true})
+        setTimeout(() => {
+          this.setState({ isCreated: false })
+        }, 200);
+      }
+      this.setState({isLoading:false})
+    } else {
+      const { form } = this.state;
+      form['barang_bukti_id'] = this.props.barangBuktiId
+      this.setState({isLoading:true})
+      await this.props.dispatch(createstatusbb(get_token(), form))
+      await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
+      this.setState({isLoading:false})
+    }
   }
 
   render(){
@@ -89,8 +126,27 @@ class FormProsesTersangka extends React.Component {
         {label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'},
         {label: 'Status', name: 'Status', fieldName: 'status', dropdown: status_drop, type: 'select'},
       ]
+
+      if(this.props.edit){
+        return (
+          <MainForm
+            title={'Edit Form Status Barang Bukti'}
+            messageTitle='Status Barang Bukti'
+            isError={this.state.isError}
+            isDataChange={this.state.isDataChange}
+            defaultValue={this.state.form}
+            isCreated={this.state.isCreated}
+            isLoading={this.state.isLoading}
+            onFormChange={this.onFormChange}
+            formData={formData}
+            onsubmit={this.onSubmit}
+          />
+        )
+      }
+
       return (
         <ModalWithTablePreview 
+          path='status_bb'
           formTitle='FORM STATUS BARANG BUKTI'
           isNotAllowTo={['view']}
           tableData={this.props.bbStatus}
@@ -108,7 +164,8 @@ class FormProsesTersangka extends React.Component {
 function mapStateToProps(state) {
   const { dashboard } = state
   return {
-    bbStatus: dashboard.bbStatus
+    bbStatus: dashboard.bbStatus,
+    statusBBData: dashboard.statusBBData,
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createprosestersangka, getprosestersangka, get_proses } from '../../../reduxActions/dashboard'
+import { createprosestersangka, getprosestersangka, get_proses, editprosestersangka } from '../../../reduxActions/dashboard'
+import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -28,14 +29,31 @@ const tableFieldStatusTersangka = [
 class FormProsesTersangka extends React.Component {
   state = {
     form:{},
-    isLoading: false
+    isLoading: false,
+    isCreated: false,
+    isDataChange: false,
+    isError: false,
   }
 
   async componentDidMount(){
     this.setState({ isLoading: true })
     await this.props.dispatch(get_proses(get_token()))
-    await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    if(this.props.edit){
+      await this.props.dispatch(getprosestersangka(get_token(), null, this.props.id))
+    } else {
+      await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    }
     this.setState({ isLoading: false })
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.prosesTersangkaData !== prevProps.prosesTersangkaData){
+      this.getDefaultForm()
+    }
+  }
+
+  getDefaultForm = async () => {
+    await this.setState({form: this.props.prosesTersangkaData}, () => this.setState({ isDataChange: true}))
   }
 
   onFormChange = (fieldName, e) => {
@@ -63,25 +81,55 @@ class FormProsesTersangka extends React.Component {
         form: form,
       })
     }
-    console.log('form', form)
   }
 
   onSubmit = async () => {
-    const { form } = this.state;
-    this.setState({isLoading:true})
-    const formData = new FormData();
-    const keys = Object.keys(form);
-    keys.map((key) => {
-      formData.append(key, form[key]);
-    })
-    formData.append('proses_tersangka', this.props.tersangkaId)
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
+    if(this.props.edit){
+      this.setState({isLoading:true})
+      const { form } = this.state;
+      const formData = new FormData();
+      const keys = Object.keys(form);
+      keys.map((key) => {
+        if(key == 'sp_han_doc' || key == 'tap_han_doc' || key == 'surat_perpanjangan_han_doc'){
+          if(form[key] && form[key].uid){
+            formData.append(key, form[key]);
+          }
+        } else {
+          formData.append(key, form[key]);
+        }
+      })
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      const result = await this.props.dispatch(editprosestersangka(get_token(), formData, this.props.id))
+      if(result === 'error'){
+        this.setState({ isError: true })
+        setTimeout(() => {
+          this.setState({ isError: false })
+        }, 200);
+      } else {
+        this.setState({ isCreated: true})
+        setTimeout(() => {
+          this.setState({ isCreated: false })
+        }, 200);
+      }
+      this.setState({isLoading:false})
+    } else {
+      const { form } = this.state;
+      this.setState({isLoading:true})
+      const formData = new FormData();
+      const keys = Object.keys(form);
+      keys.map((key) => {
+        formData.append(key, form[key]);
+      })
+      formData.append('proses_tersangka', this.props.tersangkaId)
+      for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      await this.props.dispatch(createprosestersangka(get_token(), formData))
+      await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+      this.setState({isLoading:false})
     }
-    await this.props.dispatch(createprosestersangka(get_token(), formData))
-    await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
-    console.log('ter', this.props.tersangkaId)
-    this.setState({isLoading:false})
   }
 
   render(){
@@ -103,13 +151,12 @@ class FormProsesTersangka extends React.Component {
         {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
         {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]
-
-      if(jenis_proses == '1' || jenis_proses == '2'){
+      if(jenis_proses === 1 || jenis_proses === 2){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
         formData.push({label: 'DOKUMEN TAP HAN', name: 'DOKUMEN TAP HAN', fieldName: 'tap_han_doc', type: 'upload'})
       }
 
-      if(jenis_proses == '3'){
+      if(jenis_proses === 3){
         formData.push({label: 'SURAT PERPANJANGAN HAN', name: 'SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han'})
         formData.push({label: 'DOKUMEN SURAT PERPANJANGAN HAN', name: 'DOKUMEN SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han_doc', type: 'upload'})
       }
@@ -126,8 +173,26 @@ class FormProsesTersangka extends React.Component {
         })
       }
 
+      if(this.props.edit){
+        return (
+          <MainForm
+            title={'Edit Form Proses Tersangka'}
+            messageTitle='Proses Tersangka'
+            isError={this.state.isError}
+            isDataChange={this.state.isDataChange}
+            defaultValue={this.state.form}
+            isCreated={this.state.isCreated}
+            isLoading={this.state.isLoading}
+            onFormChange={this.onFormChange}
+            formData={formData}
+            onsubmit={this.onSubmit}
+          />
+        )
+      }
+
       return (
-        <ModalWithTablePreview 
+        <ModalWithTablePreview
+          path='proses_tersangka'
           formTitle='FORM PROSES TERSANGKA'
           isNotAllowTo={['view']}
           tableData={prosesTersangka || []}
@@ -146,7 +211,8 @@ function mapStateToProps(state) {
   const { dashboard } = state
   return {
     prosesTersangka: dashboard.prosesTersangka,
-    prosesIndex: dashboard.prosesIndex
+    prosesIndex: dashboard.prosesIndex,
+    prosesTersangkaData: dashboard.prosesTersangkaData,
   }
 }
 

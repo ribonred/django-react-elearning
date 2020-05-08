@@ -21,6 +21,13 @@ function receive_statusbb(data) {
   }
 }
 
+function receive_statusbb_data(data) {
+  return {
+    type: "RECEIVE_STATUS_BB_DATA",
+    data
+  }
+}
+
 function receive_proses_tersangka(data){
   return {
     type: "RECEIVE_PROSES_TERSANGKA",
@@ -28,9 +35,23 @@ function receive_proses_tersangka(data){
   }
 }
 
+function receive_proses_tersangka_data(data){
+  return {
+    type: "RECEIVE_PROSES_TERSANGKA_DATA",
+    data,
+  }
+}
+
 function receive_status_tersangka(data){
   return {
     type: "RECEIVE_STATUS_TERSANGKA",
+    data
+  }
+}
+
+function receive_status_tersangka_data(data){
+  return {
+    type: "RECEIVE_STATUS_TERSANGKA_DATA",
     data
   }
 }
@@ -232,57 +253,54 @@ export function edituser(token, data, id) {
 
 export function fetchalluser(token, id = null) {
   return async dispatch => {
-    try {
-      let url = ''
-      if (id) {
-        url = `/api/users/${id}`
+    let url = ''
+    if (id) {
+      url = `/api/users/${id}`
+    }
+    else {
+      url = `/api/users/`
+    }
+    const result = await request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
-      else {
-        url = `/api/users/`
-      }
-      const result = await request(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      if(id) {
-        console.log('data', result.data)
-        dispatch(receive_user_data(result.data))
-      } else {
-        dispatch(receive_user_table(result.data))
-      }
-    } catch (e) {
-      console.log(e)
+    })
+    if(result instanceof Error){
+      return
+    }
+    if(id) {
+      dispatch(receive_user_data(result.data))
+    } else {
+      dispatch(receive_user_table(result.data))
     }
   }
 }
 // LKN CRUD
 export function get_lkn_by_penyidik(token, id = null, filter = null) {
   return async dispatch => {
-    try {
-      let url = ''
-      if (id) {
-        url = `/api/lkn/${id}`
-      }
-      else if (filter){
-        url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
-      }
-      else {
-        url = `/api/lkn/`
-      }
-      const result = await request(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      dispatch(receive_lkn_table(result.data))
-    } catch (e) {
-      console.log(e)
+    let url = ''
+    if (id) {
+      url = `/api/lkn/${id}`
     }
+    else if (filter){
+      url = `/api/lkn/?tgl_dibuat_mulai=${filter['startDate']}&tgl_dibuat_akhir=${filter['endDate']}`
+    }
+    else {
+      url = `/api/lkn/`
+    }
+    const result = await request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(result instanceof Error){
+      return
+    }
+    dispatch(receive_lkn_table(result.data))
   }
 }
 
@@ -323,6 +341,9 @@ export function get_lkn_by_no_lkn(token, id) {
           'Authorization': `Bearer ${token}`
         }
       })
+      if(result instanceof Error){
+        return
+      }
       dispatch(receive_lkn_by_no_lkn(result.data))
     } catch (e) {
       console.log(e)
@@ -372,12 +393,17 @@ export function getpenangkapan(token, id = null, LKN = null) {
       }
     })
       .then(response => {
+        if(response instanceof Error){
+          return
+        }
         if(LKN){
           dispatch(receive_penangkapan_by_no_lkn(response.data))
         } else if(id){
           dispatch(receive_penangkapan_by_id(response.data))
         }
-
+      })
+      .catch(error => {
+        console.log(error)
       })
   }
 }
@@ -437,6 +463,9 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
       }
     })
       .then((response) => {
+        if(response instanceof Error){
+          return
+        }
         if(id){
           dispatch(receive_tersangka_data(response.data))
         }
@@ -461,7 +490,6 @@ export function edittersangka(data, token, id) {
       }
     },data)
     .then(response => {
-
       if(response instanceof Error){
         throw Error
       }
@@ -484,7 +512,6 @@ export function edittersangkafoto(data, token, id) {
       }
     },data)
     .then(response => {
-
       if(response instanceof Error){
         throw Error
       }
@@ -641,6 +668,9 @@ export function get_lkn_detail(token, data) {
       }
     })
       .then((response) => {
+        if(response instanceof Error){
+          return
+        }
         dispatch(receive_lkn_data(response.data))
       })
   }
@@ -657,7 +687,12 @@ export function get_proses(token) {
         'Authorization': `Bearer ${token}`
       }
     })
-    .then((response) => {dispatch(receive_proses(response.data))})
+    .then((response) => {
+      if(response instanceof Error){
+        return
+      }
+      dispatch(receive_proses(response.data))
+    })
   }
 }
 
@@ -675,16 +710,54 @@ export function createprosestersangka(token, data) {
   }
 }
 
-export function getprosestersangka(token, id) {
+export function getprosestersangka(token, tsk_id, proses_id) {
   return dispatch => {
-    return request(`/api/tsk-proses/?proses_tersangka=${id}`, {
+    let url = ''
+    if (tsk_id) {
+      url = `/api/tsk-proses/?proses_tersangka=${tsk_id}`
+    }
+    else {
+      url = `/api/tsk-proses/${proses_id}`
+    }
+    return request(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_proses_tersangka(response.data)))
+    .then(response => {
+      if(response instanceof Error){
+        return
+      } else {
+        if(tsk_id) {
+          dispatch(receive_proses_tersangka(response.data))
+        } else {
+          dispatch(receive_proses_tersangka_data(response.data))
+        }
+      }
+    })
+  }
+}
+
+export function editprosestersangka(token, data, proses_id){
+  return dispatch => {
+    return request(`/api/tsk-proses/${proses_id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
@@ -702,16 +775,54 @@ export function createstatustersangka(token, data) {
   }
 }
 
-export function getstatustersangka(token, id) {
+export function getstatustersangka(token, tsk_id, status_id) {
   return dispatch => {
-    return request(`/api/tsk-status/?tersangka_id=${id}`, {
+    let url = ''
+    if (tsk_id) {
+      url = `/api/tsk-status/?tersangka_id=${tsk_id}`
+    }
+    else {
+      url = `/api/tsk-status/${status_id}`
+    }
+    return request(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_status_tersangka(response.data)))
+    .then(response => {
+      if(response instanceof Error){
+        return
+      } else {
+        if (tsk_id){
+          dispatch(receive_status_tersangka(response.data))
+        } else {
+          dispatch(receive_status_tersangka_data(response.data))
+        }
+      }
+    })
+  }
+}
+
+export function editstatustersangka(token, data, status_id){
+  return dispatch => {
+    return request(`/api/tsk-status/${status_id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }
 
@@ -729,15 +840,53 @@ export function createstatusbb(token, data) {
   }
 }
 
-export function getstatusbb(token, id) {
+export function getstatusbb(token, bb_id, status_id) {
   return dispatch => {
-    return request(`/api/bb-status/?barang_bukti_id=${id}`, {
+    let url = ''
+    if (bb_id) {
+      url = `/api/bb-status/?barang_bukti_id=${bb_id}`
+    }
+    else {
+      url = `/api/bb-status/${status_id}`
+    }
+    return request(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(response => dispatch(receive_statusbb(response.data)))
+    .then(response => {
+      if(response instanceof Error){
+        return
+      } else {
+        if (bb_id) {
+          dispatch(receive_statusbb(response.data))
+        } else {
+          dispatch(receive_statusbb_data(response.data))
+        }
+      }
+    })
+  }
+}
+
+export function editstatusbb(token, data, status_id){
+  return dispatch => {
+    return request(`/api/bb-status/${status_id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
+    })
   }
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from "antd";
-import Background from "../assets/background.png";
 import Background_1 from "../assets/background_1.png"
 
 const authContainerNew = (props) => {

@@ -6,6 +6,9 @@ import { Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './route/privateroute';
 import LoginPage from './pages/loginpages';
 import PenangkapanCreate from './pages/dashboard/Penangkapan/create'
+import EditProses from './pages/dashboard/Tersangka/editProses';
+import EditStatus from './pages/dashboard/Tersangka/editStatus';
+import EditStatusBB from './pages/dashboard/BarangBukti/editStatus';
 import PenangkapanEdit from './pages/dashboard/Penangkapan/edit';
 import Lkn from './pages/dashboard/LKN/index.js';
 import LknView from './pages/dashboard/LKN/view.js';
@@ -49,6 +52,9 @@ export default class App extends Component {
                 <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />
                 <PrivateRoute path={`${url}/LKN/:id/Penangkapan/buat`} component={PenangkapanCreate} exact />
                 <PrivateRoute path={`${url}/Penangkapan/:id/edit`} component={PenangkapanEdit} exact />
+                <PrivateRoute path={`${url}/proses_tersangka/:id/edit`} component={EditProses} exact />
+                <PrivateRoute path={`${url}/status_tersangka/:id/edit`} component={EditStatus} exact />
+                <PrivateRoute path={`${url}/status_bb/:id/edit`} component={EditStatusBB} exact />
               </>
             )}
           />

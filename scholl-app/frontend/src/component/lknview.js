@@ -1,7 +1,7 @@
 import React from "react";
 import ViewContainer from "../ui-container/viewContainer";
-import { Descriptions, Tabs, Skeleton, Layout } from "antd";
-import TableView from './table/tableFilterable';
+import { Descriptions, Tabs, Skeleton } from "antd";
+import TableView from './table/tableView';
 
 const { TabPane } = Tabs
 
@@ -21,6 +21,7 @@ const tableFieldStatus = [
   {
     title: 'Keterangan',
     dataIndex: 'keterangan',
+    longtext: true,
     sorter: true,
     search: true,
   },
@@ -40,20 +41,22 @@ const tableFieldStatus = [
 
 const tableFieldProses = [
   {
-    title: 'No Proses',
-    dataIndex: 'no_proses',
+    title: 'SP.HAN',
+    dataIndex: 'sp_han',
     sorter: true,
     search: true,
   },
   {
-    title: 'Jenis Proses',
-    dataIndex: 'jenis_proses',
+    title: 'Dokumen SP.HAN',
+    dataIndex: 'sp_han_doc',
+    link: true,
     sorter: true,
     search: true,
   },
   {
     title: 'Keterangan',
     dataIndex: 'keterangan',
+    longtext: true,
     sorter: true,
     search: true,
   }
@@ -118,14 +121,14 @@ const LknViewView = (props) => {
                   <div style={styles.profilTersangkaBox}>
                     <div style={styles.fotoTersangkaBox}>
                     {
-                      tsk.foto == null || tsk.foto == '' || tsk.foto == undefined ?
-                      (<img alt='view' src='https://f1.pngfuel.com/png/455/507/814/person-silhouette-man-drawing-male-profile-of-a-person-female-face-png-clip-art-thumbnail.png' style={styles.fotoTersangka}/>)
+                      tsk.foto === null || tsk.foto === '' || tsk.foto === undefined ?
+                      (<img alt='view' src='https://fisipwarmadewa.ac.id/wp-content/uploads/2016/11/No-image-found.jpg' style={styles.fotoTersangka}/>)
                       :
                       (<img alt='view' src={tsk.foto} style={styles.fotoTersangka}/>)
                     }
                     </div>
-                    <div style={{paddingTop: '10px'}}>
-                      <p style={styles.namaTersangka}>{tsk.nama_tersangka}</p>
+                    <div style={{paddingTop: '10px', textAlign: 'center'}}>
+                      <a style={styles.namaTersangka}>{tsk.nama_tersangka}</a>
                       <p style={styles.keteranganTersangka}>{tsk.jenis_kelamin.toUpperCase()}</p>
                       <p style={styles.keteranganTersangka}>{tsk.umur} Tahun</p>
                     </div>
@@ -148,7 +151,6 @@ const LknViewView = (props) => {
                         <div style={styles.detailBoxPenangkapan}>
                         <TableView
                           path="status tersangka"
-                          isNotAllowTo={['view','edit','delete']}
                           tableField={tableFieldStatus}
                           tableData={tsk.statustersangka}
                         />
@@ -221,8 +223,6 @@ const styles = {
   },
   namaTersangka: {
     fontSize: 16,
-    textAlign: 'center',
-    verticalAlign: 'middle',
     margin: 0,
     fontWeight: 'bold',
     fontFamily: 'Roboto'
