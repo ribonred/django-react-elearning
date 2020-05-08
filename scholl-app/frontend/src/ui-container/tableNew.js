@@ -16,7 +16,7 @@ class tableNew extends Component {
             <th style={styles.tableContent}>Actions</th>
           </tr>
 
-          <tr style={styles.hover}>
+          <tr>
             <td style={styles.tableContent}>1</td>
             <td style={styles.tableContent}>Pengadilan Satu</td>
             <td style={styles.tableContent}>

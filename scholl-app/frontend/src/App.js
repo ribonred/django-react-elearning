@@ -24,13 +24,14 @@ import TersangkaView from './pages/dashboard/Tersangka/view.js';
 import BarangBukti from './pages/dashboard/BarangBukti/index.js';
 import BarangBuktiEdit from './pages/dashboard/BarangBukti/edit.js';
 import BarangBuktiView from './pages/dashboard/BarangBukti/view.js';
+import ModalView from './component/modal/modalDetailsView'
 
 export default class App extends Component {
   render() {
     return (
       <Router history={history}>
         <Switch>
-          <PrivateRoute exact path='/' isReverse defaultPath='/dashboard' component={LoginPage} />
+          <PrivateRoute exact path='/' isReverse defaultPath='/dashboard' component={ModalView} />
           <Route
             path='/dashboard'
             render={({ match: { url } }) => (
