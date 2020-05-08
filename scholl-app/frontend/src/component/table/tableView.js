@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class tableNew extends Component {    
   render() {
-    console.log('table data', this.props.tableData)
     return (
       <div>
         <table>

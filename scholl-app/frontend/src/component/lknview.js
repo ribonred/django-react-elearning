@@ -54,12 +54,11 @@ const tableFieldProses = [
     search: true,
   },
   {
-    title: 'Keterangan',
-    dataIndex: 'keterangan',
-    longtext: true,
+    title: 'Jenis Proses',
+    dataIndex: 'jenis_proses',
     sorter: true,
     search: true,
-  }
+  },
 ]
 
 const tableFieldBarangBukti = [
@@ -111,9 +110,9 @@ const LknViewView = (props) => {
           {props.lkn.penangkapan.map(data =>
             <div key={data.id} style={styles.detailBox}>
               <Descriptions title="Penangkapan">
-                <Descriptions.Item label="No. Penangkapan">{data.no_penangkapan}</Descriptions.Item>
+                <Descriptions.Item label="SP KAP">{data.no_penangkapan}</Descriptions.Item>
                 <Descriptions.Item label="Tanggal Penangkapan">{data.tanggal_penangkapan}</Descriptions.Item>
-                <Descriptions.Item label="Jam Penangkapan">{data.jam_penangkapan}</Descriptions.Item>
+                <Descriptions.Item label="Masa Berakhir Penangkapan">{data.jam_penangkapan}</Descriptions.Item>
                 <div style={{borderTop: '1px dashed #6d6d6d'}}/>
               </Descriptions>
               {data.penangkapan_tersangka.map(tsk =>

@@ -44,14 +44,14 @@ const tableFieldStatus = [
 
 const tableFieldProses = [
   {
-    title: 'No Proses',
-    dataIndex: 'no_proses',
+    title: 'Jenis Proses',
+    dataIndex: 'jenis_proses',
     sorter: true,
     search: true,
   },
   {
-    title: 'Jenis Proses',
-    dataIndex: 'jenis_proses',
+    title: 'SP_HAN',
+    dataIndex: 'sp_han',
     sorter: true,
     search: true,
   },
@@ -104,7 +104,7 @@ class TersangkaView extends Component {
       }
         var dataStatus = statusTersangkaDataByPnkp;
         var dataProses = prosesTersangka;
-        if(prosesIndex.length > 0 && tersangkaData.id && dataProses > 0){
+        if(prosesIndex.length > 0 && tersangkaData.id && dataProses.length > 0){
           dataProses = dataProses.map((data) => {
             return {
               ...data,
@@ -124,17 +124,17 @@ class TersangkaView extends Component {
                   />
                   <ImageView image={dataTersangka}/>
                   <TableView
-                    path="status tersangka"
-                    isNotAllowTo={['view','edit','delete']}
-                    tableField={tableFieldStatus}
-                    tableData={dataStatus}
-                    isLoading={this.state.isLoading}
-                  />
-                  <TableView
                     path="proses tersangka"
                     isNotAllowTo={['view','edit','delete']}
                     tableField={tableFieldProses}
                     tableData={dataProses}
+                    isLoading={this.state.isLoading}
+                  />
+                  <TableView
+                    path="status tersangka"
+                    isNotAllowTo={['view','edit','delete']}
+                    tableField={tableFieldStatus}
+                    tableData={dataStatus}
                     isLoading={this.state.isLoading}
                   />
                  </div>
