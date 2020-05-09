@@ -120,7 +120,6 @@ class BarangBuktiView extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.bbData)
   return { bbData: dashboard.bbData, bbStatus: dashboard.bbStatus }
 }
 

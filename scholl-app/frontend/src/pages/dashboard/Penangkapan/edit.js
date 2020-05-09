@@ -125,7 +125,6 @@ class EditPenangkapan extends Component {
             form: form,
           })
         }
-        console.log(this.state.form[fieldName])
       }
     }
 
@@ -197,9 +196,6 @@ class EditPenangkapan extends Component {
           data.set("nama_tersangka", form.nama_tersangka);
           data.set("umur", form.umur);
           data.set("no_penangkapan_id", form.no_penangkapan_id);
-          for (var pair of data.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-          }
           await this.props.dispatch(createtersangka(get_token(), data))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_tersangka_list(get_token(), null, pnkpId))
@@ -215,7 +211,6 @@ class EditPenangkapan extends Component {
           return 'false'
         } else {
           form['jenis_barang'] = 'narkotika'
-          console.log('narkotika', form);
           await this.props.dispatch(create_bb_by_tersangka(get_token(), form))
           this.setState({ isLoading: true })
           await this.props.dispatch(get_bb_list(get_token(), null, pnkpId))

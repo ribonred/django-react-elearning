@@ -121,7 +121,6 @@ class EditLkn extends Component {
 
     render() {
         const { isDataChange } = this.state;
-        console.log('this.props.', this.props.penangkapanData)
         return (
           <SideMenu>
             <Content style={{padding:'20px'}}>

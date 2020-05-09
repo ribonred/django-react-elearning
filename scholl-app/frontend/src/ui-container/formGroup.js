@@ -80,6 +80,7 @@ const FormGroup = (props) => {
           >
             <Select
               allowClear
+              disabled={data.disabled}
               style={{ width: 200 }}
               placeholder={`pilih ${data.label}`}
               defaultValue={props.defaultValue && props.defaultValue[data.fieldName]

@@ -13,15 +13,14 @@ class DescriptionView extends React.Component {
                 if(data.label === 'Foto'){
                   this.photoData=data.value
                   return (
-                    <div />
+                    <div key={data.label}/>
                   )
                 }
                 return (
-                    <Descriptions.Item label={data.label}>{data.value}</Descriptions.Item>
+                    <Descriptions.Item key={data.label} label={data.label}>{data.value}</Descriptions.Item>
                 )
             })
         }
-        console.log(this.photoData)
         return (
             <ViewContainer>
                 <Descriptions title={this.props.title}>

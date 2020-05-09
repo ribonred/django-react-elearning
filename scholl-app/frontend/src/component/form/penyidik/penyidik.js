@@ -95,7 +95,6 @@ class FormPenyidik extends React.Component {
   }
 
   render(){
-    console.log('this state form', this.state.form)
       return (
         <MainForm
           title={this.props.penyidikID ? 'Edit Form Penyidik' : 'Add Form Penyidik'}

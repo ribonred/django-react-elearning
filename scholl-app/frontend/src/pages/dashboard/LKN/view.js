@@ -43,28 +43,14 @@ class LKNView extends Component {
     }
 
     render() {
-      const { prosesIndex } = this.props;
       var lknDataSend = this.state.lknDataSend
-      if(this.props.match.params.id!=='buat'){
-        if (lknDataSend.penangkapan && lknDataSend.penangkapan.length > 0 ) {
-          lknDataSend.penangkapan.map((pnkp) => {
-            if(pnkp.penangkapan_tersangka && pnkp.penangkapan_tersangka.length > 0) {
-              pnkp.penangkapan_tersangka.map((tsk) => {
-                if(tsk.prosestersangka && tsk.prosestersangka.length > 0) {
-                  tsk.prosestersangka.map((proses) => {
-                    proses.jenis_proses = prosesIndex.find(item => item.id === proses.jenis_proses).nama_proses
-                  })
-                }
-              })
-            }
-          })
-        }
+      if(this.props.match.params.id!=='buat'){       
         return (
           <SideMenu>
             <Content style={{padding:'20px'}}>
               <div style={styles.siteLayout}>
                 {this.renderBreadCrumb()}
-                <LknView lkn={lknDataSend}/>
+                <LknView lkn={lknDataSend} prosesIndex={this.props.prosesIndex}/>
                </div>
              </Content>
           </SideMenu>
@@ -76,7 +62,7 @@ class LKNView extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  return { lknData: dashboard.lknData, prosesIndex: dashboard.prosesIndex, }
+  return { lknData: dashboard.lknData, prosesIndex: dashboard.prosesIndex }
 }
 
 const styles = {

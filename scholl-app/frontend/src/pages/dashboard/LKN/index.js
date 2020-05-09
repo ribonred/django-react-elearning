@@ -67,7 +67,6 @@ class LKNTable extends Component {
     async onDelete(id){
       await this.props.dispatch(deletelkn(get_token(), id))
       this.setState({ isLoading: true })
-      let noLkn = this.props.match.params.id;
       await this.props.dispatch(get_lkn_by_penyidik(get_token()))
       this.setState({ isLoading: false })
     }
@@ -84,6 +83,11 @@ class LKNTable extends Component {
             }  
           })
         }
+        const isAdmin = localStorage.getItem('role') === '2'
+        let cannotAccess = []
+        if(!isAdmin){
+          cannotAccess = ['delete']
+        }
         return (
           <SideMenu>
             <Layout>
@@ -95,7 +99,7 @@ class LKNTable extends Component {
                   <TableView
                     path="lkn"
                     useId
-                    isNotAllowTo={[]}
+                    isNotAllowTo={cannotAccess}
                     onDelete={(id) => { this.onDelete(id); }}
                     tableField={tableField}
                     tableData={lknTable}

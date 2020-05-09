@@ -122,13 +122,10 @@ export default class TableView extends React.Component {
   };
 
   onDelete = (a,b,c) => {
-    console.log(a.id, b)
     this.props.onDelete(a.id, b)
   }
 
   onEdit = (a,b) => {
-    console.log('record',a)
-    console.log('e',b)
   }
 
   onView = (a,b) => {
@@ -148,7 +145,7 @@ export default class TableView extends React.Component {
   }
 
   render() {
-    const { xScroll, yScroll, ...state } = this.state;
+    const { xScroll, yScroll } = this.state;
     const { path, tableField } = this.props;
     const scroll = {};
     if (yScroll) {

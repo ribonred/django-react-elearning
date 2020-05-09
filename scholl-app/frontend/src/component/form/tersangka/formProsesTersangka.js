@@ -89,8 +89,8 @@ class FormProsesTersangka extends React.Component {
       const { form } = this.state;
       const formData = new FormData();
       const keys = Object.keys(form);
-      keys.map((key) => {
-        if(key == 'sp_han_doc' || key == 'tap_han_doc' || key == 'surat_perpanjangan_han_doc'){
+      keys.forEach((key) => {
+        if(key === 'sp_han_doc' || key === 'tap_han_doc' || key === 'surat_perpanjangan_han_doc'){
           if(form[key] && form[key].uid){
             formData.append(key, form[key]);
           }
@@ -98,9 +98,6 @@ class FormProsesTersangka extends React.Component {
           formData.append(key, form[key]);
         }
       })
-      for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-      }
       const result = await this.props.dispatch(editprosestersangka(get_token(), formData, this.props.id))
       if(result === 'error'){
         this.setState({ isError: true })
@@ -119,13 +116,10 @@ class FormProsesTersangka extends React.Component {
       this.setState({isLoading:true})
       const formData = new FormData();
       const keys = Object.keys(form);
-      keys.map((key) => {
+      keys.forEach((key) => {
         formData.append(key, form[key]);
       })
       formData.append('proses_tersangka', this.props.tersangkaId)
-      for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-      }
       await this.props.dispatch(createprosestersangka(get_token(), formData))
       await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
       this.setState({isLoading:false})
@@ -145,7 +139,7 @@ class FormProsesTersangka extends React.Component {
       const jenis_proses_drop = []
       if (prosesIndex.length > 0){
         jenis_proses_drop.length = 0;
-        prosesIndex.map((data) => {
+        prosesIndex.forEach((data) => {
           let dropdownData = {
             value: data.id,
             name: data.nama_proses
@@ -154,7 +148,7 @@ class FormProsesTersangka extends React.Component {
         })
       }
       let formData = [
-        {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select'},
+        {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select', disabled: this.props.edit ? true : false},
         {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
         {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]

@@ -101,7 +101,6 @@ const LknViewView = (props) => {
   }
 
   if(props.lkn.penangkapan){
-    console.log('penangkapan', props.lkn.penangkapan)
     return (
       <ViewContainer>
         <Descriptions title="LKN Info">
@@ -146,7 +145,12 @@ const LknViewView = (props) => {
                             path="proses tersangka"
                             isNotAllowTo={['view','edit','delete']}
                             tableField={tableFieldProses}
-                            tableData={tsk.prosestersangka}
+                            tableData={tsk.prosestersangka.map(data => {
+                              return {
+                                ...data,
+                                jenis_proses: props.prosesIndex.find(item => item.id === data.jenis_proses).nama_proses,
+                              }
+                            })}
                           />
                         </div>
                       </TabPane>
