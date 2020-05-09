@@ -351,6 +351,19 @@ export function get_lkn_by_no_lkn(token, id) {
   }
 }
 
+export function deletelkn(token, id) {
+  return dispatch => {
+    return request(`/api/lkn/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
 // penangkapan CRUD
 
 export function createpenangkapan(token, data) {

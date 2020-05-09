@@ -4,7 +4,7 @@ import Profile from '../../../component/profile'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { get_token } from '../../../helper/requestHelper';
-import { get_lkn_by_penyidik } from '../../../reduxActions/dashboard';
+import { get_lkn_by_penyidik, deletelkn } from '../../../reduxActions/dashboard';
 import TableView from '../../../component/table/tableFilterable'
 import SideMenu from '../../../component/sider';
 
@@ -64,6 +64,14 @@ class LKNTable extends Component {
       this.setState({ isLoading: false })
     }
 
+    async onDelete(id){
+      await this.props.dispatch(deletelkn(get_token(), id))
+      this.setState({ isLoading: true })
+      let noLkn = this.props.match.params.id;
+      await this.props.dispatch(get_lkn_by_penyidik(get_token()))
+      this.setState({ isLoading: false })
+    }
+
     render() {
         let lknTable = this.props.lknTableData
         if(lknTable.length > 0 && lknTable[0].penyidik){
@@ -87,8 +95,8 @@ class LKNTable extends Component {
                   <TableView
                     path="lkn"
                     useId
-                    isNotAllowTo={['delete']}
-                    onDelete={(id) => this.props.dispatch()}
+                    isNotAllowTo={[]}
+                    onDelete={(id) => { this.onDelete(id); }}
                     tableField={tableField}
                     tableData={lknTable}
                     isLoading={this.state.isLoading}
