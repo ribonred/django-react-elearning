@@ -43,8 +43,8 @@ const tableFieldStatus = [
 const tableFieldProses = [
   {
     title: 'SP.HAN',
-    dataIndex: 'sp_han',
     sorter: true,
+    dataIndex: 'sp_han',
     search: true,
   },
   {
@@ -64,7 +64,7 @@ const tableFieldProses = [
 
 const tableFieldBarangBukti = [
   {
-    title: 'Nama BB',
+    title: 'BB',
     dataIndex: 'nama_barang',
     sorter: true,
     search: true,
@@ -101,6 +101,7 @@ const LknViewView = (props) => {
   }
 
   if(props.lkn.penangkapan){
+    console.log('penangkapan', props.lkn.penangkapan)
     return (
       <ViewContainer>
         <Descriptions title="LKN Info">
@@ -110,9 +111,9 @@ const LknViewView = (props) => {
           {props.lkn.penangkapan.map(data =>
             <div key={data.id} style={styles.detailBox}>
               <Descriptions title="Penangkapan">
-                <Descriptions.Item label="No. Penangkapan">{data.no_penangkapan}</Descriptions.Item>
+                <Descriptions.Item label="SP KAP">{data.no_penangkapan}</Descriptions.Item>
                 <Descriptions.Item label="Tanggal Penangkapan">{data.tanggal_penangkapan}</Descriptions.Item>
-                <Descriptions.Item label="Jam Penangkapan">{data.jam_penangkapan}</Descriptions.Item>
+                <Descriptions.Item label="Masa Berakhir Penangkapan">{data.masa_berakhir_penangkapan}</Descriptions.Item>
                 <div style={{borderTop: '1px dashed #6d6d6d'}}/>
               </Descriptions>
               {data.penangkapan_tersangka.map(tsk =>
