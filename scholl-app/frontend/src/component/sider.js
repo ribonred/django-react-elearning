@@ -34,25 +34,25 @@ class SideMenu extends Component {
          <Menu style={styles.linearGradientBackground} mode="inline" defaultSelectedKeys={this.props.selected || '1'}>
            <Menu.Item key="1" onClick={() => history.push("/dashboard/lkn")}>
              <FolderOpenOutlined />
-             <span className="nav-text">LKN</span>
+             <span className="nav-text"><b>LKN</b></span>
            </Menu.Item>
            {isAdmin && (
              <Menu.Item key="2" onClick={() => history.push("/dashboard/penyidik")}>
                 <TeamOutlined />
-                <span className="nav-text">Admin</span>
+                <span className="nav-text"><b>ADMIN</b></span>
               </Menu.Item>
            )}
            <Menu.Item key="3" onClick={() => history.push("/dashboard/tersangka")}>
              <UserOutlined />
-             <span className="nav-text">Tersangka</span>
+             <span className="nav-text"><b>TERSANGKA</b></span>
            </Menu.Item>
            <Menu.Item key="4" onClick={() => history.push("/dashboard/barangbukti")}>
              <SolutionOutlined />
-             <span className="nav-text">Barang Bukti</span>
+             <span className="nav-text"><b>BARANG BUKTI</b></span>
            </Menu.Item>
            <Menu.Item key="5" onClick={() => history.push("/dashboard/lkn")}>
              <UserOutlined />
-             <span className="nav-text">Statistik</span>
+             <span className="nav-text"><b>STATISTIK</b></span>
            </Menu.Item>
          </Menu>
        </Sider>

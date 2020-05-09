@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Link
 } from "react-router-dom";
+import ModalDescription from '../modal/modalDescription';
+
 import { Table, Button, Input, DatePicker } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
@@ -12,6 +14,8 @@ const filter = filterdate
 export default class TableView extends React.Component {
   state = {
     bordered: false,
+    data: null,
+    visible: false,
   };
 
   handleToggle = prop => enable => {
@@ -126,6 +130,14 @@ export default class TableView extends React.Component {
     console.log('e',b)
   }
 
+  onView = (a,b) => {
+    const viewableData = {
+      ...a
+    }
+    delete viewableData.key
+    this.setState({visible:true, data:viewableData})
+  }
+
   applyDateFilter = (action) => {
     if(action==='filter'){
       this.props.applyDateFilter(filter)
@@ -175,7 +187,7 @@ export default class TableView extends React.Component {
     }))
 
 
-    const { useId } = this.props;
+    const { useId, editModal, viewModal } = this.props;
     let isEditAllowed = true;
     let isDeleteAllowed = true;
     let isViewAllowed = true;
@@ -207,20 +219,40 @@ export default class TableView extends React.Component {
             </a>
           )}
           {isEditAllowed && (
-            <Link
-              to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}/edit`}
-              style={{ marginRight: 16 }}
-            >
-              Edit <EditOutlined />
-            </Link>
+            !editModal ? (
+              <Link
+                to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}/edit`}
+                style={{ marginRight: 16 }}
+              >
+                Edit <EditOutlined />
+              </Link>
+            ) : (
+              <a
+                href="#!"
+                style={{ marginRight: 16, color: 'red' }}
+                onClick={(e) => { this.onEdit(record, path, e); }}
+              >
+                Edit <EditOutlined />
+              </a>
+            )
           )}
           {isViewAllowed && (
-            <Link
-              to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}`}
-              style={{ marginRight: 16, color: 'aqua' }}
-            >
-              View <EyeOutlined />
-            </Link>
+            !viewModal ? (
+              <Link
+                to={`/dashboard/${path}/${useId ? record['id'] : record[tableField[0].dataIndex]}`}
+                style={{ marginRight: 16, color: 'aqua' }}
+              >
+                View <EyeOutlined />
+              </Link>
+            ) : (
+              <a
+                href="#!"
+                style={{ marginRight: 16, color: 'aqua' }}
+                onClick={(e) => { this.onView(record, path, e); }}
+              >
+                View <EyeOutlined />
+              </a>
+            )
           )}
           </span>
         ),
@@ -243,6 +275,11 @@ export default class TableView extends React.Component {
             <Button onClick={(action) => this.applyDateFilter('clear')}>Clear filters</Button>
           </div>
         )}
+        <ModalDescription
+          visible={this.state.visible}
+          data={this.state.data || []}
+          hideModal={() => this.setState({visible: false})}
+        />
         <Table
           {...this.state}
           loading={this.props.isLoading}

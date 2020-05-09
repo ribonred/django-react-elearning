@@ -95,6 +95,7 @@ class BarangBuktiView extends Component {
                   {this.renderBreadCrumb()}
                   <DescriptionView
                     title="Data Barang Bukti"
+                    hidePhoto
                     data={dataBB}
                   />
                   <DescriptionView
@@ -103,7 +104,8 @@ class BarangBuktiView extends Component {
                   />
                   <TableView
                     path="status barang bukti"
-                    isNotAllowTo={['view','edit','delete']}
+                    viewModal
+                    isNotAllowTo={['edit','delete']}
                     tableField={tableField}
                     tableData={dataStatus}
                     isLoading={this.state.isLoading}

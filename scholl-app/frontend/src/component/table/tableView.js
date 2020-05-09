@@ -1,9 +1,19 @@
 import React, { Component } from "react";
+import ModalDescription from '../modal/modalDescription';
 
 class tableNew extends Component {    
+  state = {
+    visible: false,
+    data: null,
+  }
   render() {
     return (
       <div>
+        <ModalDescription
+          visible={this.state.visible}
+          data={this.state.data}
+          hideModal={() => this.setState({visible:false})}
+        />
         <table>
             <tbody>
               <tr style={{backgroundColor: '#d8d8d8'}}>
@@ -35,7 +45,11 @@ class tableNew extends Component {
                         )
                     }
                  })}
-                <td style={styles.tableContent}>
+                <td style={styles.tableContent} onClick={() => {
+                    this.setState({visible: true, data: item})
+                  }
+                }
+                >
                  <a style={{ padding: "0 0 0 3px" }}>View</a>
                 </td>
              </tr>  

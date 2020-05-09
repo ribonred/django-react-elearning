@@ -194,7 +194,6 @@ class FormProsesTersangka extends React.Component {
         <ModalWithTablePreview
           path='proses_tersangka'
           formTitle='FORM PROSES TERSANGKA'
-          isNotAllowTo={['view']}
           tableData={prosesTersangka || []}
           isLoading={this.state.isLoading}
           title='PROSES TERSANGKA'

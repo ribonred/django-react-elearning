@@ -16,6 +16,7 @@ export default class modalWithTablePreview extends React.Component {
           </Button>
           <TableView
             useId
+            viewModal
             path={this.props.path}
             isNotAllowTo={this.props.isNotAllowTo}
             isLoading={this.props.isLoading}

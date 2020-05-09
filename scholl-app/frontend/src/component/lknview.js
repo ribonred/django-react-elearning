@@ -1,6 +1,7 @@
 import React from "react";
 import ViewContainer from "../ui-container/viewContainer";
 import { Descriptions, Tabs, Skeleton } from "antd";
+import ImageView from '../component/image/imagePreview';
 import TableView from './table/tableView';
 
 const { TabPane } = Tabs
@@ -91,7 +92,6 @@ const tableFieldBarangBukti = [
 const LknViewView = (props) => {
   let noLkn          = ""
   let tanggal_dibuat = ""
-
   if (!props.lkn) {
     noLkn          = ""
     tanggal_dibuat = ""
@@ -123,7 +123,11 @@ const LknViewView = (props) => {
                       tsk.foto === null || tsk.foto === '' || tsk.foto === undefined ?
                       (<img alt='view' src='https://fisipwarmadewa.ac.id/wp-content/uploads/2016/11/No-image-found.jpg' style={styles.fotoTersangka}/>)
                       :
-                      (<img alt='view' src={tsk.foto} style={styles.fotoTersangka}/>)
+                      (
+                        <ImageView photoSource={tsk.foto}>
+                          <img alt='view' src={tsk.foto} style={styles.fotoTersangkaShow}/>
+                        </ImageView>
+                      )
                     }
                     </div>
                     <div style={{paddingTop: '10px'}}>
@@ -208,13 +212,19 @@ const styles = {
     height: '42vh'
   },
   fotoTersangkaBox: {
-    width: '5cm',
-    height: '6cm',
+    width: '3cm',
+    height: '3cm',
   },
   fotoTersangka: {
     width: '100%',
     height: '100%',
     borderRadius: '20px',
+  },
+  fotoTersangkaShow: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '20px',
+    paddingTop: '15px',
   },
   detailBoxPenangkapan: {
     height: '270px',
