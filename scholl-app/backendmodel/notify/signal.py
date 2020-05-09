@@ -17,10 +17,11 @@ def getNotifCreated(sender, instance, created,**kwargs):
             message = f'penyidik {instance.penyidik.nama_depan} {instance.penyidik.nama_belakang} menambahkan LKN nomor {instance.LKN} pada {time} pukul {time_hour}'
             if len(user) > 1:
                 for users in user:
-                    print(users)
+                    print(users.username)
                     NotificationsLkn.objects.create(receiver=users, message=message)
             else:
-                NotificationsLkn.objects.create(receiver=user, message=message)
+                for users in user:
+                    NotificationsLkn.objects.create(receiver=users, message=message)
 
     except Exception as e:
         print(e)
