@@ -1,5 +1,6 @@
 #!bin/bash
 pip install -r requirements.txt
+pip install channels-redis 
 python manage.py makemigrations
 python manage.py migrate
 python manage.py defaultuseradmin

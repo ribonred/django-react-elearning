@@ -1,14 +1,17 @@
 version: '3'
 services:
     django-local:
+        container_name: django
         build: ./scholl-app
-        command: python manage.py runserver 0.0.0.0:8000
+        command: sh entrypoint.sh
         env_file: ./scholl-app/.env
         volumes:
         - ./scholl-app:/code
         ports:
         - "8000:8000"
+        depends_on: redis
     react-local:
+        container_name: react
         stdin_open: true
         build: ./scholl-app/frontend
         tty: true
@@ -21,3 +24,8 @@ services:
         - /frontend/node_modules
         ports:
         - "3000:3000"
+    redis:
+        restart: always
+        image: redis:latest
+        expose:
+            - "6379"
