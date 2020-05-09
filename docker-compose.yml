@@ -9,6 +9,8 @@ services:
         - ./scholl-app:/code
         ports:
         - "8000:8000"
+        links:
+        - redis
     react:
         container_name: react
         stdin_open: true
@@ -36,5 +38,3 @@ services:
         image: redis:latest
         expose:
             - "6379"
-        depends_on: 
-            - django
