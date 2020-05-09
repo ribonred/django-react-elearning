@@ -20,7 +20,8 @@ def getNotifCreated(sender, instance, created,**kwargs):
                     print(users.username)
                     NotificationsLkn.objects.create(receiver=users, message=message)
             else:
-                NotificationsLkn.objects.create(receiver=user, message=message)
+                for users in user:
+                    NotificationsLkn.objects.create(receiver=users, message=message)
 
     except Exception as e:
         print(e)
