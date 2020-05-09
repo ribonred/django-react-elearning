@@ -251,6 +251,19 @@ export function edituser(token, data, id) {
   }
 }
 
+export function deleteuser(token, id) {
+  return dispatch => {
+    return request(`/api/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
 export function fetchalluser(token, id = null) {
   return async dispatch => {
     let url = ''

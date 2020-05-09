@@ -5,7 +5,7 @@ import { get_token } from '../../../helper/requestHelper';
 import history from '../../../route/history';
 import { connect } from 'react-redux';
 import TableView from '../../../component/table/tableFilterable';
-import { fetchalluser } from '../../../reduxActions/dashboard';
+import { fetchalluser, deleteuser } from '../../../reduxActions/dashboard';
 import SideMenu from '../../../component/sider';
 
 const { Content } = Layout;
@@ -40,6 +40,13 @@ class PenyidikTable extends Component {
       if(!isAdmin){
         history.push('/dashboard')
       }
+    }
+
+    async onDelete(id){
+      await this.props.dispatch(deleteuser(get_token(), id))
+      this.setState({ isLoading: true })
+      await this.props.dispatch(fetchalluser(get_token()))
+      this.setState({ isLoading: false })
     }
 
     renderBreadCrumb = () => {
@@ -89,6 +96,7 @@ class PenyidikTable extends Component {
                     tableField={tableField}
                     tableData={userData}
                     isLoading={this.state.isLoading}
+                    onDelete={(id) => { this.onDelete(id); }}
                   />
                  </div>
                </Content>
