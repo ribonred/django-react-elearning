@@ -1,6 +1,7 @@
 version: '3'
 services:
     django:
+        container_name: django
         build: ./scholl-app
         command: sh entrypoint.sh
         env_file: ./scholl-app/.env
@@ -8,7 +9,10 @@ services:
         - ./scholl-app:/code
         ports:
         - "8000:8000"
+        links:
+        - redis
     react:
+        container_name: react
         stdin_open: true
         image: node
         tty: true
@@ -29,3 +33,8 @@ services:
             - ./scholl-app/frontend/build:/var/www/frontend # maps frontend build inside nginx
         depends_on:
             - django
+    redis:
+        restart: always
+        image: redis:latest
+        expose:
+            - "6379"

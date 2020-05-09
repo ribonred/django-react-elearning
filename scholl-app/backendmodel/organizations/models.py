@@ -92,7 +92,7 @@ class ProsesTersangka(BaseTimeStampModel):
     surat_perpanjangan_han_doc = models.FileField(upload_to='dokumen/perpanjanghan', null=True, blank=True)
     jenis_proses = models.ForeignKey(
         ProsesPengadilan, on_delete=models.CASCADE, related_name='proses_pengadilan')
-    keterangan = models.CharField(max_length=255)
+    keterangan = models.CharField(max_length=255,null=True, blank=True)
 
     def __str__(self):
         return f'{self.proses_tersangka.nama_tersangka}||{self.sp_han} || {self.jenis_proses.nama_proses}'

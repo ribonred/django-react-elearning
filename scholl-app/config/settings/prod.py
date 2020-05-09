@@ -1,7 +1,27 @@
 from .base import *
 DEBUG = os.getenv('DEBUG')
-STATIC_URL = os.getenv('STATIC')
 
+
+
+STATIC_URL = os.getenv('STATIC_URL')
+
+STATIC_ROOT = os.path.join(BASE_R,  'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_R, "staticfiles")
+
+]
+MEDIA_ROOT = os.path.join(BASE_R, 'media')
+
+MEDIA_URL = os.getenv('MEDIA_URL')
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],   # Change localhost to the ip in which you have redis server running on.
+        },
+    },
+}
 
 if os.getenv("postgres"):
     DATABASES = {
