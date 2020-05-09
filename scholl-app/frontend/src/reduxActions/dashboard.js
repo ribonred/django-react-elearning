@@ -420,6 +420,7 @@ export function deletepenangkapan(token, id) {
       .then(response => console.log(response))
   }
 }
+
 export function editpenangkapan(token, data, id) {
   return dispatch => {
     return request(`/api/pnkp/${id}/`, {
@@ -761,6 +762,19 @@ export function editprosestersangka(token, data, proses_id){
   }
 }
 
+export function deleteprosestersangka(token, id) {
+  return dispatch => {
+    return request(`/api/tsk-proses/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
 //status tersangka
 export function createstatustersangka(token, data) {
   return dispatch => {
@@ -826,6 +840,19 @@ export function editstatustersangka(token, data, status_id){
   }
 }
 
+export function deletestatustersangka(token, id) {
+  return dispatch => {
+    return request(`/api/tsk-status/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
+  }
+}
+
 //status bb
 export function createstatusbb(token, data) {
   return dispatch => {
@@ -888,5 +915,18 @@ export function editstatusbb(token, data, status_id){
     .catch((e) => {
       return 'error'
     })
+  }
+}
+
+export function deletestatusbb(token, id) {
+  return dispatch => {
+    return request(`/api/bb-status/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => console.log(response))
   }
 }

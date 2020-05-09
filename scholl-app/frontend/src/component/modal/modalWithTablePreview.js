@@ -22,6 +22,7 @@ export default class modalWithTablePreview extends React.Component {
             isLoading={this.props.isLoading}
             tableField={this.props.tableField || []}
             tableData={this.props.tableData || []}
+            onDelete={(id) => { this.props.onDelete(id); }}
           />
           <Modal
             title={this.props.formTitle}

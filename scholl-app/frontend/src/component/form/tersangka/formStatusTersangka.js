@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createstatustersangka, getstatustersangka, editstatustersangka } from '../../../reduxActions/dashboard'
+import { createstatustersangka, getstatustersangka, editstatustersangka, deletestatustersangka } from '../../../reduxActions/dashboard'
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
@@ -109,6 +109,13 @@ class FormStatusTersangka extends React.Component {
     }
   }
 
+  onDelete = async (id) => {
+    await this.props.dispatch(deletestatustersangka(get_token(), id))
+    this.setState({ isLoading: true })
+    await this.props.dispatch(getstatustersangka(get_token(), this.props.tersangkaId))
+    this.setState({ isLoading: false })
+  }
+
   render(){
       const rekam_jejak = [{value:'Masuk', name:'Masuk'}, {value:'Keluar', name:'Keluar'}]
       const status_penahanan = [{value:'Di Amankan', name:'Diamankan'}, {value:'Di tahan', name:'Ditahan'}, {value:'TAT', name:'TAT'}, {value:'Selesai', name:'Selesai'}]
@@ -148,6 +155,7 @@ class FormStatusTersangka extends React.Component {
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}
+          onDelete={this.onDelete}
         />
       );
   }

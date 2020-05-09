@@ -122,6 +122,7 @@ export default class TableView extends React.Component {
   };
 
   onDelete = (a,b,c) => {
+    console.log(a.id, b)
     this.props.onDelete(a.id, b)
   }
 

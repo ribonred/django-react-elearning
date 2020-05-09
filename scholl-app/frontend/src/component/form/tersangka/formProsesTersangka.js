@@ -1,6 +1,6 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
-import { createprosestersangka, getprosestersangka, get_proses, editprosestersangka } from '../../../reduxActions/dashboard'
+import { createprosestersangka, getprosestersangka, get_proses, editprosestersangka, deleteprosestersangka } from '../../../reduxActions/dashboard'
 import MainForm from '../../../ui-container/mainFormContainer';
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
@@ -132,6 +132,13 @@ class FormProsesTersangka extends React.Component {
     }
   }
 
+  onDelete = async (id) => {
+    await this.props.dispatch(deleteprosestersangka(get_token(), id))
+    this.setState({ isLoading: true })
+    await this.props.dispatch(getprosestersangka(get_token(), this.props.tersangkaId))
+    this.setState({ isLoading: false })
+  }
+
   render(){
       const { jenis_proses } = this.state.form;
       const { prosesIndex } = this.props;
@@ -201,6 +208,7 @@ class FormProsesTersangka extends React.Component {
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}
+          onDelete={this.onDelete}
         />
       );
   }

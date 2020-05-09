@@ -1,7 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 import MainForm from '../../../ui-container/mainFormContainer';
-import { createstatusbb, getstatusbb, editstatusbb } from '../../../reduxActions/dashboard'
+import { createstatusbb, getstatusbb, editstatusbb, deletestatusbb } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -114,6 +114,13 @@ class FormProsesTersangka extends React.Component {
     }
   }
 
+  onDelete = async (id) => {
+    await this.props.dispatch(deletestatusbb(get_token(), id))
+    this.setState({ isLoading: true })
+    await this.props.dispatch(getstatusbb(get_token(), this.props.barangBuktiId))
+    this.setState({ isLoading: false })
+  }
+
   render(){
       const satuan_drop = [{value:"gram", name:'gram'}, {value:"Kg", name:'Kg'}, {value:"PCS", name:'Pcs'}]
       const status_drop = [{value:"Masuk", name:'Masuk'}, {value:"Keluar", name:'Keluar'}]
@@ -156,6 +163,7 @@ class FormProsesTersangka extends React.Component {
           onSubmit={this.onSubmit}
           onFormChange={this.onFormChange}
           formData={formData}
+          onDelete={this.onDelete}
         />
       );
   }
