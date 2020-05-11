@@ -84,7 +84,7 @@ class ProsesPengadilan(models.Model):
 class ProsesTersangka(BaseTimeStampModel):
     proses_tersangka = models.ForeignKey(
         Tersangka, on_delete=models.CASCADE, related_name='prosestersangka', null=True, blank=True)
-    sp_han = models.CharField(max_length=255)
+    sp_han = models.CharField(max_length=255, null=True, blank=True)
     sp_han_doc = models.FileField(upload_to='dokumen/sphan', null=True, blank=True)
     tap_han = models.CharField(max_length=255, null=True, blank=True)
     tap_han_doc = models.FileField(upload_to='dokumen/taphan', null=True, blank=True)

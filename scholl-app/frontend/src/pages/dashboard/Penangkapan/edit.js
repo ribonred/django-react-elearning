@@ -20,7 +20,6 @@ const formDataTsk = [
 const formDataBB = [
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
   {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'JENIS BB', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'disabled', value:'narkotika'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
   {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
   {label: 'TAP STATUS', name: 'Tap Status', fieldName: 'tap_status'},
@@ -29,7 +28,6 @@ const formDataBB = [
 const formDataBBNon = [
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
   {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'JENIS BB', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'disabled', value:'non narkotika'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
   {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
 ]

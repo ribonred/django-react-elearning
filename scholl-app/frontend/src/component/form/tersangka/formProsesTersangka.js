@@ -149,8 +149,6 @@ class FormProsesTersangka extends React.Component {
       }
       let formData = [
         {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select', disabled: this.props.edit ? true : false},
-        {label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'},
-        {label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'},
       ]
       if(jenis_proses === 1 || jenis_proses === 2){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
@@ -160,6 +158,11 @@ class FormProsesTersangka extends React.Component {
       if(jenis_proses === 3){
         formData.push({label: 'SURAT PERPANJANGAN HAN', name: 'SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han'})
         formData.push({label: 'DOKUMEN SURAT PERPANJANGAN HAN', name: 'DOKUMEN SURAT PERPANJANGAN HAN', fieldName: 'surat_perpanjangan_han_doc', type: 'upload'})
+      }
+
+      if(jenis_proses === 4){
+        formData.push({label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'})
+        formData.push({label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'})
       }
 
       formData.push({label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'})
