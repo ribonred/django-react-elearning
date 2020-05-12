@@ -15,7 +15,7 @@ const tableField = [
     search: true,
   },
   {
-    title: 'No. Penangkapan',
+    title: 'SP KAP',
     dataIndex: 'no_penangkapan',
     sorter: true,
     search: true,

@@ -13,7 +13,7 @@ const tailLayout = {
 };
 
 const formData = [
-  {label: 'No. Penangkapan', name: 'no_penangkapan', fieldName: 'no_penangkapan'},
+  {label: 'SP KAP', name: 'no_penangkapan', fieldName: 'no_penangkapan'},
 ]
 
 const formDataTersangka = [
