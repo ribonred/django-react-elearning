@@ -37,6 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path("mobile-api/", include('backendmodel.organizations.urls')),
     path('get-token/', include('backendmodel.account.urls')),
     path('', indexview.as_view(),name='index'),
     path('notif/', notification_test_page,name='test'),
