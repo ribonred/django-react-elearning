@@ -136,6 +136,14 @@ class StatusBarangBukti(BaseTimeStampModel):
         (KG, 'Kg'),
         (PCS,'PCS')
     )
+    PENDING = "PENDING"
+    REJECT = "REJECT"
+    APPROVE = "APPROVE"
+    approval_status = (
+        (PENDING, 'PENDING'),
+        (REJECT, 'REJECT'),
+        (APPROVE,'APPROVE')
+    )
     barang_bukti_id = models.ForeignKey(
         BarangBukti, on_delete=models.CASCADE, related_name='statusbarangbukti')
     tanggal_status = models.DateField(null=True, blank=True)
@@ -146,6 +154,16 @@ class StatusBarangBukti(BaseTimeStampModel):
     keterangan = models.TextField(null=True, blank=True)
     status = models.CharField(
         max_length=20, blank=True, null=True, choices=status_bb)
-
+    approve_status = models.CharField(
+        max_length=50, blank=True, null=True, choices=approval_status, default=PENDING)
+    moderator_one = models.ForeignKey(User,on_delete=models.SET_NULL, null= True, blank=True,related_name='moderator1')
+    moderator_one_status = models.CharField(
+        max_length=50, blank=True, null=True, choices=approval_status, default=PENDING)
+    moderator_two = models.ForeignKey(User,on_delete=models.SET_NULL, null= True, blank=True,related_name='moderator2')
+    moderator_two_status = models.CharField(
+        max_length=50, blank=True, null=True, choices=approval_status, default=PENDING)
+    moderator_three = models.ForeignKey(User,on_delete=models.SET_NULL, null= True, blank=True,related_name='moderator3')
+    moderator_three_status = models.CharField(
+        max_length=50, blank=True, null=True, choices=approval_status, default=PENDING)
     def __str__(self):
         return f'{self.barang_bukti_id.milik_tersangka_id.nama_tersangka} || {self.barang_bukti_id.nama_barang} || {self.jumlah} || {self.status}'

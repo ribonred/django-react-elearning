@@ -202,3 +202,53 @@ class LknDetailAPi(WritableNestedModelSerializer):
         model = BerkasLKN
         fields = ['id', 'LKN',
                   'penyidik', 'tgl_dibuat', 'penangkapan']
+
+class StatusModerator1(serializers.ModelSerializer):
+    moderator = serializers.HiddenField(default=serializers.CurrentUserDefault(),source='moderator_one',write_only=True)
+    status_mod = serializers.CharField(source='moderator_one_status',write_only=True)
+
+    class Meta:
+        model = StatusBarangBukti
+        fields = ['id','status','approve_status','moderator','status_mod','created']
+        read_only_fields = ('id','status','approve_status','created')
+
+class StatusModerator2(serializers.ModelSerializer):
+    moderator = serializers.HiddenField(default=serializers.CurrentUserDefault(),source='moderator_two',write_only=True)
+    status_mod = serializers.CharField(source='moderator_two_status',write_only=True)
+
+    class Meta:
+        model = StatusBarangBukti
+        fields = ['id','status','approve_status','moderator','status_mod','created']
+        read_only_fields = ('id','status','approve_status','created')
+
+class StatusModerator3(serializers.ModelSerializer):
+    moderator = serializers.HiddenField(default=serializers.CurrentUserDefault(),source='moderator_three',write_only=True)
+    status_mod = serializers.CharField(source='moderator_three_status',write_only=True)
+
+    class Meta:
+        model = StatusBarangBukti
+        fields = ['id','status','approve_status','moderator','status_mod','created']
+        read_only_fields = ('id','status','approve_status','created')
+
+
+class StatusBBwithAproval(serializers.ModelSerializer):
+    barang_bukti = serializers.CharField(source='barang_bukti_id.nama_barang')
+    tersangka = serializers.CharField(source='barang_bukti_id.milik_tersangka_id.nama_tersangka')
+    penangkapan = serializers.CharField(source='barang_bukti_id.milik_tersangka_id.no_penangkapan_id.no_penangkapan')
+    LKN = serializers.CharField(source='barang_bukti_id.milik_tersangka_id.no_penangkapan_id.no_lkn.LKN')
+    admin = serializers.CharField(source='barang_bukti_id.milik_tersangka_id.no_penangkapan_id.no_lkn.penyidik.fullname')
+
+
+    class Meta:
+        model = StatusBarangBukti
+        fields = ['id','admin','LKN','penangkapan','tersangka','barang_bukti', 'tanggal_status', 'waktu_status',
+                  'jumlah','satuan', 'keterangan', 'status','approve_status','moderator_one',
+        'moderator_one_status', 'moderator_two',
+        'moderator_two_status','moderator_three',
+        'moderator_three_status','created']
+        read_only_fields = ('id','admin','LKN','penangkapan','tersangka','barang_bukti', 'tanggal_status', 'waktu_status',
+                  'jumlah','satuan', 'keterangan', 'status','approve_status','moderator_one',
+        'moderator_one_status', 'moderator_two',
+        'moderator_two_status','moderator_three',
+        'moderator_three_status','created')
+

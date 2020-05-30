@@ -15,7 +15,8 @@ from backendmodel.organizations.views import (
     LknDetailApiView,
     ProsesTersangkaView,
     StatusTersangkaView,
-    StatusBarangBuktiView
+    StatusBarangBuktiView,
+    StatusBBapprovalView
     
 )
 router = routers.DefaultRouter()
@@ -31,6 +32,7 @@ router.register(r'bb-edit', BarangBuktiEditView)
 router.register(r'bb-status', StatusBarangBuktiView)
 router.register(r'lkn-detail', LknDetailApiView)
 router.register(r'bb-status', StatusBarangBuktiView)
+router.register(r'bb-status-app', StatusBBapprovalView)
 # router.register(r'companydiv', CompanyDivisionView)
 
 urlpatterns = [

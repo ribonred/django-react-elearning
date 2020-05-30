@@ -12,7 +12,7 @@ class AppUserAdmin(UserAdmin):
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'username',
-                           'password', 'address', 'phone', 'nama_depan', 'nama_belakang', 'role', 'tanggal_lahir', 'jenis_kelamin', 'profile_pic')}),
+                           'password', 'address', 'phone', 'nama_depan', 'nama_belakang', 'role', 'tanggal_lahir', 'jenis_kelamin','moderator','profile_pic')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser')}),
     )
     add_fieldsets = (

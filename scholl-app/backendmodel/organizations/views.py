@@ -30,7 +30,11 @@ from .serializer import (
     PenangkapanEditApi,
     ProsesTersangkaApi,
     StatusTersangkaApi,
-    StatusBarangBuktiApi
+    StatusBarangBuktiApi,
+    StatusModerator1,
+    StatusModerator2,
+    StatusModerator3,
+    StatusBBwithAproval
 
     )
 from rest_framework import viewsets
@@ -520,7 +524,51 @@ class LknDetailApiView(viewsets.ReadOnlyModelViewSet):
         return [permission() for permission in permission_classes]
 
 
+class StatusBBapprovalView(viewsets.ModelViewSet):
+    queryset = StatusBarangBukti.objects.all()
+    serializer_class = StatusModerator1
+    serializer_class_2 = StatusModerator2
+    serializer_class_3 = StatusModerator3
+    detail_serializer = StatusBBwithAproval
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['approve_status']
 
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset
+        queryset = StatusBarangBukti.objects.all()
+        if not user.is_superuser:
+            queryset = StatusBarangBukti.objects.filter(
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user)
+        return queryset
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if self.action == 'update' or self.action == 'partial_update':
+            if user.moderator == 'moderator_1':
+                return self.serializer_class
+            elif user.moderator == 'moderator_2':
+                return self.serializer_class_2
+            elif user.moderator == 'moderator_3':
+                return self.serializer_class_3
+            # return super().get_serializer_class()
+            
+        elif self.action == 'retrieve' or self.action== 'list':
+            return self.detail_serializer
+        return super().get_serializer_class()
 
 
 

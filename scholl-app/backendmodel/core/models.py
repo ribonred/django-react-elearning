@@ -14,6 +14,9 @@ class BaseTimeStampModel(models.Model):
     created = models.DateTimeField(default=timezone.now,editable=False)
     updated = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+         abstract = True
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     L = 'laki-laki'
@@ -29,6 +32,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         (PENYIDIK, 'penyidik'),
         (MANAGER, 'manager')
     )
+
+    mod_1 = "moderator_1"
+    mod_2 = "moderator_2"
+    mod_3 = "moderator_3"
+    MODERATOR_CHOICES = (
+        (mod_1, 'moderator_1'),
+        (mod_2, 'moderator_2'),
+        (mod_2, 'moderator_3')
+    )
     email = models.EmailField(('email address'))
     username = models.CharField(max_length=255, unique=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
@@ -42,6 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     role = models.PositiveIntegerField(choices=ROLE_CHOICES, default=3)
+    moderator = models.CharField(max_length=40, choices=MODERATOR_CHOICES, null=True,blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
