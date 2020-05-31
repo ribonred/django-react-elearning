@@ -11,8 +11,8 @@ def usermanagerprofile(instance, filename):
 
 
 class BaseTimeStampModel(models.Model):
-    created = models.DateTimeField(default=timezone.now,editable=False)
-    updated = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(default=timezone.now,editable=False)
+    updated = models.DateField(auto_now_add=True)
 
     class Meta:
          abstract = True

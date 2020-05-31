@@ -1,0 +1,1 @@
+default_app_config = 'backendmodel.organizations.apps.OrganizationsConfig'
