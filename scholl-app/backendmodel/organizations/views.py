@@ -90,7 +90,7 @@ class TersangkaDateFilter(FilterSet):
     class Meta:
         model = Tersangka
         fields = [
-            
+            'no_penangkapan_id__id'
         ]
 
 class BBDateFilter(FilterSet):
@@ -99,7 +99,7 @@ class BBDateFilter(FilterSet):
     class Meta:
         model = BarangBukti
         fields = [
-            
+            'milik_tersangka_id__no_penangkapan_id__id'
         ]
 
 class BerkasLknView(viewsets.ModelViewSet):
