@@ -24,6 +24,7 @@ class BerkasLknListApi(serializers.ModelSerializer):
     class Meta:
         model = BerkasLKN
         fields = ('__all__')
+        read_only_fields =['created','updated']
         depth = 1
 
 
