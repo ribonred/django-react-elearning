@@ -133,6 +133,10 @@ export default class TableView extends React.Component {
       ...a
     }
     delete viewableData.key
+    delete viewableData.id
+    delete viewableData.proses_tersangka
+    delete viewableData.tersangka_id
+    delete viewableData.barang_bukti_id
     this.setState({visible:true, data:viewableData})
   }
 
@@ -196,7 +200,7 @@ export default class TableView extends React.Component {
     }
 
     const isAllNotAllowed = !isEditAllowed && !isDeleteAllowed && !isViewAllowed
-
+    
     let columns = column;
     if(!isAllNotAllowed){
       columns = columns.concat({
