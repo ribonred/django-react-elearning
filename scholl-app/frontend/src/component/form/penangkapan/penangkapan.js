@@ -8,6 +8,11 @@ const formData = [
   {label: 'SP KAP', name: 'No Penangkapan', fieldName: 'no_penangkapan'},
   {label: 'TANGGAL PENANGKAPAN', name: 'Tanggal Penangkapan', fieldName: 'tanggal_penangkapan', type: 'date'},
   {label: 'MASA BERAKHIR PENANGKAPAN', name: 'Masa Berakhir Penangkapan', fieldName: 'masa_berakhir_penangkapan', type: 'date'},
+  {label: 'DOKUMEN PENANGKAPAN', name: 'Dokumen Penangkapan', fieldName: 'dokumen_penangkapan', type: 'upload'},
+  {label: 'SP JANGKAP', name: 'Sp Jangkap', fieldName: 'sp_jangkap'},
+  {label: 'TANGGAL SP JANGKAP', name: 'Tanggal SP Jangkap', fieldName: 'tanggal_sp_jangkap', type: 'date'},
+  {label: 'MASA BERAKHIR SP JANGKAP', name: 'Masa Berakhir SP Jangkap', fieldName: 'masa_berakhir_sp_jangkap', type: 'date'},
+  {label: 'DOKUMEN SP JANGKAP', name: 'Dokumen SP Jangkap', fieldName: 'dokumen_sp_jangkap', type: 'upload'},
 ]
 
 class FormPenangkapan extends React.Component {

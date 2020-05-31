@@ -82,7 +82,7 @@ class PenangkapanDateFilter(FilterSet):
     class Meta:
         model = Penangkapan
         fields = [
-            
+            'id', 'no_penangkapan','no_lkn__LKN','no_lkn','created'
         ]
 class TersangkaDateFilter(FilterSet):
     created = DateFromTo()
@@ -90,7 +90,7 @@ class TersangkaDateFilter(FilterSet):
     class Meta:
         model = Tersangka
         fields = [
-            
+            'no_penangkapan_id__id'
         ]
 
 class BBDateFilter(FilterSet):
@@ -99,7 +99,7 @@ class BBDateFilter(FilterSet):
     class Meta:
         model = BarangBukti
         fields = [
-            
+            'milik_tersangka_id__no_penangkapan_id__id'
         ]
 
 class BerkasLknView(viewsets.ModelViewSet):
@@ -143,7 +143,7 @@ class PenangkapanView(viewsets.ModelViewSet):
     queryset = Penangkapan.objects.all()
     serializer_class = PenangkapanApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
+    # filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
     parser_class = (FileUploadParser,)
     filter_class = PenangkapanDateFilter
 
