@@ -28,6 +28,13 @@ function receive_statusbb_data(data) {
   }
 }
 
+function receive_statusbb_approve(data) {
+  return {
+    type: "RECEIVE_STATUS_BB_APPROVE",
+    data
+  }
+}
+
 function receive_proses_tersangka(data){
   return {
     type: "RECEIVE_PROSES_TERSANGKA",
@@ -919,6 +926,58 @@ export function getstatusbb(token, bb_id, status_id) {
           dispatch(receive_statusbb_data(response.data))
         }
       }
+    })
+  }
+}
+
+export function getstatusbbapprove(token, id) {
+  return dispatch => {
+    let url = ''
+    if (id) {
+      url = `/api/bb-status-app/${id}/`
+    }
+    else {
+      url = `/api/bb-status-app/`
+    }
+    return request(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if(response instanceof Error){
+        return
+      } else {
+        if (id) {
+          console.log('pakai id')
+          // dispatch(receive_statusbb(response.data))
+        } else {
+          dispatch(receive_statusbb_approve(response.data))
+        }
+      }
+    })
+  }
+}
+
+export function editstatusbbapprove(token, data, id){
+  return dispatch => {
+    return request(`/api/bb-status-app/${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }, data)
+    .then(response => {
+      if(response instanceof Error){
+        throw Error
+      }
+      return response
+    })
+    .catch((e) => {
+      return 'error'
     })
   }
 }

@@ -11,7 +11,7 @@ class ApiUser(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'nama_depan', 'nama_belakang', 'profile_pic', 'email', 'password', 'phone',
-                  'jenis_kelamin', 'tanggal_lahir', 'address', 'role')
+                  'jenis_kelamin', 'tanggal_lahir', 'address', 'role','moderator')
     
     
     # def update(self, instance, validated_data):

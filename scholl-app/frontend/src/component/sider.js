@@ -54,6 +54,10 @@ class SideMenu extends Component {
              <UserOutlined />
              <span className="nav-text"><b>STATISTIK</b></span>
            </Menu.Item>
+           <Menu.Item key="6" onClick={() => history.push("/dashboard/approval")}>
+             <SolutionOutlined />
+             <span className="nav-text"><b>APPROVAL</b></span>
+           </Menu.Item>
          </Menu>
        </Sider>
       )

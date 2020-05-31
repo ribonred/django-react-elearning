@@ -10,6 +10,7 @@ const initialState = {
   lknData: [],
   bbStatus: [],
   statusBBData: [],
+  bbStatusApprove: [],
   lknCreated: false,
   penangkapanData: [],
   statusTersangkaDataByPnkp: [],
@@ -96,6 +97,11 @@ const dashboard = (state = initialState, action) => {
         ...state,
         bbDataByPnkp: action.data,
       };
+      case 'RECEIVE_STATUS_BB_APPROVE':
+        return {
+          ...state,
+          bbStatusApprove: action.data,
+        };
     case 'RECEIVE_STATUS_TERSANGKA':
       return {
         ...state,

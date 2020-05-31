@@ -24,6 +24,7 @@ import TersangkaView from './pages/dashboard/Tersangka/view.js';
 import BarangBukti from './pages/dashboard/BarangBukti/index.js';
 import BarangBuktiEdit from './pages/dashboard/BarangBukti/edit.js';
 import BarangBuktiView from './pages/dashboard/BarangBukti/view.js';
+import Approval from './pages/dashboard/Approval/index';
 
 export default class App extends Component {
   render() {
@@ -55,6 +56,7 @@ export default class App extends Component {
                 <PrivateRoute path={`${url}/proses_tersangka/:id/edit`} component={EditProses} exact />
                 <PrivateRoute path={`${url}/status_tersangka/:id/edit`} component={EditStatus} exact />
                 <PrivateRoute path={`${url}/status_bb/:id/edit`} component={EditStatusBB} exact />
+                <PrivateRoute path={`${url}/Approval`} component={Approval} exact />
               </>
             )}
           />
