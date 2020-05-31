@@ -76,6 +76,31 @@ class LknDateFilter(FilterSet):
         fields = [
             
         ]
+class PenangkapanDateFilter(FilterSet):
+    created = DateFromTo()
+
+    class Meta:
+        model = Penangkapan
+        fields = [
+            
+        ]
+class TersangkaDateFilter(FilterSet):
+    created = DateFromTo()
+
+    class Meta:
+        model = Tersangka
+        fields = [
+            
+        ]
+
+class BBDateFilter(FilterSet):
+    created = DateFromTo()
+
+    class Meta:
+        model = BarangBukti
+        fields = [
+            
+        ]
 
 class BerkasLknView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
@@ -120,6 +145,7 @@ class PenangkapanView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
     parser_class = (FileUploadParser,)
+    filter_class = PenangkapanDateFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -156,6 +182,7 @@ class TersangkaView(viewsets.ModelViewSet):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaApi
     parser_class = (FileUploadParser,)
+    
 
 
     def get_queryset(self):
@@ -335,6 +362,7 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['no_penangkapan_id__id']
     parser_class = (FormParser, MultiPartParser)
+    filter_class = TersangkaDateFilter
 
 
 
@@ -393,6 +421,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     serializer_class = BarangBuktiEdit
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
+    filter_class = BBDateFilter
     
     
     

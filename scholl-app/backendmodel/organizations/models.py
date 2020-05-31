@@ -128,13 +128,15 @@ class StatusBarangBukti(BaseTimeStampModel):
     )
 
     GRAM = 'gram'
-    KG = 'Kg'
+    BUTIR = 'butir'
     PCS = 'PCS'
+    UNIT = 'unit'
 
     satuan_bb = (
         (GRAM, 'gram'),
-        (KG, 'Kg'),
-        (PCS,'PCS')
+        (BUTIR, 'butir'),
+        (PCS,'PCS'),
+        (UNIT, 'unit')
     )
     PENDING = "PENDING"
     REJECT = "REJECT"
