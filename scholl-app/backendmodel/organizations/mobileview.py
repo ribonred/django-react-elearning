@@ -81,7 +81,7 @@ class BerkasLknMobileView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'LKN']
+    filterset_fields = ['id', 'LKN','created']
     filter_class = LknDateFilter
     pagination_class = StandardResultsSetPagination
     
@@ -120,6 +120,9 @@ class TersangkaMobileView(viewsets.ModelViewSet):
     serializer_class = TersangkaApi
     parser_class = (FileUploadParser,)
     pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['created']
+
 
 
     def get_queryset(self):
@@ -158,6 +161,8 @@ class BarangBuktiMobileView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     pagination_class = StandardResultsSetPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['created']
     
     
     
