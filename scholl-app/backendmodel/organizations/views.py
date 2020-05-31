@@ -459,6 +459,8 @@ class StatusBarangBuktiView(viewsets.ModelViewSet):
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
                 barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user,approve_status='APPROVE')
+        else:
+           queryset = StatusBarangBukti.objects.filter(approve_status='APPROVE') 
         return queryset
 
     def get_permissions(self):

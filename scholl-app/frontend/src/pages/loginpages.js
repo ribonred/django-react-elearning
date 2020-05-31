@@ -42,6 +42,7 @@ class LoginPage extends React.Component {
          }, this.state.form);
          localStorage.setItem('user', result.data.user.username)
          localStorage.setItem('role', result.data.user.role)
+         localStorage.setItem('moderator', result.data.user.moderator)
          localStorage.setItem('token', result.data.token)
          history.push('/dashboard')
       } catch(e){

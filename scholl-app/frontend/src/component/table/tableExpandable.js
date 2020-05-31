@@ -313,7 +313,6 @@ export default class TableView extends React.Component {
       tableColumns[0].fixed = true;
       tableColumns[tableColumns.length - 1].fixed = 'right';
     }
-    console.log('tableDataWithKey', tableDataWithKey)
     return (
       <div style={{padding:'15px'}}>
         {this.props.applyDateFilter && (

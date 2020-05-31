@@ -99,6 +99,8 @@ const FormGroup = (props) => {
             key={data.fieldName}
             label={data.label}
             name={data.name}
+            defaultValue={props.defaultValue && props.defaultValue[data.fieldName]
+              ? props.defaultValue[data.fieldName] : null}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
               <InputNumber onChange={(e) => { props.onFormChange(data.fieldName, e) }} />

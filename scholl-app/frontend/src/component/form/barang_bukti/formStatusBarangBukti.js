@@ -1,7 +1,7 @@
 import React from 'react'
 import ModalWithTablePreview from '../../modal/modalWithTablePreview';
 import MainForm from '../../../ui-container/mainFormContainer';
-import { createstatusbb, getstatusbb, editstatusbb, deletestatusbb } from '../../../reduxActions/dashboard'
+import { createstatusbb, getstatusbb, editstatusbb, deletestatusbb, get_bb_list } from '../../../reduxActions/dashboard'
 import { get_token } from '../../../helper/requestHelper';
 import { connect } from 'react-redux';
 
@@ -46,6 +46,7 @@ class FormProsesTersangka extends React.Component {
 
   async componentDidMount(){
     this.setState({isLoading: true})
+    await this.props.dispatch(get_bb_list(get_token(), this.props.barangBuktiId))
     if(this.props.edit){
       await this.props.dispatch(getstatusbb(get_token(), null, this.props.id))
     } else {
@@ -122,9 +123,14 @@ class FormProsesTersangka extends React.Component {
   }
 
   render(){
-      const satuan_drop = [{value:"gram", name:'gram'}, {value:"Kg", name:'Kg'}, {value:"PCS", name:'Pcs'}]
+      const satuan_drop = [{value:"gram", name:'gram'}, {value:"butir", name:'butir'}, {value:"PCS", name:'Pcs'}, {value:"unit", name:'unit'}]
       const status_drop = [{value:"Masuk", name:'Masuk'}, {value:"Keluar", name:'Keluar'}]
-
+      if (this.props.bbData.jenis_barang=='narkotika') {
+        satuan_drop.splice(2);
+      } else {
+        satuan_drop.shift();
+        satuan_drop.shift();
+      }
       const formData = [
         {label: 'Tanggal Status', name: 'Tanggal Status', fieldName: 'tanggal_status', type: 'date'},
         {label: 'Waktu Status', name: 'Waktu Status', fieldName: 'waktu_status', type: 'time'},
@@ -133,7 +139,6 @@ class FormProsesTersangka extends React.Component {
         {label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'},
         {label: 'Status', name: 'Status', fieldName: 'status', dropdown: status_drop, type: 'select'},
       ]
-
       if(this.props.edit){
         return (
           <MainForm
@@ -174,6 +179,7 @@ function mapStateToProps(state) {
   return {
     bbStatus: dashboard.bbStatus,
     statusBBData: dashboard.statusBBData,
+    bbData: dashboard.bbData
   }
 }
 

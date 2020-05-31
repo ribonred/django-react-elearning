@@ -78,6 +78,12 @@ class BarangBuktiTable extends Component {
 
     render() {
       const { bbStatusApprove } = this.props;
+      var isNotAllow = ['view','edit','delete'];
+      var moderator = localStorage.getItem('moderator')
+      if (moderator==='null'||null||''||undefined) {
+        isNotAllow.push('approve')
+        isNotAllow.push('reject')
+      }
         return (
           <SideMenu selected="6">
             <Layout>
@@ -87,7 +93,7 @@ class BarangBuktiTable extends Component {
                   <TableExpand
                     useId
                     path="status barangbukti approval"
-                    isNotAllowTo={['view','edit','delete']}
+                    isNotAllowTo={isNotAllow}
                     tableField={tableField1}
                     tableData={bbStatusApprove}
                     isLoading={this.state.isLoading}
@@ -106,8 +112,7 @@ class BarangBuktiTable extends Component {
 
 function mapStateToProps(state) {
   const { dashboard } = state
-  console.log(dashboard.bbStatusApprove)
-  return { bbTableData: dashboard.bbTableData, bbStatusApprove: dashboard.bbStatusApprove }
+  return { bbStatusApprove: dashboard.bbStatusApprove }
 }
 
 const styles = {

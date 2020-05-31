@@ -82,7 +82,6 @@ class FormBarangBukti extends React.Component {
       formData.push({label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'})
       formData.push({label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'})
     }
-
     formData.push({label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown})
       return (
         <React.Fragment>
