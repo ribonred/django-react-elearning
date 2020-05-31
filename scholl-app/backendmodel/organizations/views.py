@@ -477,7 +477,7 @@ class StatusBarangBuktiView(viewsets.ModelViewSet):
     queryset = StatusBarangBukti.objects.all()
     serializer_class = StatusBarangBuktiApi
     filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
+    filterset_fields = ['barang_bukti_id']
     
     
     
