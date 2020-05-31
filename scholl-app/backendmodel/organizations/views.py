@@ -5,6 +5,7 @@ from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models import Q
 from .models import (
     BerkasLKN,
     BarangBukti,
@@ -80,7 +81,7 @@ class BerkasLknView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'LKN']
+    filterset_fields = ['id', 'LKN','created']
     filter_class = LknDateFilter
     
     
@@ -117,7 +118,7 @@ class PenangkapanView(viewsets.ModelViewSet):
     queryset = Penangkapan.objects.all()
     serializer_class = PenangkapanApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn']
+    filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
     parser_class = (FileUploadParser,)
 
     def get_queryset(self):
@@ -457,7 +458,7 @@ class StatusBarangBuktiView(viewsets.ModelViewSet):
         queryset = StatusBarangBukti.objects.all()
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
-                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user)
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user,approve_status='APPROVE')
         return queryset
 
     def get_permissions(self):
@@ -531,17 +532,25 @@ class StatusBBapprovalView(viewsets.ModelViewSet):
     serializer_class_3 = StatusModerator3
     detail_serializer = StatusBBwithAproval
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['approve_status']
+    filterset_fields = ['approve_status','moderator_one_status','moderator_two_status','moderator_three_status']
 
 
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset
-        queryset = StatusBarangBukti.objects.all()
+        queryset = StatusBarangBukti.objects.all().order_by('-created')
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
                 barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user)
+        if user.moderator == 'moderator_1':
+            queryset =  queryset.filter(moderator_one_status='PENDING')
+        if user.moderator == 'moderator_2':
+            queryset =  queryset.filter(moderator_two_status='PENDING')
+        if user.moderator == 'moderator_3':
+            queryset =  queryset.filter(moderator_three_status='PENDING')
+            
         return queryset
+        
 
     def get_permissions(self):
         permission_classes = []
