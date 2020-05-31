@@ -149,6 +149,8 @@ class FormProsesTersangka extends React.Component {
       }
       let formData = [
         {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select', disabled: this.props.edit ? true : false},
+        {label: 'Tanggal Mulai Proses', name: 'Tanggal Mulai Proses', fieldName: 'tanggal_mulai_proses', type: 'date'},
+        {label: 'Tanggal Akhir Proses', name: 'Tanggal Akhir Proses', fieldName: 'tanggal_akhir_proses', type: 'date'},
       ]
       if(jenis_proses === 4 || jenis_proses === 3){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
