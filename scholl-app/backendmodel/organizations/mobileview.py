@@ -68,6 +68,7 @@ class DateFromTo(RangeFilter):
 
 class LknDateFilter(FilterSet):
     tgl_dibuat = DateFromTo()
+    created =DateFromTo()
 
     class Meta:
         model = BerkasLKN
