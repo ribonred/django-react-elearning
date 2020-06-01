@@ -101,16 +101,16 @@ class FormBarangBukti extends React.Component {
     let formData = [
       {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
       {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-      {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+      {label: 'SP Sita Dokumen', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
       {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
-      {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
+      {label: 'Tap Sita Dokumen', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
     ]
 
     if(this.state.form.jenis_barang === 'narkotika'){
       formData.push({label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'})
-      formData.push({label: 'Tap Status Doc', name: 'Tap Status Doc', fieldName: 'tap_status_doc', type: 'upload'})
-      formData.push({label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'})
-      formData.push({label: 'Nomor Lab Doc', name: 'Nomor Lab Doc', fieldName: 'nomor_lab_doc', type: 'upload'})
+      formData.push({label: 'Tap Status Dokumen', name: 'Tap Status Dokumen', fieldName: 'tap_status_doc', type: 'upload'})
+      formData.push({label: 'Lab', name: 'Lab', fieldName: 'nomor_lab'})
+      formData.push({label: 'Lab Dokumen', name: 'Lab Dokumen', fieldName: 'nomor_lab_doc', type: 'upload'})
     }
     formData.push({label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown})
       return (
