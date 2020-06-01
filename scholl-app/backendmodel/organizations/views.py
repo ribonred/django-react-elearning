@@ -144,7 +144,7 @@ class PenangkapanView(viewsets.ModelViewSet):
     serializer_class = PenangkapanApi
     filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
-    parser_class = (FileUploadParser,)
+    parser_class = (FileUploadParser,MultiPartParser,FormParser)
     filter_class = PenangkapanDateFilter
 
     def get_queryset(self):
@@ -174,7 +174,9 @@ class PenangkapanView(viewsets.ModelViewSet):
         serializer = Penangkapan(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print("tese")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

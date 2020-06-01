@@ -120,7 +120,7 @@ class PenangkapanEditApi(serializers.ModelSerializer):
 class PenangkapanApi(WritableNestedModelSerializer):
     penangkapan_tersangka = TersangkaApi(
         many=True, required=False, allow_null=True)
-    lkn = serializers.CharField(source='no_lkn.LKN')
+    lkn = serializers.CharField(source='no_lkn.LKN',read_only=True)
 
     class Meta:
         model = Penangkapan

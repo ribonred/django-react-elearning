@@ -61,10 +61,7 @@ class FormTersangka extends React.Component {
   onsubmit = async() => {
     this.setState({isLoading:true})
     const { form } = this.state;
-    if(form.foto.constructor===File){
-      // console.log('file')
-    } else {
-      // console.log('bukan file')
+    if(!form.foto || form.foto.constructor!==File){
       delete form.foto;
     }
     const formData = new FormData();

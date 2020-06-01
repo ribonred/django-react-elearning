@@ -392,7 +392,7 @@ export function createpenangkapan(token, data) {
     return request('/api/pnkp/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     }, data)
@@ -460,7 +460,7 @@ export function editpenangkapan(token, data, id) {
     return request(`/api/pnkp/${id}/`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     }, data)

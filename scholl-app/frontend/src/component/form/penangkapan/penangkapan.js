@@ -50,10 +50,22 @@ class FormPenangkapan extends React.Component {
     }, async() => {
       this.setState({isLoading:true})
       let result;
+      const { form } = this.state;
+      if(!form.dokumen_penangkapan || form.dokumen_penangkapan.constructor!==File){
+        delete form.dokumen_penangkapan;
+      }
+      if(!form.dokumen_sp_jangkap || form.dokumen_sp_jangkap.constructor!==File){
+        delete form.dokumen_sp_jangkap;
+      }
+      const formData = new FormData();
+      const keys = Object.keys(form);
+      keys.forEach((key) => {
+        formData.append(key, form[key]);
+      })
       if(this.props.penangkapanID){
-        result = await this.props.dispatch(editpenangkapan(get_token(), this.state.form, this.props.penangkapanID))
+        result = await this.props.dispatch(editpenangkapan(get_token(), formData, this.props.penangkapanID))
       } else if(this.props.LKNID){
-        result = await this.props.dispatch(createpenangkapan(get_token(), this.state.form))
+        result = await this.props.dispatch(createpenangkapan(get_token(), formData))
       }
       if(result === 'error'){
         this.setState({ isError: true })
@@ -73,7 +85,12 @@ class FormPenangkapan extends React.Component {
   onFormChange = (fieldName, e) => {
      const formObj = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
-       if(!e.target){
+      if(e.file){
+        formObj[fieldName]=e.file.originFileObj
+        this.setState({
+            form: formObj,
+        })
+       } else if(!e.target){
            formObj[fieldName] = e
            this.setState({
                form: formObj,
