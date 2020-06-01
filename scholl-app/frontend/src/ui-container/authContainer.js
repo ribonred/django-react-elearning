@@ -45,6 +45,7 @@ const AuthContainer = (props) => {
         </Col>
       </Row>
     </div>
+    
   );
 };
 
