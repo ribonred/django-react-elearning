@@ -66,7 +66,11 @@ class FormTersangka extends React.Component {
     keys.forEach((key) => {
       formData.append(key, form[key]);
     })
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+    }
     const result= await this.props.dispatch(edittersangka(formData, get_token(), this.props.tersangkaId));
+    return
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {

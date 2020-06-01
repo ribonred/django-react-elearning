@@ -30,7 +30,6 @@ class FormBarangBukti extends React.Component {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
       if(e.file){
-        console.log(e.file.originFileObj)
         form[fieldName]=e.file.originFileObj
         this.setState({
             form: form,
@@ -66,7 +65,7 @@ class FormBarangBukti extends React.Component {
       console.log(pair[0]+ ', ' + pair[1]); 
     }
     const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.barangBuktiId));
-    console.log(result)
+    return
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {
