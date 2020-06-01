@@ -457,9 +457,11 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
             
             if serializer.is_valid():
                 serializer.save()
+                print(serializer.data)
                 success = Response(serializer.data,status=status.HTTP_200_OK)
                 return success
             error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(serializer.errors)
             return error
         except BarangBukti.DoesNotExist:
             serializer = BarangBuktiEdit(data=request.data)

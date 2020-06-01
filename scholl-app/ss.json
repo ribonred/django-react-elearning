@@ -1,0 +1,19 @@
+{
+    'id': 1,
+    'milik_tersangka_id': OrderedDict([('id',
+        1), ('created', '01-06-2020'), ('updated', '01-06-2020'), ('nama_tersangka', 'heru'), ('umur',
+        12), ('jenis_kelamin', 'laki-laki'), ('foto', None), ('no_penangkapan_id', OrderedDict([('id',
+        1), ('created', '01-06-2020'), ('updated', '01-06-2020'), ('no_penangkapan', '1234'), ('tanggal_penangkapan', '01-06-2020'), ('masa_berakhir_penangkapan', '01-06-2020'), ('dokumen_penangkapan', None), ('sp_jangkap', 'fer'), ('tanggal_sp_jangkap', '01-06-2020'), ('masa_berakhir_sp_jangkap', '01-06-2020'), ('dokumen_sp_jangkap', None), ('no_lkn', OrderedDict([('id',
+        1), ('created', '01-06-2020'), ('updated', '01-06-2020'), ('LKN', 'LKN1'), ('tgl_dibuat', '01-06-2020'), ('penyidik',
+        1)]))]))]),
+    'nama_barang': '1',
+    'sp_sita': '1',
+    'sp_sita_doc': '/media/dokumen/barangbukti/sp_sita/New_Text_Document.txt',
+    'tap_sita': '1',
+    'tap_sita_doc': '/media/dokumen/barangbukti/tap_sita/Invoice_0000001.pdf',
+    'tap_status': '1',
+    'tap_status_doc': None,
+    'nomor_lab': '1',
+    'nomor_lab_doc': None,
+    'jenis_barang': 'narkotika'
+}
