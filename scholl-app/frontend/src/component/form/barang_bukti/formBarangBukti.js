@@ -29,7 +29,13 @@ class FormBarangBukti extends React.Component {
   onFormChange = (fieldName, e) => {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
-       if(!e.target){
+      if(e.file){
+        console.log(e.file.originFileObj)
+        form[fieldName]=e.file.originFileObj
+        this.setState({
+            form: form,
+        })
+       } else if(!e.target){
          form[fieldName] = e
          this.setState({
              form: form,
@@ -50,7 +56,17 @@ class FormBarangBukti extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
+    const { form } = this.state;
+    const formData = new FormData();
+    const keys = Object.keys(form);
+    keys.forEach((key) => {
+      formData.append(key, form[key]);
+    })
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+    }
     const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.barangBuktiId));
+    console.log(result)
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {
