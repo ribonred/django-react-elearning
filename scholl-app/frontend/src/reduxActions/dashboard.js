@@ -664,7 +664,7 @@ export function create_bb_by_tersangka(token, data) {
     return request(`/api/bb-edit/`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
       }
     }, data)
