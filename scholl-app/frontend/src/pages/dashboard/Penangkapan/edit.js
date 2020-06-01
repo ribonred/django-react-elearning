@@ -17,19 +17,24 @@ const formDataTsk = [
   {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
+
 const formDataBB = [
-  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
-  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
-  {label: 'TAP STATUS', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'NOMOR LAB', name: 'Tap Status', fieldName: 'nomor_lab'},
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
+  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
+  {label: 'Tap Status Doc', name: 'Tap Status Doc', fieldName: 'tap_status_doc', type: 'upload'},
+  {label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'},
+  {label: 'Nomor Lab Doc', name: 'Nomor Lab Doc', fieldName: 'nomor_lab_doc', type: 'upload'}
 ]
 const formDataBBNon = [
-  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
-  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
 ]
 
 const tableFieldTsk = [

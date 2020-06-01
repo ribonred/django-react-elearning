@@ -14,12 +14,6 @@ const { Content } = Layout;
 
 const tableField = [
   {
-    title: 'NO LKN',
-    dataIndex: 'no_lkn',
-    sorter: true,
-    search: true,
-  },
-  {
     title: 'SP KAP',
     dataIndex: 'no_penangkapan',
     sorter: true,
