@@ -56,16 +56,27 @@ class FormBarangBukti extends React.Component {
   onsubmit = async() => {
     this.setState({isLoading:true})
     const { form } = this.state;
+    if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
+      delete form.nomor_lab_doc;
+    }
+    if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
+      delete form.sp_sita_doc;
+    }
+    if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
+      delete form.tap_sita_doc;
+    }
+    if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
+      delete form.tap_status_doc;
+    }
     const formData = new FormData();
     const keys = Object.keys(form);
     keys.forEach((key) => {
       formData.append(key, form[key]);
     })
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-    }
-    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.barangBuktiId));
-    return
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+    const result= await this.props.dispatch(editbb(formData, get_token(), this.props.barangBuktiId));
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {

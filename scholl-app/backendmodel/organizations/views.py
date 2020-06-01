@@ -279,6 +279,8 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
         try:
             instance = ProsesTersangka.objects.get(pk=kwargs['pk'])
             serializer = ProsesTersangkaApi(instance=instance,data=request.data)
+            files = request.FILES["tap_sita_doc"]
+            print(files)
             
             if serializer.is_valid():
                 serializer.save()
@@ -422,7 +424,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     filter_class = BBDateFilter
-    parser_class =(FormParser, MultiPartParser)
+    parser_class =(FileUploadParser,MultiPartParser,FormParser)
 
     
     

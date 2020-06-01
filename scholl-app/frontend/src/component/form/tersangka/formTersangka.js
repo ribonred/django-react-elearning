@@ -61,16 +61,18 @@ class FormTersangka extends React.Component {
   onsubmit = async() => {
     this.setState({isLoading:true})
     const { form } = this.state;
+    if(form.foto.constructor===File){
+      // console.log('file')
+    } else {
+      // console.log('bukan file')
+      delete form.foto;
+    }
     const formData = new FormData();
     const keys = Object.keys(form);
     keys.forEach((key) => {
       formData.append(key, form[key]);
     })
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-    }
     const result= await this.props.dispatch(edittersangka(formData, get_token(), this.props.tersangkaId));
-    return
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {
