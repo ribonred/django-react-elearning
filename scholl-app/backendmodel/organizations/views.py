@@ -422,6 +422,8 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     filter_class = BBDateFilter
+    parser_class =(FormParser, MultiPartParser)
+
     
     
     
@@ -442,6 +444,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            self.serializer_class = CreateBarangBuktiByTsk
             permission_classes = [AllowAny]
         elif self.action == 'destroy':
             permission_classes = [IsAuthenticated]

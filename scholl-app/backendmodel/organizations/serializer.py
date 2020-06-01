@@ -120,10 +120,11 @@ class PenangkapanEditApi(serializers.ModelSerializer):
 class PenangkapanApi(WritableNestedModelSerializer):
     penangkapan_tersangka = TersangkaApi(
         many=True, required=False, allow_null=True)
+    lkn = serializers.CharField(source='no_lkn.LKN')
 
     class Meta:
         model = Penangkapan
-        fields = ('id', 'no_lkn', 'no_penangkapan',
+        fields = ('id', 'no_lkn','lkn', 'no_penangkapan',
                   'tanggal_penangkapan', 'masa_berakhir_penangkapan', 'penangkapan_tersangka',
                   'dokumen_penangkapan',
                   'sp_jangkap','tanggal_sp_jangkap','masa_berakhir_sp_jangkap','dokumen_sp_jangkap')
