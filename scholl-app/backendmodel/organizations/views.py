@@ -281,8 +281,8 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
         try:
             instance = ProsesTersangka.objects.get(pk=kwargs['pk'])
             serializer = ProsesTersangkaApi(instance=instance,data=request.data)
-            files = request.FILES["tap_sita_doc"]
-            print(files)
+            # files = request.FILES["tap_sita_doc"]
+            # print(files)
             
             if serializer.is_valid():
                 serializer.save()
@@ -296,6 +296,7 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
             serializer = ProsesTersangkaApi(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
