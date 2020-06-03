@@ -113,7 +113,7 @@ class EditPenangkapan extends Component {
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if (e.file){
-          form[fieldName] = e.file.originFileObj
+          form[fieldName] = e
           this.setState({
               form: form,
           })
@@ -167,16 +167,19 @@ class EditPenangkapan extends Component {
       if(action === 'tersangka'){
         this.setState({
           showTskModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti'){
         this.setState({
           showBBModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti non'){
         this.setState({
           showBBModalNon: false,
+          form: {},
         });
       }
     };
@@ -320,6 +323,7 @@ class EditPenangkapan extends Component {
                 <ModalTersangka
                   title={'Tambah Tersangka'}
                   formData={formDataTsk}
+                  form={this.state.form}
                   isSuccess={this.state.isSuccess}
                   showModal={() => this.showModal('tersangka')}
                   hideModal={() => this.hideModal('tersangka')}
@@ -339,6 +343,7 @@ class EditPenangkapan extends Component {
                   <ModalTersangka
                     title={'Tambah BB Narkotika'}
                     formData={formDataBB}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti')}
                     hideModal={() => this.hideModal('barangbukti')}
                     visible={this.state.showBBModal}
@@ -349,6 +354,7 @@ class EditPenangkapan extends Component {
                   <ModalTersangka
                     title={'Tambah BB Non Narkotika'}
                     formData={formDataBBNon}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti non')}
                     hideModal={() => this.hideModal('barangbukti non')}
                     visible={this.state.showBBModalNon}

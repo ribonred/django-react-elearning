@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, message, Dropdown, TimePicker, Input, InputNumber, DatePicker, Select, Upload, Button } from 'antd'
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CopyOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 const dateFormat = 'DD-MM-YYYY';
@@ -113,11 +113,14 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <Upload {...uploadProps} onChange={(e) => { props.onFormChange(data.fieldName, e) }}>
+            <Upload {...uploadProps} showUploadList={false} onChange={(e) => { props.onFormChange(data.fieldName, e) }}>
               <Button>
                 <UploadOutlined />
               </Button>
             </Upload>
+            {props.defaultValue && props.defaultValue[data.fieldName] && props.defaultValue[data.fieldName].file && (
+              <div style={{padding:5, fontSize:12}}><CopyOutlined /> {props.defaultValue[data.fieldName].file && props.defaultValue[data.fieldName].file.name}</div>
+            )}
           </Form.Item>
         )
       } else if(data.type === 'time'){
