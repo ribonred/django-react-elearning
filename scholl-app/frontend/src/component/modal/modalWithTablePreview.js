@@ -26,14 +26,21 @@ export default class modalWithTablePreview extends React.Component {
           />
           <Modal
             title={this.props.formTitle}
-            onCancel={() => this.setState({visible: false})}
+            onCancel={
+              () => {
+                this.setState({visible: false})
+                this.props.hideModal()
+              }
+            }
             visible={this.state.visible}
             footer={[]}
           >
               <FormGroup
                 formData={this.props.formData || []}
+                defaultValue={this.props.form}
                 onSubmit={async() => {
                   await this.props.onSubmit(this.props.title)
+                  this.props.hideModal()
                   this.setState({visible: false})
                 }}
                 onFormChange={this.props.onFormChange}

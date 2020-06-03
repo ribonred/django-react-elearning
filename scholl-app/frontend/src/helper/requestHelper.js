@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Helper from './helper';
-let baseUrl = 'http://127.0.0.1:8000';
+let baseUrl = 'http://178.128.80.233:8000';
 
 export function get_token() {
   const token = localStorage.getItem('token')

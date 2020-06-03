@@ -40,7 +40,7 @@ class FormTersangka extends React.Component {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
       if(e.file){
-        form[fieldName]=e.file.originFileObj
+        form[fieldName]=e
         this.setState({
             form: form,
         })

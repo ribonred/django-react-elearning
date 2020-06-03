@@ -56,6 +56,10 @@ class FormStatusTersangka extends React.Component {
     }
   }
 
+  hideModal = () => {
+    this.setState({form:{}})
+  }
+
   getDefaultForm = async () => {
     await this.setState({form: this.props.statusTersangkaData}, () => this.setState({ isDataChange: true}))
   }
@@ -147,6 +151,8 @@ class FormStatusTersangka extends React.Component {
       return (
         <ModalWithTablePreview 
           path='status_tersangka'
+          hideModal={this.hideModal}
+          form={this.state.form}
           formTitle='FORM STATUS TERSANGKA'
           tableData={this.props.statusTersangkaDataByPnkp}
           isLoading={this.state.isLoading}
