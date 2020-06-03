@@ -70,6 +70,8 @@ class ProsesTersangkaApi(serializers.ModelSerializer):
         fields = [
             'id',
             'proses_tersangka',
+            'tanggal_mulai_proses',
+            'tanggal_akhir_proses',
             'sp_han',
             'sp_han_doc',
             'tap_han',
@@ -111,17 +113,21 @@ class PenangkapanEditApi(serializers.ModelSerializer):
     class Meta:
         model = Penangkapan
         fields = ('id','no_penangkapan',
-                  'tanggal_penangkapan', 'masa_berakhir_penangkapan')
+                  'tanggal_penangkapan', 'masa_berakhir_penangkapan','dokumen_penangkapan',
+                  'sp_jangkap','tanggal_sp_jangkap','masa_berakhir_sp_jangkap','dokumen_sp_jangkap')
 
 
 class PenangkapanApi(WritableNestedModelSerializer):
     penangkapan_tersangka = TersangkaApi(
         many=True, required=False, allow_null=True)
+    lkn = serializers.CharField(source='no_lkn.LKN',read_only=True)
 
     class Meta:
         model = Penangkapan
-        fields = ('id', 'no_lkn', 'no_penangkapan',
-                  'tanggal_penangkapan', 'masa_berakhir_penangkapan', 'penangkapan_tersangka')
+        fields = ('id', 'no_lkn','lkn', 'no_penangkapan',
+                  'tanggal_penangkapan', 'masa_berakhir_penangkapan', 'penangkapan_tersangka',
+                  'dokumen_penangkapan',
+                  'sp_jangkap','tanggal_sp_jangkap','masa_berakhir_sp_jangkap','dokumen_sp_jangkap')
 
 
 class TersangkaEditApi(WritableNestedModelSerializer):
@@ -140,7 +146,7 @@ class BarangBuktiEdit(WritableNestedModelSerializer):
     class Meta:
         model = BarangBukti
         fields = ['id','milik_tersangka_id' ,'nama_barang',
-                  'sp_sita','tap_sita', 'tap_status','nomor_lab', 'jenis_barang']
+                  'sp_sita','sp_sita_doc','tap_sita','tap_sita_doc', 'tap_status','tap_status_doc','nomor_lab','nomor_lab_doc', 'jenis_barang']
 
         depth = 3
 
@@ -160,7 +166,7 @@ class CreateBarangBuktiByTsk(WritableNestedModelSerializer):
     class Meta:
         model = BarangBukti
         fields = ['id','milik_tersangka_id' ,'nama_barang',
-                  'sp_sita','tap_sita', 'tap_status','nomor_lab', 'jenis_barang']
+                  'sp_sita','sp_sita_doc','tap_sita','tap_sita_doc', 'tap_status','tap_status_doc','nomor_lab','nomor_lab_doc', 'jenis_barang']
 
 class BarangBuktiDetailApi(WritableNestedModelSerializer):
     statusbarangbukti = StatusBarangBuktiApi(

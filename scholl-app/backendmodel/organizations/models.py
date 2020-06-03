@@ -20,9 +20,15 @@ class Penangkapan(BaseTimeStampModel):
     tanggal_penangkapan = models.DateField(
         null=True, blank=True)
     masa_berakhir_penangkapan = models.DateField(null=True, blank=True)
+    dokumen_penangkapan =models.FileField(upload_to='dokumen/penangkapan', null=True, blank=True)
+    sp_jangkap = models.CharField(max_length=255,null=True, blank=True)
+    tanggal_sp_jangkap = models.DateField(
+        null=True, blank=True)
+    masa_berakhir_sp_jangkap = models.DateField(null=True, blank=True)
+    dokumen_sp_jangkap =models.FileField(upload_to='dokumen/sp_jangkap', null=True, blank=True)
 
     def __str__(self):
-        return f'/ {self.no_penangkapan}'
+        return f'{self.no_penangkapan}'
 
 
 class Tersangka(BaseTimeStampModel):
@@ -84,6 +90,10 @@ class ProsesPengadilan(models.Model):
 class ProsesTersangka(BaseTimeStampModel):
     proses_tersangka = models.ForeignKey(
         Tersangka, on_delete=models.CASCADE, related_name='prosestersangka', null=True, blank=True)
+    tanggal_mulai_proses = models.DateField(
+    null=True, blank=True)
+    tanggal_akhir_proses = models.DateField(
+        null=True, blank=True)
     sp_han = models.CharField(max_length=255, null=True, blank=True)
     sp_han_doc = models.FileField(upload_to='dokumen/sphan', null=True, blank=True)
     tap_han = models.CharField(max_length=255, null=True, blank=True)
@@ -109,9 +119,13 @@ class BarangBukti(BaseTimeStampModel):
         Tersangka, on_delete=models.CASCADE, related_name='barangbuktitersangka', blank=True, null=True)
     nama_barang = models.CharField(max_length=255, blank=True, null=True)
     sp_sita = models.CharField(max_length=255, blank=True, null=True)
+    sp_sita_doc = models.FileField(upload_to='dokumen/barangbukti/sp_sita', null=True, blank=True)
     tap_sita = models.CharField(max_length=255, blank=True, null=True)
+    tap_sita_doc = models.FileField(upload_to='dokumen/barangbukti/tap_sita', null=True, blank=True)
     tap_status = models.CharField(max_length=255, blank=True, null=True)
+    tap_status_doc = models.FileField(upload_to='dokumen/barangbukti/tap_status', null=True, blank=True)
     nomor_lab = models.CharField(max_length=255, blank=True, null=True)
+    nomor_lab_doc = models.FileField(upload_to='dokumen/barangbukti/nomor_lab', null=True, blank=True)
     jenis_barang = models.CharField(
         max_length=255, choices=jenis, blank=True, null=True)
 

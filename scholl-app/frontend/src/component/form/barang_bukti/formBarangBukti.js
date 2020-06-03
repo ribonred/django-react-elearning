@@ -29,7 +29,12 @@ class FormBarangBukti extends React.Component {
   onFormChange = (fieldName, e) => {
      const form = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
-       if(!e.target){
+      if(e.file){
+        form[fieldName]=e.file.originFileObj
+        this.setState({
+            form: form,
+        })
+       } else if(!e.target){
          form[fieldName] = e
          this.setState({
              form: form,
@@ -50,7 +55,28 @@ class FormBarangBukti extends React.Component {
 
   onsubmit = async() => {
     this.setState({isLoading:true})
-    const result= await this.props.dispatch(editbb(this.state.form, get_token(), this.props.barangBuktiId));
+    const { form } = this.state;
+    if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
+      delete form.nomor_lab_doc;
+    }
+    if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
+      delete form.sp_sita_doc;
+    }
+    if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
+      delete form.tap_sita_doc;
+    }
+    if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
+      delete form.tap_status_doc;
+    }
+    const formData = new FormData();
+    const keys = Object.keys(form);
+    keys.forEach((key) => {
+      formData.append(key, form[key]);
+    })
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+    const result= await this.props.dispatch(editbb(formData, get_token(), this.props.barangBuktiId));
     if(result === 'error'){
       this.setState({ isError: true })
       setTimeout(() => {
@@ -75,16 +101,16 @@ class FormBarangBukti extends React.Component {
     let formData = [
       {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
       {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-      {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+      {label: 'SP Sita Dokumen', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
       {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
-      {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
+      {label: 'Tap Sita Dokumen', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
     ]
 
     if(this.state.form.jenis_barang === 'narkotika'){
       formData.push({label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'})
-      formData.push({label: 'Tap Status Doc', name: 'Tap Status Doc', fieldName: 'tap_status_doc', type: 'upload'})
-      formData.push({label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'})
-      formData.push({label: 'Nomor Lab Doc', name: 'Nomor Lab Doc', fieldName: 'nomor_lab_doc', type: 'upload'})
+      formData.push({label: 'Tap Status Dokumen', name: 'Tap Status Dokumen', fieldName: 'tap_status_doc', type: 'upload'})
+      formData.push({label: 'Lab', name: 'Lab', fieldName: 'nomor_lab'})
+      formData.push({label: 'Lab Dokumen', name: 'Lab Dokumen', fieldName: 'nomor_lab_doc', type: 'upload'})
     }
     formData.push({label: 'Jenis Barang', name: 'Jenis Barang', fieldName: 'jenis_barang', type: 'select', dropdown: dropdown})
       return (

@@ -149,8 +149,7 @@ class FormProsesTersangka extends React.Component {
       }
       let formData = [
         {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select', disabled: this.props.edit ? true : false},
-        {label: 'Tanggal Mulai Proses', name: 'Tanggal Mulai Proses', fieldName: 'tanggal_mulai_proses', type: 'date'},
-        {label: 'Tanggal Akhir Proses', name: 'Tanggal Akhir Proses', fieldName: 'tanggal_akhir_proses', type: 'date'},
+        
       ]
       if(jenis_proses === 4 || jenis_proses === 3){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
@@ -166,7 +165,8 @@ class FormProsesTersangka extends React.Component {
         formData.push({label: 'SP.HAN', name: 'SP.HAN', fieldName: 'sp_han'})
         formData.push({label: 'DOKUMEN SP.HAN', name: 'DOKUMEN SP.HAN', fieldName: 'sp_han_doc', type: 'upload'})
       }
-
+      formData.push({label: 'Tanggal Mulai Penahanan', name: 'Tanggal Mulai Penahanan', fieldName: 'tanggal_mulai_proses', type: 'date'})
+      formData.push({label: 'Tanggal Akhir Penahanan', name: 'Tanggal Akhir Penahanan', fieldName: 'tanggal_akhir_proses', type: 'date'})
       formData.push({label: 'Keterangan', name: 'Keterangan', fieldName: 'keterangan', type: 'area'})
       
       let prosesTersangka = []
@@ -199,7 +199,7 @@ class FormProsesTersangka extends React.Component {
       return (
         <ModalWithTablePreview
           path='proses_tersangka'
-          formTitle='FORM PROSES TERSANGKA'
+          formTitle='FORM PROSES PENAHANAN'
           tableData={prosesTersangka || []}
           isLoading={this.state.isLoading}
           title='PROSES TERSANGKA'

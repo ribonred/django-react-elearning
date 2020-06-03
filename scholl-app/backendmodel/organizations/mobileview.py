@@ -42,6 +42,7 @@ from django_filters.fields import RangeField
 from django.shortcuts import render
 from django import forms
 from rest_framework.pagination import PageNumberPagination
+from .views import PenangkapanDateFilter
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 2
@@ -110,6 +111,45 @@ class BerkasLknMobileView(viewsets.ModelViewSet):
     def post(self, request, format=None):
         image = request.FILES["penangkapan_tersangka.foto"]
         serializer = BerkasLKN(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PenangkapanMobileView(viewsets.ModelViewSet):
+    queryset = Penangkapan.objects.all()
+    serializer_class = PenangkapanApi
+    filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
+    parser_class = (FileUploadParser,)
+    filter_class = PenangkapanDateFilter
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset
+        queryset = Penangkapan.objects.all()
+        if not user.is_superuser:
+            queryset = Penangkapan.objects.filter(
+                no_lkn__penyidik=self.request.user)
+
+        return queryset
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+            self.serializer_class = PenangkapanEditApi
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'destroy':
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def post(self, request, format=None):
+        serializer = Penangkapan(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

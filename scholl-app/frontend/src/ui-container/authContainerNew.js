@@ -10,6 +10,7 @@ const authContainerNew = (props) => {
         src={require("../assets/bnn_bintang_fix_max.png")}
         style={styles.image}
       />
+      <h2 style={styles.h2}> E-Manajemen Tahti BNNP Kepri</h2>
       <div style={styles.box}>
         <Form style={{ padding: "10px", marginTop: '5px' }}>
           <p
@@ -57,6 +58,10 @@ const authContainerNew = (props) => {
 };
 
 const styles = {
+  h2:{
+    color: 'white',
+    fontWeight:'bold'
+  },
   container: {
     display: "flex",
     flexDirection: "column",
