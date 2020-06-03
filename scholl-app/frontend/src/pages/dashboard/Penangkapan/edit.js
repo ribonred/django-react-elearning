@@ -19,33 +19,25 @@ const formDataTsk = [
 ]
 
 const formDataBB = [
-  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
-  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
-  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
-  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
-  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
-  {label: 'Tap Status Doc', name: 'Tap Status Doc', fieldName: 'tap_status_doc', type: 'upload'},
-  {label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'},
-  {label: 'Nomor Lab Doc', name: 'Nomor Lab Doc', fieldName: 'nomor_lab_doc', type: 'upload'}
-]
-
-const formDataBBNon = [
-  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
-  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
-  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
-  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
-  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP SITA DOC', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'SP SITA DOKUMEN', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
   {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
   {label: 'TAP SITA DOKUMEN', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
   {label: 'TAP STATUS', name: 'Tap Status', fieldName: 'tap_status'},
   {label: 'TAP STATUS DOKUMEN', name: 'Tap Status Dokumen', fieldName: 'tap_status_doc', type: 'upload'},
   {label: 'NOMOR LAB', name: 'Nomor Lab', fieldName: 'nomor_lab'},
   {label: 'NOMOR LAB DOKUMEN', name: 'Nomor Lab Dokumen', fieldName: 'nomor_lab_doc', type: 'upload'},
+]
+
+const formDataBBNon = [
+  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
+  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'SP SITA DOKUMEN', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'TAP SITA DOKUMEN', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
 ]
 
 const tableFieldTsk = [
@@ -197,8 +189,8 @@ class EditPenangkapan extends Component {
 
     async onSubmit(action){
       const { form } = this.state
+      console.log(action)
       let pnkpId = this.props.match.params.id
-      console.log('form', form)
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
           this.setState({form:{}})
@@ -211,7 +203,7 @@ class EditPenangkapan extends Component {
             form.jenis_kelamin = 'laki-laki';
           }
           if(form.foto){
-            data.append("foto", form.foto);
+            data.append("foto", form.foto.file.originFileObj);
           }
           data.set("jenis_kelamin", form.jenis_kelamin);
           data.set("nama_tersangka", form.nama_tersangka);
@@ -228,22 +220,31 @@ class EditPenangkapan extends Component {
           return 'success'
         }
       } else if (action === 'Tambah BB Narkotika') {
+          console.log(form)
         if (!this.state.form['nama_barang'] || !this.state.form['milik_tersangka_id']) {
           this.openErrorMessage()
           this.setState({form:{}})
           return 'false'
         } else {
-          if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
+          if(!form.nomor_lab_doc || form.nomor_lab_doc.file.originFileObj.constructor!==File){
             delete form.nomor_lab_doc;
+          } else {
+            form.nomor_lab_doc = form.nomor_lab_doc.file.originFileObj
           }
-          if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
+          if(!form.sp_sita_doc || form.sp_sita_doc.file.originFileObj.constructor!==File){
             delete form.sp_sita_doc;
+          } else {
+            form.sp_sita_doc = form.sp_sita_doc.file.originFileObj
           }
-          if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
+          if(!form.tap_sita_doc || form.tap_sita_doc.file.originFileObj.constructor!==File){
             delete form.tap_sita_doc;
+          } else {
+            form.tap_sita_doc = form.tap_sita_doc.file.originFileObj
           }
-          if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
+          if(!form.tap_status_doc || form.tap_status_doc.file.originFileObj.constructor!==File){
             delete form.tap_status_doc;
+          } else {
+            form.tap_status_doc = form.tap_status_doc.file.originFileObj
           }
           const formData = new FormData();
           const keys = Object.keys(form);
@@ -394,7 +395,7 @@ class EditPenangkapan extends Component {
                 />
                 <Space>
                   <ModalTersangka
-                    title={'Tambah BB Narkotika Id'}
+                    title={'Tambah BB Narkotika'}
                     formData={formDataBB}
                     form={this.state.form}
                     showModal={() => this.showModal('barangbukti')}
