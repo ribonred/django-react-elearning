@@ -17,7 +17,25 @@ const formDataTsk = [
   {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
+
 const formDataBB = [
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
+  {label: 'Tap Status', name: 'Tap Status', fieldName: 'tap_status'},
+  {label: 'Tap Status Doc', name: 'Tap Status Doc', fieldName: 'tap_status_doc', type: 'upload'},
+  {label: 'Nomor Lab', name: 'Nomor Lab', fieldName: 'nomor_lab'},
+  {label: 'Nomor Lab Doc', name: 'Nomor Lab Doc', fieldName: 'nomor_lab_doc', type: 'upload'}
+]
+
+const formDataBBNon = [
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
+  {label: 'SP Sita', name: 'SP Sita', fieldName: 'sp_sita'},
+  {label: 'SP Sita Doc', name: 'SP Sita Doc', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'Tap Sita', name: 'Tap Sita', fieldName: 'tap_sita'},
+  {label: 'Tap Sita Doc', name: 'Tap Sita Doc', fieldName: 'tap_sita_doc', type: 'upload'},
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
   {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
@@ -28,14 +46,6 @@ const formDataBB = [
   {label: 'TAP STATUS DOKUMEN', name: 'Tap Status Dokumen', fieldName: 'tap_status_doc', type: 'upload'},
   {label: 'NOMOR LAB', name: 'Nomor Lab', fieldName: 'nomor_lab'},
   {label: 'NOMOR LAB DOKUMEN', name: 'Nomor Lab Dokumen', fieldName: 'nomor_lab_doc', type: 'upload'},
-]
-const formDataBBNon = [
-  {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
-  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
-  {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP SITA DOC', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
-  {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
-  {label: 'TAP SITA DOKUMEN', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
 ]
 
 const tableFieldTsk = [
@@ -114,7 +124,7 @@ class EditPenangkapan extends Component {
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if (e.file){
-          form[fieldName] = e.file.originFileObj
+          form[fieldName] = e
           this.setState({
               form: form,
           })
@@ -168,16 +178,19 @@ class EditPenangkapan extends Component {
       if(action === 'tersangka'){
         this.setState({
           showTskModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti'){
         this.setState({
           showBBModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti non'){
         this.setState({
           showBBModalNon: false,
+          form: {},
         });
       }
     };
@@ -363,6 +376,7 @@ class EditPenangkapan extends Component {
                 <ModalTersangka
                   title={'Tambah Tersangka'}
                   formData={formDataTsk}
+                  form={this.state.form}
                   isSuccess={this.state.isSuccess}
                   showModal={() => this.showModal('tersangka')}
                   hideModal={() => this.hideModal('tersangka')}
@@ -382,6 +396,7 @@ class EditPenangkapan extends Component {
                   <ModalTersangka
                     title={'Tambah BB Narkotika Id'}
                     formData={formDataBB}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti')}
                     hideModal={() => this.hideModal('barangbukti')}
                     visible={this.state.showBBModal}
@@ -392,6 +407,7 @@ class EditPenangkapan extends Component {
                   <ModalTersangka
                     title={'Tambah BB Non Narkotika'}
                     formData={formDataBBNon}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti non')}
                     hideModal={() => this.hideModal('barangbukti non')}
                     visible={this.state.showBBModalNon}

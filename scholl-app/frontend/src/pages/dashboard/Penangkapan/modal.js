@@ -6,7 +6,6 @@ export default class ModalTersangka extends React.Component {
       state = {
         ModalText: 'Content of the modal',
       };
-    
       render() {
         return (
           <div>
@@ -24,6 +23,7 @@ export default class ModalTersangka extends React.Component {
                     onSubmit={async() => {
                       this.props.onSubmit(this.props.title)
                     }}
+                    defaultValue={this.props.form}
                     onFormChange={this.props.onFormChange}
                 />
             </Modal>
