@@ -113,6 +113,7 @@ class EditPenangkapan extends Component {
     }
 
     onFormChange = (fieldName, e) => {
+      alert('trigger')
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if (e.file){
@@ -337,6 +338,7 @@ class EditPenangkapan extends Component {
 
     render() {
         const { tersangkaTableDataByLkn, bbDataByPnkp } = this.props;
+        console.log('rerender')
         if(tersangkaTableDataByLkn.length > 0) {
           dropdownTsk.length = 0;
           tersangkaTableDataByLkn.map((data) => {

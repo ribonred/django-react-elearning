@@ -86,7 +86,7 @@ class FormPenangkapan extends React.Component {
      const formObj = {...this.state.form};
      if(e!==null && e!==undefined && e!==''){
       if(e.file){
-        formObj[fieldName]=e.file.originFileObj
+        formObj[fieldName]=e
         this.setState({
             form: formObj,
         })
@@ -107,7 +107,7 @@ class FormPenangkapan extends React.Component {
   render(){
       return (
         <MainForm
-          title={this.props.penangkapanID ? 'Edit Form Penangkapan' : 'Edit Form Penangkapan'}
+          title={this.props.penangkapanID ? 'Edit Form Penangkapan' : 'Buat Form Penangkapan'}
           messageTitle='Penangkapan'
           isError={this.state.isError}
           isDataChange={this.props.type === 'create' ? true : this.state.isDataChange}

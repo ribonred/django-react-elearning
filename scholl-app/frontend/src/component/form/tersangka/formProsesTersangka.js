@@ -46,9 +46,16 @@ class FormProsesTersangka extends React.Component {
     this.setState({ isLoading: false })
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps, prevState){
     if(this.props.prosesTersangkaData !== prevProps.prosesTersangkaData){
       this.getDefaultForm()
+    }
+    if(this.state.form.jenis_proses!==prevState.form.jenis_proses){
+       this.setState((prevState) => ({
+        form: {
+          jenis_proses: prevState.form.jenis_proses
+        }
+       }));
     }
   }
 
@@ -60,7 +67,7 @@ class FormProsesTersangka extends React.Component {
     const form = {...this.state.form};
     if(e!==null && e!==undefined){
       if(e.file){
-        form[fieldName]=e.file.originFileObj
+        form[fieldName]=e
         this.setState({
             form: form,
         })
@@ -126,6 +133,12 @@ class FormProsesTersangka extends React.Component {
     }
   }
 
+  hideModal = () => {
+    this.setState({
+      form: {}
+    })
+  }
+
   onDelete = async (id) => {
     await this.props.dispatch(deleteprosestersangka(get_token(), id))
     this.setState({ isLoading: true })
@@ -149,7 +162,6 @@ class FormProsesTersangka extends React.Component {
       }
       let formData = [
         {label: 'Jenis Proses', name: 'Jenis Proses', fieldName: 'jenis_proses', dropdown: jenis_proses_drop, type: 'select', disabled: this.props.edit ? true : false},
-        
       ]
       if(jenis_proses === 4 || jenis_proses === 3){
         formData.push({label: 'TAP HAN', name: 'TAP HAN', fieldName: 'tap_han'})
@@ -199,6 +211,8 @@ class FormProsesTersangka extends React.Component {
       return (
         <ModalWithTablePreview
           path='proses_tersangka'
+          hideModal={this.hideModal}
+          form={this.state.form}
           formTitle='FORM PROSES PENAHANAN'
           tableData={prosesTersangka || []}
           isLoading={this.state.isLoading}
