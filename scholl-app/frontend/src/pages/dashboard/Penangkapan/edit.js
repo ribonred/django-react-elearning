@@ -113,7 +113,6 @@ class EditPenangkapan extends Component {
     }
 
     onFormChange = (fieldName, e) => {
-      alert('trigger')
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if (e.file){
@@ -190,7 +189,6 @@ class EditPenangkapan extends Component {
 
     async onSubmit(action){
       const { form } = this.state
-      console.log(action)
       let pnkpId = this.props.match.params.id
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
@@ -203,8 +201,8 @@ class EditPenangkapan extends Component {
           if(!form.jenis_kelamin) {
             form.jenis_kelamin = 'laki-laki';
           }
-          if(form.foto){
-            data.append("foto", form.foto.file.originFileObj);
+          if(form.foto && form.foto.constructor===File){
+            data.append("foto", form.foto);
           }
           data.set("jenis_kelamin", form.jenis_kelamin);
           data.set("nama_tersangka", form.nama_tersangka);
@@ -221,31 +219,30 @@ class EditPenangkapan extends Component {
           return 'success'
         }
       } else if (action === 'Tambah BB Narkotika') {
-          console.log(form)
         if (!this.state.form['nama_barang'] || !this.state.form['milik_tersangka_id']) {
           this.openErrorMessage()
           this.setState({form:{}})
           return 'false'
         } else {
-          if(!form.nomor_lab_doc || form.nomor_lab_doc.file.originFileObj.constructor!==File){
+          if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
             delete form.nomor_lab_doc;
           } else {
-            form.nomor_lab_doc = form.nomor_lab_doc.file.originFileObj
+            form.nomor_lab_doc = form.nomor_lab_doc
           }
-          if(!form.sp_sita_doc || form.sp_sita_doc.file.originFileObj.constructor!==File){
+          if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
             delete form.sp_sita_doc;
           } else {
-            form.sp_sita_doc = form.sp_sita_doc.file.originFileObj
+            form.sp_sita_doc = form.sp_sita_doc
           }
-          if(!form.tap_sita_doc || form.tap_sita_doc.file.originFileObj.constructor!==File){
+          if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
             delete form.tap_sita_doc;
           } else {
-            form.tap_sita_doc = form.tap_sita_doc.file.originFileObj
+            form.tap_sita_doc = form.tap_sita_doc
           }
-          if(!form.tap_status_doc || form.tap_status_doc.file.originFileObj.constructor!==File){
+          if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
             delete form.tap_status_doc;
           } else {
-            form.tap_status_doc = form.tap_status_doc.file.originFileObj
+            form.tap_status_doc = form.tap_status_doc
           }
           const formData = new FormData();
           const keys = Object.keys(form);

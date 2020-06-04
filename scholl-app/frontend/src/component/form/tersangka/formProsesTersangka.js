@@ -91,9 +91,9 @@ class FormProsesTersangka extends React.Component {
   }
 
   onSubmit = async () => {
-    if(this.props.edit){
-      this.setState({isLoading:true})
       const { form } = this.state;
+      if(this.props.edit){
+      this.setState({isLoading:true})
       const formData = new FormData();
       const keys = Object.keys(form);
       keys.forEach((key) => {
@@ -119,7 +119,6 @@ class FormProsesTersangka extends React.Component {
       }
       this.setState({isLoading:false})
     } else {
-      const { form } = this.state;
       this.setState({isLoading:true})
       const formData = new FormData();
       const keys = Object.keys(form);

@@ -17,12 +17,12 @@ class Uploader extends React.Component {
           <FilePicker
             className="button"
             maxSize={10}
-            buttonText=<UploadOutlined/>
+            buttonText='Upload Files'
             extensions={["application/pdf", "image/jpeg", "image/png"]}
             onChange={(file) => {
               this.props.onFormChange(this.props.fieldName, file)
               this.setState({ file })
-            }
+            }}
             onError={error => { alert("that's an error: " + error) }}
             onClear={() => this.setState({ file: {} })}
             triggerReset={this.state.reset}

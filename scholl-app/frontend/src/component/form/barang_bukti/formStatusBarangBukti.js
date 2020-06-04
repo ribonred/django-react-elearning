@@ -61,6 +61,9 @@ class FormProsesTersangka extends React.Component {
     }
   }
 
+  hideModal = () => {
+    this.setState({form: {}})
+  }
   getDefaultForm = async () => {
     await this.setState({form: this.props.statusBBData}, () => this.setState({ isDataChange: true}))
   }
@@ -89,9 +92,9 @@ class FormProsesTersangka extends React.Component {
   }
 
   onSubmit = async() => {
+    const { form } = this.state;
     if(this.props.edit){
       this.setState({isLoading:true})
-      const { form } = this.state;
       const result= await this.props.dispatch(editstatusbb(get_token(), form, this.props.id))
       if(result === 'error'){
         this.setState({ isError: true })
@@ -106,7 +109,6 @@ class FormProsesTersangka extends React.Component {
       }
       this.setState({isLoading:false})
     } else {
-      const { form } = this.state;
       form['barang_bukti_id'] = this.props.barangBuktiId
       this.setState({isLoading:true})
       await this.props.dispatch(createstatusbb(get_token(), form))
@@ -164,6 +166,8 @@ class FormProsesTersangka extends React.Component {
         <ModalWithTablePreview 
           path='status_bb'
           viewModal
+          hideModal={this.hideModal}
+          form={this.state.form}
           formTitle='FORM STATUS BARANG BUKTI'
           tableData={this.props.bbStatus}
           isLoading={this.state.isLoading}

@@ -69,7 +69,7 @@ class CreateLKN extends Component {
               <Content style={{padding:'20px'}}>
                 <div style={styles.siteLayout}>
                   {this.renderBreadCrumb()}
-                  <LknFormView isLoading={this.state.isLoading} onFormChange={this.onFormChange} onsubmit={this.onsubmit}></LknFormView>
+                  <LknFormView isLoading={this.state.isLoading} onFormChange={this.onFormChange} defaultValue={this.state.form} onsubmit={this.onsubmit}></LknFormView>
                  </div>
                </Content>
              </Layout>
