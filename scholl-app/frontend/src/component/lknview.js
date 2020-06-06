@@ -20,13 +20,6 @@ const tableFieldStatus = [
     search: true,
   },
   {
-    title: 'Keterangan',
-    dataIndex: 'keterangan',
-    longtext: true,
-    sorter: true,
-    search: true,
-  },
-  {
     title: 'Tanggal',
     dataIndex: 'tanggal',
     sorter: true,
@@ -42,23 +35,18 @@ const tableFieldStatus = [
 
 const tableFieldProses = [
   {
-    title: 'SP.HAN',
-    sorter: true,
-    dataIndex: 'sp_han',
-    search: true,
-  },
-  {
-    title: 'Dokumen SP.HAN',
-    dataIndex: 'sp_han_doc',
-    link: true,
-    sorter: true,
-    search: true,
-  },
-  {
     title: 'Jenis Proses',
     dataIndex: 'jenis_proses',
     sorter: true,
     search: true,
+  },
+  {
+    title: 'Tangal Mulai',
+    dataIndex: 'tanggal_mulai_proses',
+  },
+  {
+    title: 'Tanggal Berakhir',
+    dataIndex: 'tanggal_akhir_proses',
   },
 ]
 
@@ -82,8 +70,8 @@ const tableFieldBarangBukti = [
     search: true,
   },
   {
-    title: 'Tap Status',
-    dataIndex: 'tap_status',
+    title: 'Tap Sita',
+    dataIndex: 'tap_sita',
     sorter: true,
     search: true,
   }
@@ -130,7 +118,7 @@ const LknViewView = (props) => {
                       )
                     }
                     </div>
-                    <div style={{paddingTop: '10px'}}>
+                    <div style={{paddingTop: '10px', marginTop: '50px'}}>
                       <p style={styles.namaTersangka}>{tsk.nama_tersangka}</p>
                       <p style={styles.keteranganTersangka}>{tsk.jenis_kelamin.toUpperCase()}</p>
                       <p style={styles.keteranganTersangka}>{tsk.umur} Tahun</p>
@@ -142,6 +130,7 @@ const LknViewView = (props) => {
                       <TabPane tab='Proses Tersangka' key='1'>
                         <div style={styles.detailBoxPenangkapan}>
                           <TableView
+                            hideField={['id', 'proses_tersangka']}
                             path="proses tersangka"
                             isNotAllowTo={['view','edit','delete']}
                             tableField={tableFieldProses}
@@ -158,6 +147,7 @@ const LknViewView = (props) => {
                       <TabPane tab='Status Tersangka' key='2'>
                         <div style={styles.detailBoxPenangkapan}>
                         <TableView
+                          hideField={['id', 'tersangka_id']}
                           path="status tersangka"
                           tableField={tableFieldStatus}
                           tableData={tsk.statustersangka}
@@ -168,6 +158,7 @@ const LknViewView = (props) => {
                       <TabPane tab='Barang Bukti Tersangka' key='3'>
                         <div style={styles.detailBoxPenangkapan}>
                         <TableView
+                          hideField={['id']}
                           path="barang bukti"
                           isNotAllowTo={['view','edit','delete']}
                           tableField={tableFieldBarangBukti}
@@ -229,7 +220,7 @@ const styles = {
     width: '100%',
     height: '100%',
     borderRadius: '20px',
-    paddingTop: '15px',
+    marginTop: '15px',
   },
   detailBoxPenangkapan: {
     height: '270px',

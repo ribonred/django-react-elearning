@@ -13,6 +13,7 @@ class tableNew extends Component {
           visible={this.state.visible}
           data={this.state.data}
           hideModal={() => this.setState({visible:false})}
+          hideField={this.props.hideField}
         />
         <table>
             <tbody>

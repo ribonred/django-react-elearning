@@ -30,7 +30,6 @@ const FormGroup = (props) => {
       },
       onChange(info) {
         if (info.file.status !== 'uploading') {
-          console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
           message.success(`${info.file.name} file uploaded successfully`);
@@ -51,7 +50,7 @@ const FormGroup = (props) => {
             key={data.fieldName}
             label={data.label}
             name={data.fieldName}
-            value={props.defaultValue[data.fieldName]}
+            value={props.defaultValue && props.defaultValue[data.fieldName]}
             rules={[{ required: true, message: `Please input your ${data.name}!` }]}
           >
               <Input onInput={(e) => { props.onFormChange(data.fieldName, e) }} type={data.name}/>

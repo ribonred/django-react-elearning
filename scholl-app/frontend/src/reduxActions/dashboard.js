@@ -183,7 +183,6 @@ export function createLKN(token, data) {
       }
     }, data)
     if (result instanceof Error) {
-    console.log('response', data)
       if (data['LKN'] !== undefined) {
         dispatch(receive_error('LKN gagal dibuat , no LKN anda sudah ada'))
       } else {

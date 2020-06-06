@@ -1,10 +1,14 @@
 import React from 'react'
 import ViewContainer from '../ui-container/viewContainer';
 import ImageViewer from '../component/image/imagePreview';
+import ModalDescription from '../component/modal/modalDescription';
 
-import { Descriptions } from 'antd';
+import { Descriptions, Button } from 'antd';
 
 class DescriptionView extends React.Component {
+    state = {
+        visible: false,
+    }
     photoData=null;
     render(){
         var DescriptionList = ''
@@ -17,7 +21,7 @@ class DescriptionView extends React.Component {
                   )
                 }
                 return (
-                    <Descriptions.Item key={data.label} label={data.label}>{data.value}</Descriptions.Item>
+                    <Descriptions.Item key={data.label} label={data.label}>{data.value || 'no item'}</Descriptions.Item>
                 )
             })
         }
@@ -27,6 +31,14 @@ class DescriptionView extends React.Component {
                     {DescriptionList}
                 </Descriptions>
                 {!this.props.hidePhoto && <ImageViewer photoSource={this.photoData}/>}
+                {this.props.showDocument && 
+                <Button onClick={() => {this.setState({visible: true})}} type="primary"><b>Lihat Dokumen</b></Button>
+                }
+                <ModalDescription
+                    visible={this.state.visible}
+                    data={this.props.dataDokumen}
+                    hideModal={() => this.setState({visible: false})}
+                />
             </ViewContainer>
         )
     }

@@ -448,7 +448,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
             self.serializer_class = CreateBarangBuktiByTsk
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
-        elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
+        elif  self.action == 'update' or self.action == 'partial_update':
             self.serializer_class = CreateBarangBuktiByTsk
             permission_classes = [AllowAny]
         elif self.action == 'destroy':

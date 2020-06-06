@@ -215,7 +215,6 @@ class EditPenangkapan extends Component {
           this.openSuccessMessage();
           this.hideModal('tersangka')
           this.setState({form:{}})
-          console.log(this.state.form)
           return 'success'
         }
       } else if (action === 'Tambah BB Narkotika') {
@@ -335,7 +334,6 @@ class EditPenangkapan extends Component {
 
     render() {
         const { tersangkaTableDataByLkn, bbDataByPnkp } = this.props;
-        console.log('rerender')
         if(tersangkaTableDataByLkn.length > 0) {
           dropdownTsk.length = 0;
           tersangkaTableDataByLkn.map((data) => {

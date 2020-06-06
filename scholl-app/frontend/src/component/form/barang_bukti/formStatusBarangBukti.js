@@ -128,16 +128,12 @@ class FormProsesTersangka extends React.Component {
       const satuan_drop = [{value:"gram", name:'gram'}, {value:"butir", name:'butir'}, {value:"PCS", name:'Pcs'}, {value:"unit", name:'unit'}]
       const status_drop = [{value:"Masuk", name:'Masuk'}, {value:"Keluar", name:'Keluar'}]
 
-      console.log('jenis_barang',this.props.bbData.jenis_barang)
       if (this.props.bbData.jenis_barang=='narkotika') {
-        console.log('ke narkotika')
         satuan_drop.splice(2);
       } else if (this.props.bbData.jenis_barang=='non narkotika') {
-        console.log('ke non narkotika')
         satuan_drop.shift();
         satuan_drop.shift();
       }
-      console.log('satuan_drop', satuan_drop)
       const formData = [
         {label: 'Tanggal Status', name: 'Tanggal Status', fieldName: 'tanggal_status', type: 'date'},
         {label: 'Waktu Status', name: 'Waktu Status', fieldName: 'waktu_status', type: 'time'},
