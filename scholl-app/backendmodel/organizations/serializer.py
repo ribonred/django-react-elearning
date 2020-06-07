@@ -174,8 +174,9 @@ class BarangBuktiDetailApi(WritableNestedModelSerializer):
 
     class Meta:
         model = BarangBukti
-        fields = ['id', 'nama_barang',
-                  'sp_sita', 'tap_status', 'jenis_barang', 'statusbarangbukti']
+        fields = ['id','milik_tersangka_id' ,'nama_barang',
+                  'sp_sita','sp_sita_doc','tap_sita','tap_sita_doc', 'tap_status','tap_status_doc','nomor_lab','nomor_lab_doc', 'jenis_barang',
+                  'statusbarangbukti']
 
 
 class TersangkaDetailApi(WritableNestedModelSerializer):

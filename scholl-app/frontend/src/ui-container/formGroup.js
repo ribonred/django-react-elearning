@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, message, Dropdown, TimePicker, Input, InputNumber, DatePicker, Select, Upload, Button } from 'antd'
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CopyOutlined } from '@ant-design/icons';
+import Uploader from '../component/uploader';
 import moment from 'moment';
 
 const dateFormat = 'DD-MM-YYYY';
@@ -29,7 +30,6 @@ const FormGroup = (props) => {
       },
       onChange(info) {
         if (info.file.status !== 'uploading') {
-          console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
           message.success(`${info.file.name} file uploaded successfully`);
@@ -50,6 +50,7 @@ const FormGroup = (props) => {
             key={data.fieldName}
             label={data.label}
             name={data.fieldName}
+            value={props.defaultValue && props.defaultValue[data.fieldName]}
             rules={[{ required: true, message: `Please input your ${data.name}!` }]}
           >
               <Input onInput={(e) => { props.onFormChange(data.fieldName, e) }} type={data.name}/>
@@ -61,14 +62,17 @@ const FormGroup = (props) => {
           var dateParts = props.defaultValue[data.fieldName].split("-");
           var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
           defaultDate = moment(dateObject);
+        } else {
+          defaultDate = null;
         }
+
         return (
           <Form.Item
             key={data.fieldName}
             label={data.label}
             rules={[{ required: true, message: `Masukkan ${data.label} dibuat form!` }]}
           >
-            <DatePicker defaultValue={defaultDate} format={dateFormat} onChange={(i, e) => props.onFormChange(data.fieldName, e)}/>
+            <DatePicker value={defaultDate} defaultValue={defaultDate} format={dateFormat} onChange={(i, e) => props.onFormChange(data.fieldName, e)}/>
           </Form.Item>
         )
       } else if(data.type === 'select'){
@@ -82,6 +86,7 @@ const FormGroup = (props) => {
               allowClear
               disabled={data.disabled}
               style={{ width: 200 }}
+              value={props.defaultValue && props.defaultValue[data.fieldName]}
               placeholder={`pilih ${data.label}`}
               defaultValue={props.defaultValue && props.defaultValue[data.fieldName]
                 ? props.defaultValue[data.fieldName] : null}
@@ -111,11 +116,7 @@ const FormGroup = (props) => {
             label={data.label}
             rules={[{ required: true, message: `Masukkan field ${data.name}!` }]}
           >
-            <Upload {...uploadProps} onChange={(e) => { props.onFormChange(data.fieldName, e) }}>
-              <Button>
-                <UploadOutlined />
-              </Button>
-            </Upload>
+            <Uploader fieldName={data.fieldName} onFormChange={props.onFormChange}/>
           </Form.Item>
         )
       } else if(data.type === 'time'){

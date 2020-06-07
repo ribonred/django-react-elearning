@@ -17,11 +17,12 @@ const formDataTsk = [
   {label: 'Jenis Kelamin', name: 'Jenis Kelamin', fieldName: 'jenis_kelamin', dropdown: dropdown, type: 'select'},
   {label: 'Foto', name: 'foto', fieldName: 'foto', type: 'upload'}
 ]
+
 const formDataBB = [
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
-  {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
+  {label: 'BB', name: 'BB', fieldName: 'nama_barang'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP SITA DOC', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'SP SITA DOKUMEN', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
   {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
   {label: 'TAP SITA DOKUMEN', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
   {label: 'TAP STATUS', name: 'Tap Status', fieldName: 'tap_status'},
@@ -29,11 +30,12 @@ const formDataBB = [
   {label: 'NOMOR LAB', name: 'Nomor Lab', fieldName: 'nomor_lab'},
   {label: 'NOMOR LAB DOKUMEN', name: 'Nomor Lab Dokumen', fieldName: 'nomor_lab_doc', type: 'upload'},
 ]
+
 const formDataBBNon = [
   {label: 'Pilih Tersangka', name: 'Pilih Tersangka', fieldName: 'milik_tersangka_id', type: 'select', dropdown: dropdownTsk},
   {label: 'BB', name: 'Nama Barang', fieldName: 'nama_barang'},
   {label: 'SP SITA', name: 'SP Sita', fieldName: 'sp_sita'},
-  {label: 'SP SITA DOC', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
+  {label: 'SP SITA DOKUMEN', name: 'SP Sita Dokumen', fieldName: 'sp_sita_doc', type: 'upload'},
   {label: 'TAP SITA', name: 'Tap Sita', fieldName: 'tap_sita'},
   {label: 'TAP SITA DOKUMEN', name: 'Tap Sita Dokumen', fieldName: 'tap_sita_doc', type: 'upload'},
 ]
@@ -114,7 +116,7 @@ class EditPenangkapan extends Component {
       const form = {...this.state.form};
       if(e!==null && e!==undefined && e!==''){
         if (e.file){
-          form[fieldName] = e.file.originFileObj
+          form[fieldName] = e
           this.setState({
               form: form,
           })
@@ -168,16 +170,19 @@ class EditPenangkapan extends Component {
       if(action === 'tersangka'){
         this.setState({
           showTskModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti'){
         this.setState({
           showBBModal: false,
+          form: {},
         });
       }
       if(action === 'barangbukti non'){
         this.setState({
           showBBModalNon: false,
+          form: {},
         });
       }
     };
@@ -185,7 +190,6 @@ class EditPenangkapan extends Component {
     async onSubmit(action){
       const { form } = this.state
       let pnkpId = this.props.match.params.id
-      console.log('form', form)
       if(action === 'Tambah Tersangka') {
         if (!form['nama_tersangka'] || !form['jenis_kelamin'] || !form['umur']) {
           this.setState({form:{}})
@@ -197,7 +201,7 @@ class EditPenangkapan extends Component {
           if(!form.jenis_kelamin) {
             form.jenis_kelamin = 'laki-laki';
           }
-          if(form.foto){
+          if(form.foto && form.foto.constructor===File){
             data.append("foto", form.foto);
           }
           data.set("jenis_kelamin", form.jenis_kelamin);
@@ -211,7 +215,6 @@ class EditPenangkapan extends Component {
           this.openSuccessMessage();
           this.hideModal('tersangka')
           this.setState({form:{}})
-          console.log(this.state.form)
           return 'success'
         }
       } else if (action === 'Tambah BB Narkotika') {
@@ -222,15 +225,23 @@ class EditPenangkapan extends Component {
         } else {
           if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
             delete form.nomor_lab_doc;
+          } else {
+            form.nomor_lab_doc = form.nomor_lab_doc
           }
           if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
             delete form.sp_sita_doc;
+          } else {
+            form.sp_sita_doc = form.sp_sita_doc
           }
           if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
             delete form.tap_sita_doc;
+          } else {
+            form.tap_sita_doc = form.tap_sita_doc
           }
           if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
             delete form.tap_status_doc;
+          } else {
+            form.tap_status_doc = form.tap_status_doc
           }
           const formData = new FormData();
           const keys = Object.keys(form);
@@ -363,6 +374,7 @@ class EditPenangkapan extends Component {
                 <ModalTersangka
                   title={'Tambah Tersangka'}
                   formData={formDataTsk}
+                  form={this.state.form}
                   isSuccess={this.state.isSuccess}
                   showModal={() => this.showModal('tersangka')}
                   hideModal={() => this.hideModal('tersangka')}
@@ -380,8 +392,9 @@ class EditPenangkapan extends Component {
                 />
                 <Space>
                   <ModalTersangka
-                    title={'Tambah BB Narkotika Id'}
+                    title={'Tambah BB Narkotika'}
                     formData={formDataBB}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti')}
                     hideModal={() => this.hideModal('barangbukti')}
                     visible={this.state.showBBModal}
@@ -392,6 +405,7 @@ class EditPenangkapan extends Component {
                   <ModalTersangka
                     title={'Tambah BB Non Narkotika'}
                     formData={formDataBBNon}
+                    form={this.state.form}
                     showModal={() => this.showModal('barangbukti non')}
                     hideModal={() => this.hideModal('barangbukti non')}
                     visible={this.state.showBBModalNon}

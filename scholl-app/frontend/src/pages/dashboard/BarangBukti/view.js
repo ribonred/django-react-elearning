@@ -69,8 +69,9 @@ class BarangBuktiView extends Component {
 
     render() {
       const { bbData, bbStatus } = this.props;
-      let dataTersangka = []
-      let dataBB = []
+      let dataTersangka = [];
+      let dataBB = [];
+      let dataDoc = [];
       if (bbData.milik_tersangka_id) {
         dataTersangka = [
           {label: 'Nama', value: bbData.milik_tersangka_id.nama_tersangka},
@@ -82,11 +83,18 @@ class BarangBuktiView extends Component {
           {label: 'Nama', value: bbData.nama_barang},
           {label: 'Jenis Barang', value: bbData.jenis_barang},
           {label: 'SP Sita', value: bbData.sp_sita},
+          {label: 'Tap Sita', value: bbData.tap_sita},
           {label: 'Tap Status', value: bbData.tap_status},
+          {label: 'No Lab', value: bbData.nomor_lab},
         ];
+        dataDoc = {
+          sp_sita_doc: bbData.sp_sita_doc,
+          tap_sita_doc: bbData.tap_sita_doc,
+          tap_status_doc: bbData.tap_status_doc,
+          nomor_lab_doc: bbData.nomor_lab_doc
+        };
       }
       let dataStatus = bbStatus;
-
         return (
           <SideMenu selected="4">
             <Layout>
@@ -95,8 +103,10 @@ class BarangBuktiView extends Component {
                   {this.renderBreadCrumb()}
                   <DescriptionView
                     title="Data Barang Bukti"
+                    showDocument
                     hidePhoto
                     data={dataBB}
+                    dataDokumen={dataDoc}
                   />
                   <DescriptionView
                     title="Data Tersangka"
