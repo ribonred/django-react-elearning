@@ -17,7 +17,7 @@ node_modules/
 
 # production
 /build
-
+/media
 # misc
 .DS_Store
 .env.local
