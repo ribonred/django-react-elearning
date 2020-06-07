@@ -45,7 +45,7 @@ from rest_framework.pagination import PageNumberPagination
 from .views import PenangkapanDateFilter
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
@@ -88,24 +88,24 @@ class BerkasLknMobileView(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     
     
-    def get_queryset(self):
-        user = self.request.user
-        query_set = self.queryset
-        if not user.is_superuser:
-            query_set = query_set.filter(penyidik=self.request.user)
-        return query_set
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     query_set = self.queryset
+    #     if not user.is_superuser:
+    #         query_set = query_set.filter(penyidik=self.request.user)
+    #     return query_set
 
     def get_permissions(self):
         permission_classes = []
         if self.action == 'create':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
         elif self.action == 'list':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
             self.serializer_class = BerkasLknListApi
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
         elif self.action == 'destroy':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
     def post(self, request, format=None):
