@@ -21,6 +21,7 @@ def getNotifCreated(sender, instance, created,**kwargs):
                     NotificationsLkn.objects.create(receiver=users, message=message)
             else:
                 for users in user:
+                    print(users.username)
                     NotificationsLkn.objects.create(receiver=users, message=message)
 
     except Exception as e:
@@ -33,3 +34,4 @@ def send_notif(sender, instance,created, **kwargs):
     user = instance.receiver
     msg = instance.message
     notification_test_page(user,msg)
+    print('send notif')
