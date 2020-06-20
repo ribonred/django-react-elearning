@@ -26,7 +26,7 @@ def notification_test_page(receiver,msg):
     }
     # Trigger message sent to group
     async_to_sync(channel_layer.group_send)(
-        str("tes"),  # Channel Name, Should always be string
+        str("group"),  # Channel Name, Should always be string
         {
             "type": "notify",   # Custom Function written in the consumers.py
             "text": data,
