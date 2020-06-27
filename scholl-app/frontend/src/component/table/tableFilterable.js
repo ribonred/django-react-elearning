@@ -160,7 +160,7 @@ export default class TableView extends React.Component {
     }
     
     const tableDataWithKey = this.props.tableData ? this.props.tableData.map((data, index) => {
-      Object.keys(data).map((key, index) => {
+      Object.keys(data).forEach((key, index) => {
         if(data[key]===null || data[key]===undefined || data[key]==='null'){
           data[key] = 'no item';
         }

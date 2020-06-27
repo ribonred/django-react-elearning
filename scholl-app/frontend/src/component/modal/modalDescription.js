@@ -8,7 +8,6 @@ export default class modalDescription extends React.Component {
       let data = []
       let hideField = this.props.hideField || [];
       if(this.props.data){
-        const values = Object.values(this.props.data);
         var keys = Object.keys(this.props.data);
         keys = keys.filter(
           function(e) {

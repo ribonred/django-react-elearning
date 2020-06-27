@@ -36,27 +36,29 @@ export default class App extends Component {
             path='/dashboard'
             render={({ match: { url } }) => (
               <>
-                <PrivateRoute path={`${url}/`} component={Lkn} exact />
-                <PrivateRoute path={`${url}/LKN`} component={Lkn} exact />
-                <PrivateRoute path={`${url}/LKN/buat`} component={LknCreate} exact />
-                <PrivateRoute path={`${url}/LKN/:id`} component={LknView} exact />
-                <PrivateRoute path={`${url}/LKN/:id/edit`} component={LknEdit} exact />
-                <PrivateRoute path={`${url}/Penyidik`} component={Penyidik} exact />
-                <PrivateRoute path={`${url}/Penyidik/buat`} component={PenyidikCreate} exact />
-                <PrivateRoute path={`${url}/Penyidik/:id`} component={PenyidikView} exact />
-                <PrivateRoute path={`${url}/Penyidik/:id/edit`} component={PenyidikEdit} exact />
-                <PrivateRoute path={`${url}/Tersangka`} component={Tersangka} exact />
-                <PrivateRoute path={`${url}/Tersangka/:id`} component={TersangkaView} exact />
-                <PrivateRoute path={`${url}/Tersangka/:id/edit`} component={TersangkaEdit} exact />
-                <PrivateRoute path={`${url}/BarangBukti/:id`} component={BarangBuktiView} exact />
-                <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
-                <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />
-                <PrivateRoute path={`${url}/LKN/:id/Penangkapan/buat`} component={PenangkapanCreate} exact />
-                <PrivateRoute path={`${url}/Penangkapan/:id/edit`} component={PenangkapanEdit} exact />
-                <PrivateRoute path={`${url}/proses_tersangka/:id/edit`} component={EditProses} exact />
-                <PrivateRoute path={`${url}/status_tersangka/:id/edit`} component={EditStatus} exact />
-                <PrivateRoute path={`${url}/status_bb/:id/edit`} component={EditStatusBB} exact />
-                <PrivateRoute path={`${url}/Approval`} component={Approval} exact />
+                <Switch>
+                    <PrivateRoute path={`${url}/`} component={Lkn} exact />
+                    <PrivateRoute path={`${url}/LKN`} component={Lkn} exact />
+                    <PrivateRoute path={`${url}/LKN/buat`} component={LknCreate} exact />
+                    <PrivateRoute path={`${url}/LKN/:id`} component={LknView} exact />
+                    <PrivateRoute path={`${url}/LKN/:id/edit`} component={LknEdit} exact />
+                    <PrivateRoute path={`${url}/Penyidik`} component={Penyidik} exact />
+                    <PrivateRoute path={`${url}/Penyidik/buat`} component={PenyidikCreate} exact />
+                    <PrivateRoute path={`${url}/Penyidik/:id`} component={PenyidikView} exact />
+                    <PrivateRoute path={`${url}/Penyidik/:id/edit`} component={PenyidikEdit} exact />
+                    <PrivateRoute path={`${url}/Tersangka`} component={Tersangka} exact />
+                    <PrivateRoute path={`${url}/Tersangka/:id`} component={TersangkaView} exact />
+                    <PrivateRoute path={`${url}/Tersangka/:id/edit`} component={TersangkaEdit} exact />
+                    <PrivateRoute path={`${url}/BarangBukti/:id`} component={BarangBuktiView} exact />
+                    <PrivateRoute path={`${url}/BarangBukti`} component={BarangBukti} exact />
+                    <PrivateRoute path={`${url}/BarangBukti/:id/edit`} component={BarangBuktiEdit} exact />
+                    <PrivateRoute path={`${url}/LKN/:id/Penangkapan/buat`} component={PenangkapanCreate} exact />
+                    <PrivateRoute path={`${url}/Penangkapan/:id/edit`} component={PenangkapanEdit} exact />
+                    <PrivateRoute path={`${url}/proses_tersangka/:id/edit`} component={EditProses} exact />
+                    <PrivateRoute path={`${url}/status_tersangka/:id/edit`} component={EditStatus} exact />
+                    <PrivateRoute path={`${url}/status_bb/:id/edit`} component={EditStatusBB} exact />
+                    <PrivateRoute path={`${url}/Approval`} component={Approval} exact />
+                  </Switch>
               </>
             )}
           />

@@ -225,23 +225,15 @@ class EditPenangkapan extends Component {
         } else {
           if(!form.nomor_lab_doc || form.nomor_lab_doc.constructor!==File){
             delete form.nomor_lab_doc;
-          } else {
-            form.nomor_lab_doc = form.nomor_lab_doc
           }
           if(!form.sp_sita_doc || form.sp_sita_doc.constructor!==File){
             delete form.sp_sita_doc;
-          } else {
-            form.sp_sita_doc = form.sp_sita_doc
           }
           if(!form.tap_sita_doc || form.tap_sita_doc.constructor!==File){
             delete form.tap_sita_doc;
-          } else {
-            form.tap_sita_doc = form.tap_sita_doc
           }
           if(!form.tap_status_doc || form.tap_status_doc.constructor!==File){
             delete form.tap_status_doc;
-          } else {
-            form.tap_status_doc = form.tap_status_doc
           }
           const formData = new FormData();
           const keys = Object.keys(form);
