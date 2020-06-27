@@ -87,15 +87,14 @@ const LknViewView = (props) => {
     noLkn = props.lkn.LKN
     tanggal_dibuat  = props.lkn.tgl_dibuat
   }
-
-  if(props.lkn.penangkapan){
+  if(!props.isLoading){
     return (
       <ViewContainer>
         <Descriptions title="LKN Info">
           <Descriptions.Item label="No. LKN">{noLkn}</Descriptions.Item>
           <Descriptions.Item label="Tanggal Dibuat">{tanggal_dibuat}</Descriptions.Item>
         </Descriptions>
-          {props.lkn.penangkapan.map(data =>
+          {props.lkn.penangkapan && props.lkn.penangkapan.map(data =>
             <div key={data.id} style={styles.detailBox}>
               <Descriptions title="Penangkapan">
                 <Descriptions.Item label="SP KAP">{data.no_penangkapan}</Descriptions.Item>

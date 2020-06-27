@@ -16,15 +16,17 @@ class LKNView extends Component {
         tanggal_dibuat: '',
         coba: '',
       },
+      isLoading: false,
       lknDataSend: {}
     }
 
     async componentDidMount(){
       if(this.props.match.params.id!=='buat'){
+        this.setState({ isLoading: true })
         let lknId = this.props.match.params.id;
         await this.props.dispatch(get_proses(get_token()))
         await this.props.dispatch(get_lkn_detail(get_token(), lknId))
-        this.setState({lknDataSend: this.props.lknData})
+        this.setState({lknDataSend: this.props.lknData, isLoading: false})
       }
     }
 
@@ -50,7 +52,7 @@ class LKNView extends Component {
             <Content style={{padding:'20px'}}>
               <div style={styles.siteLayout}>
                 {this.renderBreadCrumb()}
-                <LknView lkn={lknDataSend} prosesIndex={this.props.prosesIndex}/>
+                <LknView lkn={lknDataSend} isLoading={this.state.isLoading} prosesIndex={this.props.prosesIndex}/>
                </div>
              </Content>
           </SideMenu>

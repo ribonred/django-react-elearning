@@ -1,6 +1,5 @@
 import React from 'react';
 import { FilePicker } from 'react-file-picker-preview';
-import { UploadOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 class Uploader extends React.Component {
@@ -10,7 +9,6 @@ class Uploader extends React.Component {
   }
 
   render() {
-    const { file } = this.state;
     return (
         <div>
         <Button type="dashed" size='large' style={{padding:10}}>

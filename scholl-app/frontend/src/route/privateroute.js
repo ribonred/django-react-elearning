@@ -6,13 +6,13 @@ import { withRouter } from "react-router";
 
 class PrivateRoute extends React.Component{
   state = {
-    status: false
+    status: false,
   }
 
   async componentDidMount(){
     const status = await this.props.dispatch(verify_token(localStorage.getItem("token")))
     window.scrollTo(0, 0);
-    this.setState({status})
+    this.setState({status, isMounted: true})
   }
 
   async componentDidUpdate(newProps) {
