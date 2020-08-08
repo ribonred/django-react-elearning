@@ -59,6 +59,7 @@ export async function request(path, options, body) {
 
 
   try {
+    console.log('request object', requestObject)
     const result = await requestObject
     return result;
   } catch (e) {

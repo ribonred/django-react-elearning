@@ -248,7 +248,7 @@ export function edituser(token, data, id) {
     }, data)
     .then(response => {
       if(response instanceof Error){
-        throw Error
+        return
       }
       return response
     })
@@ -275,7 +275,7 @@ export function fetchalluser(token, id = null) {
   return async dispatch => {
     let url = ''
     if (id) {
-      url = `/api/users/${id}`
+      url = `/api/users/${id}/`
     }
     else {
       url = `/api/users/`
@@ -354,7 +354,7 @@ export function post_lkn_by_penyidik(token, data) {
 export function get_lkn_by_no_lkn(token, id) {
   return async dispatch => {
     try {
-      const result = await request(`/api/lkn/${id}`, {
+      const result = await request(`/api/lkn/${id}/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -373,7 +373,7 @@ export function get_lkn_by_no_lkn(token, id) {
 
 export function deletelkn(token, id) {
   return dispatch => {
-    return request(`/api/lkn/${id}`, {
+    return request(`/api/lkn/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -443,7 +443,7 @@ export function getpenangkapan(token, id = null, LKN = null) {
 
 export function deletepenangkapan(token, id) {
   return dispatch => {
-    return request(`/api/pnkp/${id}`, {
+    return request(`/api/pnkp/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -480,7 +480,7 @@ export function get_tersangka_list(token, id = null, pnkp_id = null) {
   return dispatch => {
     let url = ''
     if (id) {
-      url = `/api/tsk-edit/${id}`
+      url = `/api/tsk-edit/${id}/`
     }
     else if (pnkp_id){
       url = `/api/tsk-edit/?no_penangkapan_id__id=${pnkp_id}`
@@ -559,7 +559,7 @@ export function edittersangkafoto(data, token, id) {
 
 export function deletetersangka(token, id) {
   return dispatch => {
-    return request(`/api/tsk-edit/${id}`, {
+    return request(`/api/tsk-edit/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -589,7 +589,7 @@ export function get_bb_list(token, id = null, pnkp_id) {
   return dispatch => {
     let url = ''
     if (id) {
-      url = `/api/bb-edit/${id}`
+      url = `/api/bb-edit/${id}/`
     }
     else if (pnkp_id){
       url = `/api/bb-edit/?milik_tersangka_id__no_penangkapan_id__id=${pnkp_id}`
@@ -647,7 +647,7 @@ export function editbb(data, token, id) {
 }
 export function deletebb(token, id) {
   return dispatch => {
-    return request(`/api/bb-edit/${id}`, {
+    return request(`/api/bb-edit/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -693,7 +693,8 @@ export function get_bb_list_lkn(token, data) {
 
 export function get_lkn_detail(token, data) {
   return dispatch => {
-    let url = `/api/lkn-detail/${data}`
+    let url = `/api/lkn-detail/${data}/`
+
     return request(url, {
       method: 'GET',
       headers: {
@@ -751,7 +752,7 @@ export function getprosestersangka(token, tsk_id, proses_id) {
       url = `/api/tsk-proses/?proses_tersangka=${tsk_id}`
     }
     else {
-      url = `/api/tsk-proses/${proses_id}`
+      url = `/api/tsk-proses/${proses_id}/`
     }
     return request(url, {
       method: 'GET',
@@ -797,7 +798,7 @@ export function editprosestersangka(token, data, proses_id){
 
 export function deleteprosestersangka(token, id) {
   return dispatch => {
-    return request(`/api/tsk-proses/${id}`, {
+    return request(`/api/tsk-proses/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -829,7 +830,7 @@ export function getstatustersangka(token, tsk_id, status_id) {
       url = `/api/tsk-status/?tersangka_id=${tsk_id}`
     }
     else {
-      url = `/api/tsk-status/${status_id}`
+      url = `/api/tsk-status/${status_id}/`
     }
     return request(url, {
       method: 'GET',
@@ -875,7 +876,7 @@ export function editstatustersangka(token, data, status_id){
 
 export function deletestatustersangka(token, id) {
   return dispatch => {
-    return request(`/api/tsk-status/${id}`, {
+    return request(`/api/tsk-status/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -907,7 +908,7 @@ export function getstatusbb(token, bb_id, status_id) {
       url = `/api/bb-status/?barang_bukti_id=${bb_id}`
     }
     else {
-      url = `/api/bb-status/${status_id}`
+      url = `/api/bb-status/${status_id}/`
     }
     return request(url, {
       method: 'GET',
@@ -1005,7 +1006,7 @@ export function editstatusbb(token, data, status_id){
 
 export function deletestatusbb(token, id) {
   return dispatch => {
-    return request(`/api/bb-status/${id}`, {
+    return request(`/api/bb-status/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

@@ -191,6 +191,7 @@ class FormProsesTersangka extends React.Component {
       }
 
       if(this.props.edit){
+        console.log('this state isLoading', this.state.isLoading)
         return (
           <MainForm
             title={'Edit Form Proses Tersangka'}

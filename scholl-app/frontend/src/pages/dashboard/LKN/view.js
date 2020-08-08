@@ -22,10 +22,10 @@ class LKNView extends Component {
 
     async componentDidMount(){
       if(this.props.match.params.id!=='buat'){
-        this.setState({ isLoading: true })
+        this.setState({ isLoading: true });
         let lknId = this.props.match.params.id;
-        await this.props.dispatch(get_proses(get_token()))
-        await this.props.dispatch(get_lkn_detail(get_token(), lknId))
+        await this.props.dispatch(get_lkn_detail(get_token(), lknId));
+        await this.props.dispatch(get_proses(get_token()));
         this.setState({lknDataSend: this.props.lknData, isLoading: false})
       }
     }

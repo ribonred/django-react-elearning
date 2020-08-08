@@ -30,7 +30,7 @@ class FormPenyidik extends React.Component {
 
   async componentDidMount(){
     if(this.props.penyidikID){
-      await this.props.dispatch(fetchalluser(get_token(), this.props.penyidikID))
+      await this.props.dispatch(fetchalluser(get_token(), this.props.penyidikID));
     }
   }
 

@@ -87,6 +87,7 @@ const LknViewView = (props) => {
     noLkn = props.lkn.LKN
     tanggal_dibuat  = props.lkn.tgl_dibuat
   }
+  console.log('props isLoading', props.isLoading)
   if(!props.isLoading){
     return (
       <ViewContainer>
