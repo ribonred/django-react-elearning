@@ -6,4 +6,4 @@ class notifserializer(serializers.ModelSerializer):
 
     class Meta:
         model = NotificationsLkn
-        fields =('created','message','status_read')
+        fields =('id','created','message','status_read')
