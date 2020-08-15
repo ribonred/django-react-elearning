@@ -10,7 +10,7 @@ class ActivityView(generics.ListAPIView):
     def get_queryset(self):
         user =self.request.user
         user_instance = User.objects.get(id=user.id)
-        queryset = user_instance.notifuser.filter(status_read=True)
+        queryset = user_instance.notifuser.filter(status_read=False)
         return queryset
     
 
