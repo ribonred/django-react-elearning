@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import indexview,notification_test_page
 from rest_framework import routers
+from push_notifications.api.rest_framework import GCMDeviceAuthorizedViewSet
+from backendmodel.notify.views import ActivityView
 from backendmodel.account.views import ApiUserView
 from backendmodel.organizations.views import (
     BerkasLknView,
@@ -20,6 +22,7 @@ from backendmodel.organizations.views import (
     
 )
 router = routers.DefaultRouter()
+router.register(r'device/gcm', GCMDeviceAuthorizedViewSet)
 router.register(r'users', ApiUserView)
 router.register(r'lkn', BerkasLknView)
 router.register(r'pnkp', PenangkapanView)
@@ -42,7 +45,7 @@ urlpatterns = [
     path("mobile-api/", include('backendmodel.organizations.urls')),
     path('get-token/', include('backendmodel.account.urls')),
     path('', indexview.as_view(),name='index'),
-    path('notif/', notification_test_page,name='test'),
+    path('notif/', ActivityView.as_view(),name='notif'),
 
     ]
 

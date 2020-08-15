@@ -1,3 +1,5 @@
 from django.contrib import admin
 from .models import NotificationsLkn
-admin.site.register(NotificationsLkn)
+class notifadmin(admin.ModelAdmin):
+    readonly_fields=('topic_fcm',)
+admin.site.register(NotificationsLkn,notifadmin)

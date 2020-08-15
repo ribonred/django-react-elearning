@@ -38,9 +38,12 @@ INSTALLED_APPS = [
 
     'backendmodel.notify',
     'channels',
+    'push_notifications'
 
 ]
-
+PUSH_NOTIFICATIONS_SETTINGS = {
+        "FCM_API_KEY": "AAAAjMUeqiw:APA91bENDa_KY4Bp-YD36FiRmzNtTZZ2Qw_SlC01qNECqWxk20JOSG8s0wzLN33d6vbgyW40Hp1A5kQAhQ81MBycvMOHA9RCePQud-3OlYWQCpxE4FUaWGT8EcxP0vb9UUDAuxXSRXeC",
+}
 CHANNELS_API = {
     'DEFAULT_PERMISSION_CLASSES': ('channels_api.permissions.AllowAny',)
 
