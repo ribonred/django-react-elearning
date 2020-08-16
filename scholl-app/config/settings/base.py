@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'backendmodel.core',
     'backendmodel.account',
     'rest_framework_jwt',
+    'django_cleanup',
 
     'backendmodel.notify',
     'channels',
