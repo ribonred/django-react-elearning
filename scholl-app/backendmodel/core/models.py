@@ -66,3 +66,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class ApkBuild(models.Model):
+    version = models.CharField(max_length=255,null=True,blank=True)
+    file_apk = models.FileField(upload_to='apk/')
+
+
+    def __str__(self):
+        return self.version

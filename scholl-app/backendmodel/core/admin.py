@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import User
+from .models import User,ApkBuild
 
 
 class AppUserAdmin(UserAdmin):
@@ -26,3 +26,5 @@ class AppUserAdmin(UserAdmin):
 
 
 admin.site.register(User, AppUserAdmin)
+admin.site.register(ApkBuild)
+
