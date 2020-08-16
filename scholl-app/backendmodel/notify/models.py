@@ -5,7 +5,7 @@ from push_notifications.gcm import send_message
 
 class NotificationsLkn(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,related_name='sender_user')
-    receiver = models.ManyToManyField(User,  related_name='notifuser')
+    receiver = models.ManyToManyField(User,  related_name='notifuser', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=150,null=True, blank=True)
     status_read =models.BooleanField(default=False)
@@ -14,6 +14,8 @@ class NotificationsLkn(models.Model):
 
 
     def save(self,*args,**kwargs):
+        if self.receiver.count() < 1:
+            self.status_read = True
         if not self.created:
             self.created = datetime.now()
         if self.sender.role == 2:

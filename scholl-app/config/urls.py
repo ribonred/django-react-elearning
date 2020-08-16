@@ -23,6 +23,7 @@ from backendmodel.organizations.views import (
 )
 router = routers.DefaultRouter()
 router.register(r'device/gcm', GCMDeviceAuthorizedViewSet)
+router.register(r'notif', ActivityView)
 router.register(r'users', ApiUserView)
 router.register(r'lkn', BerkasLknView)
 router.register(r'pnkp', PenangkapanView)
@@ -45,7 +46,7 @@ urlpatterns = [
     path("mobile-api/", include('backendmodel.organizations.urls')),
     path('get-token/', include('backendmodel.account.urls')),
     path('', indexview.as_view(),name='index'),
-    path('notif/', ActivityView.as_view(),name='notif'),
+    path('notifsssss/', indexview.as_view(),name='notif'),
 
     ]
 
