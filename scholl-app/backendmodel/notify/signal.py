@@ -11,6 +11,7 @@ def getNotifCreated(sender, instance, created,**kwargs):
     # if created:
     try:
         user = User.objects.filter(role=2)
+        print(len(user))
         if user:
             time = instance.created.strftime('%Y-%m-%d')
             time_hour = datetime.now().strftime('%H:%M')
@@ -18,6 +19,8 @@ def getNotifCreated(sender, instance, created,**kwargs):
             message = f'penyidik {instance.penyidik.nama_depan} {instance.penyidik.nama_belakang} menambahkan LKN nomor {instance.LKN} pada {time} pukul {time_hour}'
             if len(user) > 1:
                 notif = NotificationsLkn.objects.create(sender=instance.penyidik, message=message)
+                notif.save()
+                print("notif",notif.id)
                 for users in user:
                     notif.receiver.add(users)
                     

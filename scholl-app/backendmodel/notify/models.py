@@ -13,9 +13,7 @@ class NotificationsLkn(models.Model):
     topic_fcm = models.CharField(max_length=255,null=True, blank=True)
 
 
-    def save(self,*args,**kwargs):
-        if self.receiver.count() < 1:
-            self.status_read = True
+    def save(self, *args, **kwargs):
         if not self.created:
             self.created = datetime.now()
         if self.sender.role == 2:
