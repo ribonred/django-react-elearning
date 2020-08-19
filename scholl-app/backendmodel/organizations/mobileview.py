@@ -30,7 +30,7 @@ from .serializer import (
     StatusTersangkaApi,
     StatusBarangBuktiApi
 
-    )
+)
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
@@ -41,20 +41,16 @@ from django_filters.filters import RangeFilter
 from django_filters.fields import RangeField
 from django.shortcuts import render
 from django import forms
-from rest_framework.pagination import PageNumberPagination
 from .views import PenangkapanDateFilter
+from .utils import StandardResultsSetPagination
 
-class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 1000
 
 class DateRangeCustomWidget(RangeWidget):
-    suffixes = ['mulai','akhir']
+    suffixes = ['mulai', 'akhir']
 
 
 class CustomRange(RangeField):
-    
+
     widget = DateRangeCustomWidget
 
     def __init__(self, *args, **kwargs):
@@ -67,27 +63,26 @@ class CustomRange(RangeField):
 class DateFromTo(RangeFilter):
     field_class = CustomRange
 
+
 class LknDateFilter(FilterSet):
     tgl_dibuat = DateFromTo()
-    created =DateFromTo()
+    created = DateFromTo()
 
     class Meta:
         model = BerkasLKN
         fields = [
-            
-        ]
 
+        ]
 
 
 class BerkasLknMobileView(viewsets.ModelViewSet):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'LKN','created']
+    filterset_fields = ['id', 'LKN', 'created']
     filter_class = LknDateFilter
     pagination_class = StandardResultsSetPagination
-    
-    
+
     # def get_queryset(self):
     #     user = self.request.user
     #     query_set = self.queryset
@@ -115,6 +110,7 @@ class BerkasLknMobileView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class PenangkapanMobileView(viewsets.ModelViewSet):
     queryset = Penangkapan.objects.all()
@@ -164,8 +160,6 @@ class TersangkaMobileView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['created']
 
-
-
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset
@@ -204,9 +198,7 @@ class BarangBuktiMobileView(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['created']
-    
-    
-    
+
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset
@@ -232,13 +224,14 @@ class BarangBuktiMobileView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = BarangBukti.objects.get(pk=kwargs['pk'])
-            serializer = BarangBuktiEdit(instance=instance,data=request.data)
-            
+            serializer = BarangBuktiEdit(instance=instance, data=request.data)
+
             if serializer.is_valid():
                 serializer.save()
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             return error
         except BarangBukti.DoesNotExist:
             serializer = BarangBuktiEdit(data=request.data)
