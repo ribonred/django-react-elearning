@@ -82,6 +82,7 @@ class LknDateFilter(FilterSet):
 
 class PenangkapanDateFilter(FilterSet):
     created = DateFromTo()
+    no_penangkapan = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = Penangkapan
@@ -92,6 +93,7 @@ class PenangkapanDateFilter(FilterSet):
 
 class TersangkaDateFilter(FilterSet):
     created = DateFromTo()
+    nama_tersangka = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = Tersangka
@@ -102,11 +104,13 @@ class TersangkaDateFilter(FilterSet):
 
 class BBDateFilter(FilterSet):
     created = DateFromTo()
+    sp_sita = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = BarangBukti
         fields = [
-            'milik_tersangka_id__no_penangkapan_id__id'
+            'milik_tersangka_id__no_penangkapan_id__id',
+            'sp_sita'
         ]
 
 
