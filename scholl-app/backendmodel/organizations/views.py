@@ -384,6 +384,8 @@ class TersangkaEditDetailView(ModelViewsetPaginate):
     filterset_fields = ['no_penangkapan_id__id']
     parser_class = (FormParser, MultiPartParser)
     filter_class = TersangkaDateFilter
+    pagination_class = StandardResultsSetPagination
+
 
     def get_queryset(self):
         user = self.request.user
@@ -443,6 +445,8 @@ class BarangBuktiEditView(ModelViewsetPaginate):
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     filter_class = BBDateFilter
     parser_class = (FileUploadParser, MultiPartParser, FormParser)
+    pagination_class = StandardResultsSetPagination
+
 
     def get_queryset(self):
         user = self.request.user
