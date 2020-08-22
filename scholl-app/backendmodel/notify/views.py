@@ -5,17 +5,19 @@ from .serializers import notifserializer
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .utils import ModelViewsetPaginate, StandardResultsSetPagination
 
 
-class ActivityView(viewsets.ModelViewSet):
+class ActivityView(ModelViewsetPaginate):
     queryset = User.objects.all()
     serializer_class = notifserializer
     permission_classes = [IsAuthenticated]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user =self.request.user
         user_instance = User.objects.get(id=user.id)
-        queryset = user_instance.notifuser.filter(status_read=False)
+        queryset = user_instance.notifuser.filter(status_read=False).order_by('created')
         return queryset
     
     def get_permissions(self):
