@@ -18,7 +18,7 @@ class SideMenu extends Component {
 
     renderHeaderLogo = () => {
       return(
-        <Header style={{height: '80px', backgroundColor:'white'}} className="header">
+        <Header style={{height: '80px', backgroundColor:'#1890ff'}} className="header">
           <div style={{marginTop:'10px', display:'flex',flexDirection:'row', alignItems:'center'}}>
             <img
               alt='BNN'
@@ -33,33 +33,93 @@ class SideMenu extends Component {
     renderHeader = () => {
       const isAdmin = localStorage.getItem('role') === '2'
       return (
-        <Header style={{backgroundColor:'white'}} className="header">
-         <Menu theme='light' mode="horizontal" defaultSelectedKeys={this.props.selected || '1'}>
+        <Header style={{backgroundColor:'#020E6F'}} className="header">
+         <Menu theme='dark' style={{backgroundColor:'#020E6F'}} mode="horizontal" defaultSelectedKeys={this.props.selected || '1'}>
            <Menu.Item key="1" onClick={() => history.push("/dashboard/lkn")}>
-             <FolderOpenOutlined />
-             <span className="nav-text"><b>LKN</b></span>
+            {this.props.selected === "1" 
+              ? (
+                <React.Fragment>
+                   <FolderOpenOutlined />
+                   <span className="nav-text"><b>LKN</b></span>
+                </React.Fragment>
+              )  : (
+                <React.Fragment>
+                   <FolderOpenOutlined style={{color:'#F1C000'}} />
+                   <span className="nav-text" style={{color:'#F1C000'}}><b>LKN</b></span>
+                </React.Fragment>
+              )}
            </Menu.Item>
            {isAdmin && (
              <Menu.Item key="2" onClick={() => history.push("/dashboard/penyidik")}>
-                <TeamOutlined />
-                <span className="nav-text"><b>ADMIN</b></span>
+                {this.props.selected === "2" 
+                  ? (
+                    <React.Fragment>
+                      <TeamOutlined />
+                      <span className="nav-text"><b>ADMIN</b></span>
+                    </React.Fragment>
+                  )  : (
+                    <React.Fragment>
+                      <TeamOutlined style={{color:'#F1C000'}} />
+                      <span className="nav-text" style={{color:'#F1C000'}}><b>ADMIN</b></span>
+                    </React.Fragment>
+                  )}
               </Menu.Item>
            )}
            <Menu.Item key="3" onClick={() => history.push("/dashboard/tersangka")}>
-             <UserOutlined />
-             <span className="nav-text"><b>TERSANGKA</b></span>
+            {this.props.selected === "3" 
+              ? (
+                <React.Fragment>
+                   <UserOutlined />
+                   <span className="nav-text"><b>TERSANGKA</b></span>
+                </React.Fragment>
+              )  : (
+                <React.Fragment>
+                   <UserOutlined style={{color:'#F1C000'}} />
+                   <span className="nav-text" style={{color:'#F1C000'}}><b>TERSANGKA</b></span>
+                </React.Fragment>
+              )}
            </Menu.Item>
            <Menu.Item key="4" onClick={() => history.push("/dashboard/barangbukti")}>
-             <SolutionOutlined />
-             <span className="nav-text"><b>BARANG BUKTI</b></span>
+             {this.props.selected === "4" 
+              ? (
+                <React.Fragment>
+                   <SolutionOutlined />
+                   <span className="nav-text"><b>BARANG BUKTI</b></span>
+                </React.Fragment>
+              )  : (
+                <React.Fragment>
+                   <SolutionOutlined style={{color:'#F1C000'}} />
+                   <span className="nav-text" style={{color:'#F1C000'}}><b>BARANG BUKTI</b></span>
+                </React.Fragment>
+              )}
            </Menu.Item>
            <Menu.Item key="5" onClick={() => history.push("/dashboard/lkn")}>
-             <UserOutlined />
-             <span className="nav-text"><b>STATISTIK</b></span>
+            {this.props.selected === "5" 
+              ? (
+                <React.Fragment>
+                   <UserOutlined />
+                   <span className="nav-text"><b>STATISTIK</b></span>
+                </React.Fragment>
+              )  : (
+                <React.Fragment>
+                   <UserOutlined style={{color:'#F1C000'}} />
+                   <span className="nav-text" style={{color:'#F1C000'}}><b>STATISTIK</b></span>
+                </React.Fragment>
+              )}
            </Menu.Item>
            <Menu.Item key="6" onClick={() => history.push("/dashboard/approval")}>
-             <SolutionOutlined />
-             <span className="nav-text"><b>APPROVAL</b></span>
+             {this.props.selected === "6" 
+              ? (
+                <React.Fragment>
+                   <SolutionOutlined />
+                   <span className="nav-text"><b>APPROVAL</b></span>
+                </React.Fragment>
+              )  : (
+                <React.Fragment>
+                   <SolutionOutlined style={{color:'#F1C000'}} />
+                   <span className="nav-text" style={{color:'#F1C000'}}><b>APPROVAL</b></span>
+                </React.Fragment>
+              )}
            </Menu.Item>
          </Menu>
         </Header>

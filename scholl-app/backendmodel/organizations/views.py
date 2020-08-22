@@ -377,7 +377,7 @@ class StatusTersangkaView(ModelViewsetPaginate):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TersangkaEditDetailView(viewsets.ModelViewSet):
+class TersangkaEditDetailView(ModelViewsetPaginate):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaEditApi
     filter_backends = [DjangoFilterBackend]
@@ -436,7 +436,7 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class BarangBuktiEditView(viewsets.ModelViewSet):
+class BarangBuktiEditView(ModelViewsetPaginate):
     queryset = BarangBukti.objects.all()
     serializer_class = BarangBuktiEdit
     filter_backends = [DjangoFilterBackend]
