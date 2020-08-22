@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import render
+from .utils import ModelViewsetPaginate, StandardResultsSetPagination
 from rest_framework.parsers import FileUploadParser, FormParser, MultiPartParser
 from rest_framework.generics import CreateAPIView, ListCreateAPIView
 from rest_framework import status
@@ -37,25 +36,26 @@ from .serializer import (
     StatusModerator3,
     StatusBBwithAproval
 
-    )
-from rest_framework import viewsets
+)
+from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet, filters
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from django.views.generic import TemplateView
 from django_filters.widgets import RangeWidget
-from django_filters.filters import RangeFilter
+from django_filters.filters import RangeFilter, CharFilter
 from django_filters.fields import RangeField
 from django.shortcuts import render
 from django import forms
+import django_filters
 
 
 class DateRangeCustomWidget(RangeWidget):
-    suffixes = ['mulai','akhir']
+    suffixes = ['mulai', 'akhir']
 
 
 class CustomRange(RangeField):
-    
+
     widget = DateRangeCustomWidget
 
     def __init__(self, *args, **kwargs):
@@ -68,24 +68,32 @@ class CustomRange(RangeField):
 class DateFromTo(RangeFilter):
     field_class = CustomRange
 
+
 class LknDateFilter(FilterSet):
     tgl_dibuat = DateFromTo()
+    LKN = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = BerkasLKN
-        fields = [
-            
-        ]
+        fields = {
+            'LKN'
+        }
+
+
 class PenangkapanDateFilter(FilterSet):
     created = DateFromTo()
+    no_penangkapan = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = Penangkapan
         fields = [
-            'id', 'no_penangkapan','no_lkn__LKN','no_lkn','created'
+            'id', 'no_penangkapan', 'no_lkn__LKN', 'no_lkn', 'created'
         ]
+
+
 class TersangkaDateFilter(FilterSet):
     created = DateFromTo()
+    nama_tersangka = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = Tersangka
@@ -93,28 +101,32 @@ class TersangkaDateFilter(FilterSet):
             'no_penangkapan_id__id'
         ]
 
+
 class BBDateFilter(FilterSet):
     created = DateFromTo()
+    sp_sita = CharFilter(lookup_expr='startswith')
 
     class Meta:
         model = BarangBukti
         fields = [
-            'milik_tersangka_id__no_penangkapan_id__id'
+            'milik_tersangka_id__no_penangkapan_id__id',
+            'sp_sita'
         ]
 
-class BerkasLknView(viewsets.ModelViewSet):
+
+class BerkasLknView(ModelViewsetPaginate):
     queryset = BerkasLKN.objects.all()
     serializer_class = BerkasLknApi
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'LKN','created']
+    # filterset_fields = ['id', 'LKN', 'created']
     filter_class = LknDateFilter
-    
-    
+    pagination_class = StandardResultsSetPagination
+
     def get_queryset(self):
         user = self.request.user
-        query_set = self.queryset
+        query_set = self.queryset.order_by('tgl_dibuat')
         if not user.is_superuser:
-            query_set = query_set.filter(penyidik=self.request.user)
+            query_set = query_set.filter(
+                penyidik=self.request.user).order_by('tgl_dibuat')
         return query_set
 
     def get_permissions(self):
@@ -139,13 +151,14 @@ class BerkasLknView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class PenangkapanView(viewsets.ModelViewSet):
+class PenangkapanView(ModelViewsetPaginate):
     queryset = Penangkapan.objects.all()
     serializer_class = PenangkapanApi
     filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['id', 'no_penangkapan','no_lkn__LKN','no_lkn','created']
-    parser_class = (FileUploadParser,MultiPartParser,FormParser)
+    parser_class = (FileUploadParser, MultiPartParser, FormParser)
     filter_class = PenangkapanDateFilter
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -180,12 +193,13 @@ class PenangkapanView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TersangkaView(viewsets.ModelViewSet):
+class TersangkaView(ModelViewsetPaginate):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaApi
     parser_class = (FileUploadParser,)
-    
-
+    pagination_class = StandardResultsSetPagination
+    search_fields = ['^nama_tersangka']
+    filter_backends = [filters.SearchFilter]
 
     def get_queryset(self):
         user = self.request.user
@@ -240,14 +254,15 @@ class ProsesPengadilanView(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProsesTersangkaView(viewsets.ModelViewSet):
+
+class ProsesTersangkaView(ModelViewsetPaginate):
     queryset = ProsesTersangka.objects.all()
     serializer_class = ProsesTersangkaApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['proses_tersangka__no_penangkapan_id__no_penangkapan','proses_tersangka']
+    filterset_fields = [
+        'proses_tersangka__no_penangkapan_id__no_penangkapan', 'proses_tersangka']
     parser_class = (FormParser, MultiPartParser)
-
-
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -280,16 +295,18 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = ProsesTersangka.objects.get(pk=kwargs['pk'])
-            serializer = ProsesTersangkaApi(instance=instance,data=request.data)
+            serializer = ProsesTersangkaApi(
+                instance=instance, data=request.data)
             # files = request.FILES["tap_sita_doc"]
             # print(files)
-            
+
             if serializer.is_valid():
                 serializer.save()
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 print(success.data)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             print(error.data)
             return error
         except ProsesTersangka.DoesNotExist:
@@ -301,20 +318,18 @@ class ProsesTersangkaView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-class StatusTersangkaView(viewsets.ModelViewSet):
+class StatusTersangkaView(ModelViewsetPaginate):
     queryset = StatusTersangka.objects.all()
     serializer_class = StatusTersangkaApi
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['tersangka_id__no_penangkapan_id','tersangka_id']
+    filterset_fields = ['tersangka_id__no_penangkapan_id', 'tersangka_id']
     parser_class = (FormParser, MultiPartParser)
-
-
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.user
-        queryset = self.queryset
-        queryset = StatusTersangka.objects.all()
+        queryset = self.queryset.order_by('created')
+        queryset = StatusTersangka.objects.all().order_by('created')
         if not user.is_superuser:
             queryset = StatusTersangka.objects.filter(
                 tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user.id)
@@ -342,14 +357,16 @@ class StatusTersangkaView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = StatusTersangka.objects.get(pk=kwargs['pk'])
-            serializer = StatusTersangkaApi(instance=instance,data=request.data)
-            
+            serializer = StatusTersangkaApi(
+                instance=instance, data=request.data)
+
             if serializer.is_valid():
                 serializer.save()
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 print(success.data)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             print(error.data)
             return error
         except StatusTersangka.DoesNotExist:
@@ -360,7 +377,6 @@ class StatusTersangkaView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class TersangkaEditDetailView(viewsets.ModelViewSet):
     queryset = Tersangka.objects.all()
     serializer_class = TersangkaEditApi
@@ -368,8 +384,6 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     filterset_fields = ['no_penangkapan_id__id']
     parser_class = (FormParser, MultiPartParser)
     filter_class = TersangkaDateFilter
-
-
 
     def get_queryset(self):
         user = self.request.user
@@ -403,14 +417,15 @@ class TersangkaEditDetailView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = Tersangka.objects.get(pk=kwargs['pk'])
-            serializer = TersangkaEditApi(instance=instance,data=request.data)
-            
+            serializer = TersangkaEditApi(instance=instance, data=request.data)
+
             if serializer.is_valid():
                 serializer.save()
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 print(success.data)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             print(error.data)
             return error
         except Tersangka.DoesNotExist:
@@ -427,11 +442,8 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['milik_tersangka_id__no_penangkapan_id__id']
     filter_class = BBDateFilter
-    parser_class =(FileUploadParser,MultiPartParser,FormParser)
+    parser_class = (FileUploadParser, MultiPartParser, FormParser)
 
-    
-    
-    
     def get_queryset(self):
         user = self.request.user
         queryset = self.queryset
@@ -448,7 +460,7 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
             self.serializer_class = CreateBarangBuktiByTsk
         elif self.action == 'list':
             permission_classes = [IsAuthenticated]
-        elif  self.action == 'update' or self.action == 'partial_update':
+        elif self.action == 'update' or self.action == 'partial_update':
             self.serializer_class = CreateBarangBuktiByTsk
             permission_classes = [AllowAny]
         elif self.action == 'destroy':
@@ -458,14 +470,15 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = BarangBukti.objects.get(pk=kwargs['pk'])
-            serializer = BarangBuktiEdit(instance=instance,data=request.data)
-            
+            serializer = BarangBuktiEdit(instance=instance, data=request.data)
+
             if serializer.is_valid():
                 serializer.save()
                 print(serializer.data)
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             print(serializer.errors)
             return error
         except BarangBukti.DoesNotExist:
@@ -483,23 +496,22 @@ class BarangBuktiEditView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StatusBarangBuktiView(viewsets.ModelViewSet):
+class StatusBarangBuktiView(ModelViewsetPaginate):
     queryset = StatusBarangBukti.objects.all()
     serializer_class = StatusBarangBuktiApi
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['barang_bukti_id']
-    
-    
-    
+    pagination_class = StandardResultsSetPagination
+
     def get_queryset(self):
         user = self.request.user
-        queryset = self.queryset
-        queryset = StatusBarangBukti.objects.all()
+        queryset = StatusBarangBukti.objects.all().order_by('created')
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
-                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user,approve_status='APPROVE')
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user, approve_status='APPROVE').order_by('created')
         else:
-           queryset = StatusBarangBukti.objects.filter(approve_status='APPROVE') 
+            queryset = StatusBarangBukti.objects.filter(
+                approve_status='APPROVE')
         return queryset
 
     def get_permissions(self):
@@ -517,13 +529,15 @@ class StatusBarangBuktiView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         try:
             instance = StatusBarangBukti.objects.get(pk=kwargs['pk'])
-            serializer = StatusBarangBuktiApi(instance=instance,data=request.data)
-            
+            serializer = StatusBarangBuktiApi(
+                instance=instance, data=request.data)
+
             if serializer.is_valid():
                 serializer.save()
-                success = Response(serializer.data,status=status.HTTP_200_OK)
+                success = Response(serializer.data, status=status.HTTP_200_OK)
                 return success
-            error = Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            error = Response(serializer.errors,
+                             status=status.HTTP_400_BAD_REQUEST)
             return error
         except StatusBarangBukti.DoesNotExist:
             serializer = StatusBarangBuktiApi(data=request.data)
@@ -540,17 +554,19 @@ class StatusBarangBuktiView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LknDetailApiView(viewsets.ReadOnlyModelViewSet):
+class LknDetailApiView(ModelViewsetPaginate):
     queryset = BerkasLKN.objects.all()
     serializer_class = LknDetailAPi
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'LKN']
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = self.queryset.order_by('created')
         user = self.request.user
         if not user.is_superuser:
-            queryset = queryset.filter(penyidik=self.request.user)
+            queryset = queryset.filter(
+                penyidik=self.request.user).order_by('created')
         return queryset
 
     def get_permissions(self):
@@ -566,15 +582,16 @@ class LknDetailApiView(viewsets.ReadOnlyModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-class StatusBBapprovalView(viewsets.ModelViewSet):
+class StatusBBapprovalView(ModelViewsetPaginate):
     queryset = StatusBarangBukti.objects.all()
     serializer_class = StatusModerator1
     serializer_class_2 = StatusModerator2
     serializer_class_3 = StatusModerator3
     detail_serializer = StatusBBwithAproval
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['approve_status','moderator_one_status','moderator_two_status','moderator_three_status']
-
+    filterset_fields = ['approve_status', 'moderator_one_status',
+                        'moderator_two_status', 'moderator_three_status']
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.user
@@ -582,16 +599,15 @@ class StatusBBapprovalView(viewsets.ModelViewSet):
         queryset = StatusBarangBukti.objects.all().order_by('-created')
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
-                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user)
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user).order_by('created')
         if user.moderator == 'moderator_1':
-            queryset =  queryset.filter(moderator_one_status='PENDING')
+            queryset = queryset.filter(moderator_one_status='PENDING')
         if user.moderator == 'moderator_2':
-            queryset =  queryset.filter(moderator_two_status='PENDING')
+            queryset = queryset.filter(moderator_two_status='PENDING')
         if user.moderator == 'moderator_3':
-            queryset =  queryset.filter(moderator_three_status='PENDING')
-            
+            queryset = queryset.filter(moderator_three_status='PENDING')
+
         return queryset
-        
 
     def get_permissions(self):
         permission_classes = []
@@ -615,13 +631,10 @@ class StatusBBapprovalView(viewsets.ModelViewSet):
             elif user.moderator == 'moderator_3':
                 return self.serializer_class_3
             # return super().get_serializer_class()
-            
-        elif self.action == 'retrieve' or self.action== 'list':
+
+        elif self.action == 'retrieve' or self.action == 'list':
             return self.detail_serializer
         return super().get_serializer_class()
-
-
-
 
 
 class HomeView(TemplateView):
