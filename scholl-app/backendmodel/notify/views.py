@@ -5,7 +5,7 @@ from .serializers import notifserializer
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .utils import ModelViewsetPaginate, StandardResultsSetPagination
+from backendmodel.organizations.utils import ModelViewsetPaginate, StandardResultsSetPagination
 
 
 class ActivityView(ModelViewsetPaginate):
