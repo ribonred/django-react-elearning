@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import indexview,notification_test_page,get_loc
+from .views import indexview,notification_test_page,get_loc,tyView
 from rest_framework import routers
 from push_notifications.api.rest_framework import GCMDeviceAuthorizedViewSet
 from backendmodel.notify.views import ActivityView
@@ -46,7 +46,7 @@ urlpatterns = [
     path("mobile-api/", include('backendmodel.organizations.urls')),
     path('get-token/', include('backendmodel.account.urls')),
     path('', indexview.as_view(),name='index'),
-    path('notifsssss/', indexview.as_view(),name='notif'),
+    path('thankyou/', tyView.as_view(),name='tx'),
     path('getloc/', get_loc,name='getloc'),
 
     ]

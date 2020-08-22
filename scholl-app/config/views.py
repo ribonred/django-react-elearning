@@ -24,6 +24,9 @@ def telegram_bot_sendtext(bot_message,bot_chatID):
         return print('connected')
     else:
         return print('we cant recognize your id')
+
+class tyView(TemplateView):
+    template_name = 'thankyou.html' 
 class indexview(TemplateView):
     template_name = 'home.html'
 
