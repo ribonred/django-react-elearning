@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import 'antd/dist/antd.css';
 import { store } from './reducers';
+import './fonts/GlueGun.otf'
 
 ReactDOM.render(
   <Provider store={store}>

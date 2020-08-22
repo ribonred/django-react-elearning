@@ -16,11 +16,25 @@ class SideMenu extends Component {
       setTimeout(() => { this.setState({ isCollapsed: collapsed}) }, 200);
     };
 
+    renderHeaderLogo = () => {
+      return(
+        <Header style={{height: '80px', backgroundColor:'white'}} className="header">
+          <div style={{marginTop:'10px', display:'flex',flexDirection:'row', alignItems:'center'}}>
+            <img
+              alt='BNN'
+              src={require("../assets/bnn_bintang_fix_max.png")}
+              style={{height:'60px', width:'60px'}}
+            />
+            <div style={{fontFamily: 'GlueGun', paddingLeft:'15px', fontSize:'35px'}}>e-SITATI BNN KEPULAUAN RIAU</div>
+          </div>
+        </Header>
+      )
+    }
     renderHeader = () => {
       const isAdmin = localStorage.getItem('role') === '2'
       return (
-        <Header className="header">
-         <Menu theme='dark' mode="horizontal" defaultSelectedKeys={this.props.selected || '1'}>
+        <Header style={{backgroundColor:'white'}} className="header">
+         <Menu theme='light' mode="horizontal" defaultSelectedKeys={this.props.selected || '1'}>
            <Menu.Item key="1" onClick={() => history.push("/dashboard/lkn")}>
              <FolderOpenOutlined />
              <span className="nav-text"><b>LKN</b></span>
@@ -55,6 +69,7 @@ class SideMenu extends Component {
     render() {
         return (
           <Layout>
+            {this.renderHeaderLogo()}
             {this.renderHeader()}
             <Layout>
               {this.props.children}
