@@ -82,7 +82,7 @@ var allowGeoRecall = true
 function getLocation() {   
     console.log('getLocation was called') 
     if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, positionError);
+        navigator.geolocation.getCurrentPosition(showPosition);
     } else {
         allowGeoRecall = false
     }
