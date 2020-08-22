@@ -123,10 +123,10 @@ class BerkasLknView(ModelViewsetPaginate):
 
     def get_queryset(self):
         user = self.request.user
-        query_set = self.queryset.order_by('tgl_dibuat')
+        query_set = self.queryset.order_by('-tgl_dibuat')
         if not user.is_superuser:
             query_set = query_set.filter(
-                penyidik=self.request.user).order_by('tgl_dibuat')
+                penyidik=self.request.user).order_by('-tgl_dibuat')
         return query_set
 
     def get_permissions(self):
@@ -328,8 +328,8 @@ class StatusTersangkaView(ModelViewsetPaginate):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = self.queryset.order_by('created')
-        queryset = StatusTersangka.objects.all().order_by('created')
+        queryset = self.queryset.order_by('-created')
+        queryset = StatusTersangka.objects.all().order_by('-created')
         if not user.is_superuser:
             queryset = StatusTersangka.objects.filter(
                 tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user.id)
@@ -509,10 +509,10 @@ class StatusBarangBuktiView(ModelViewsetPaginate):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = StatusBarangBukti.objects.all().order_by('created')
+        queryset = StatusBarangBukti.objects.all().order_by('-created')
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
-                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user, approve_status='APPROVE').order_by('created')
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user, approve_status='APPROVE').order_by('-created')
         else:
             queryset = StatusBarangBukti.objects.filter(
                 approve_status='APPROVE')
@@ -566,11 +566,11 @@ class LknDetailApiView(ModelViewsetPaginate):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        queryset = self.queryset.order_by('created')
+        queryset = self.queryset.order_by('-created')
         user = self.request.user
         if not user.is_superuser:
             queryset = queryset.filter(
-                penyidik=self.request.user).order_by('created')
+                penyidik=self.request.user).order_by('-created')
         return queryset
 
     def get_permissions(self):
@@ -603,7 +603,7 @@ class StatusBBapprovalView(ModelViewsetPaginate):
         queryset = StatusBarangBukti.objects.all().order_by('-created')
         if not user.is_superuser:
             queryset = StatusBarangBukti.objects.filter(
-                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user).order_by('created')
+                barang_bukti_id__milik_tersangka_id__no_penangkapan_id__no_lkn__penyidik=self.request.user).order_by('-created')
         if user.moderator == 'moderator_1':
             queryset = queryset.filter(moderator_one_status='PENDING')
         if user.moderator == 'moderator_2':
