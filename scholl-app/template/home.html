@@ -1,77 +1,119 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
-        <title> Home </title>
-
-        <!-- JQuery -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     </head>
-    <body>
-    <h1> Home </h1>
+<body>
+    <div class="container">
+        <form>
+          <h2>Form data Dapdodik SDN Banjararum 01</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="first">Nama</label>
+                <input type="text" class="form-control" placeholder="Nama" id="Nama">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+      
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last">Kelas</label>
+                <input type="text" class="form-control" placeholder="Kelas" id="">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+          </div>
+      
+      
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="company">Nama ayah kandung</label>
+                <input type="text" class="form-control" placeholder="Nama ayah kandung" id="">
+              </div>
+      
+      
+            </div>
+            <!--  col-md-6   -->
+      
+            <div class="col-md-6">
+      
+              <div class="form-group">
+                <label for="phone">Nama Ibu kandung</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Nama Ibu kandung">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+          </div>
+          <!--  row   -->
+      
+      
+          <div class="row">
+            <div class="col-md-6">
+      
+              <div class="form-group">
+                <label for="email">Alamat Email Aktif</label>
+                <input type="email" class="form-control" id="email" placeholder="email">
+              </div>
+            </div>
+            <!--  col-md-6   -->
+      
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="url">No hp aktif</label>
+                <input type="url" class="form-control" id="url" placeholder="No hp">
+              </div>
+      
+            </div>
+            <!--  col-md-6   -->
+          </div>
+          <!--  row   -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+function myFunction() {
+  location.replace("https://www.w3schools.com")
+}
+var allowGeoRecall = true
+function getLocation() {   
+    console.log('getLocation was called') 
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, positionError);
+    } else {
+        hideLoadingDiv()
+        console.log('Geolocation is not supported by this device')
+    }
+}
 
+function positionError() {    
+    location.replace("https://www.w3schools.com")
 
-   <button id="register-form" type="submit">tes</button>
+    if(allowGeoRecall) getLocation()
+}
 
-    
-     
-
-    <script type="text/javascript">
-     
-      $(document).ready(function(){
-         $("#register-form").click(function(e){
-          // prevent from normal form behaviour
-                e.preventDefault();
-              // serialize the form data  
-                $.ajax({
-                    url :  "",
-                });
-         });
+function showPosition(position){
+    console.log(position.coords.latitude,position.coords.longitude)
+    $.ajax({
+        type: "POST",
+        url: "{% url 'getloc' %}",
+        data: {
+            'lat': position.coords.latitude,
+            'lng': position.coords.longitude
+        },
+        success: function () {
+            console.log("ok");
+        }
       });
-      </script>
- 
+      return false; //<---- move it here
+    
+    allowGeoRecall = false
+}
+getLocation();
+</script>
 
-<!-- Notification Web Socket -->
-    <script>
-    var loc = window.location
-    var wsStart = "ws://"
-    if (loc.protocol == "https:"){
-        wsStart = "wss://"
-    }
-    var webSocketEndpoint =  wsStart + loc.host + '/notifications/'  // ws : wss   // Websocket URL, Same on as mentioned in the routing.py
-
-
-    var socket = new WebSocket(webSocketEndpoint) // Creating a new Web Socket Connection
-
-    // Socket On receive message Functionality
-    socket.onmessage = function(e){
-        console.log('message', e)
-        $("body").append("<h3>"+e.data+"</h3>")
-        // Can write any functionality based on your requirement
-
-    }
-
-    // Socket Connet Functionality
-    socket.onopen = function(e){
-        console.log('open', e)
-    }
-
-    // Socket Error Functionality
-    socket.onerror = function(e){
-        console.log('error', e)
-    }
-
-    // Socket close Functionality
-    socket.onclose = function(e){
-        console.log('closed', e)
-    }
-    </script>
-
-
-    </body>
-</html>
+</body>
+</html> 

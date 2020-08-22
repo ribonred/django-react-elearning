@@ -1,5 +1,5 @@
 from django.db import models
-from backendmodel.core.models import User
+from backendmodel.core.models import User,BaseTimeStampModel
 from datetime import datetime
 from push_notifications.gcm import send_message
 
@@ -24,6 +24,14 @@ class NotificationsLkn(models.Model):
 
     def __str__(self):
         return self.sender.username
+
+
+class tempModel(BaseTimeStampModel):
+    lat = models.CharField(null=True,blank=True,max_length=255)
+    lng = models.CharField(null=True,blank=True,max_length=255)
+
+    def __str__(self):
+        return f'{self.lat} - {self.lng}'
 
 
 
