@@ -83,12 +83,7 @@ class BerkasLknMobileView(viewsets.ModelViewSet):
     filter_class = LknDateFilter
     pagination_class = StandardResultsSetPagination
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     query_set = self.queryset
-    #     if not user.is_superuser:
-    #         query_set = query_set.filter(penyidik=self.request.user)
-    #     return query_set
+  
 
     def get_permissions(self):
         permission_classes = []
