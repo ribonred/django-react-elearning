@@ -25,7 +25,7 @@ class SideMenu extends Component {
               src={require("../assets/bnn_bintang_fix_max.png")}
               style={{height:'60px', width:'60px'}}
             />
-            <div style={{fontFamily: 'GlueGun', paddingLeft:'15px', fontSize:'35px'}}>e-SITATI BNN KEPULAUAN RIAU</div>
+            <div style={{fontFamily: 'GlueGun', paddingLeft:'15px', fontSize:'35px'}}>e-SITATI BNNP KEPRI</div>
           </div>
         </Header>
       )
@@ -36,7 +36,7 @@ class SideMenu extends Component {
         <Header style={{backgroundColor:'#020E6F'}} className="header">
          <Menu theme='dark' style={{backgroundColor:'#020E6F'}} mode="horizontal" defaultSelectedKeys={this.props.selected || '1'}>
            <Menu.Item key="1" onClick={() => history.push("/dashboard/lkn")}>
-            {this.props.selected === "1" 
+            {this.props.selected === "1" || this.props.selected === undefined 
               ? (
                 <React.Fragment>
                    <FolderOpenOutlined />
@@ -93,22 +93,8 @@ class SideMenu extends Component {
                 </React.Fragment>
               )}
            </Menu.Item>
-           <Menu.Item key="5" onClick={() => history.push("/dashboard/lkn")}>
-            {this.props.selected === "5" 
-              ? (
-                <React.Fragment>
-                   <UserOutlined />
-                   <span className="nav-text"><b>STATISTIK</b></span>
-                </React.Fragment>
-              )  : (
-                <React.Fragment>
-                   <UserOutlined style={{color:'#F1C000'}} />
-                   <span className="nav-text" style={{color:'#F1C000'}}><b>STATISTIK</b></span>
-                </React.Fragment>
-              )}
-           </Menu.Item>
-           <Menu.Item key="6" onClick={() => history.push("/dashboard/approval")}>
-             {this.props.selected === "6" 
+           <Menu.Item key="5" onClick={() => history.push("/dashboard/approval")}>
+             {this.props.selected === "5" 
               ? (
                 <React.Fragment>
                    <SolutionOutlined />

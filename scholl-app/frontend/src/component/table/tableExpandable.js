@@ -193,7 +193,7 @@ export default class TableView extends React.Component {
     }) : []
 
     const number = [{
-      title: 'Nomor',
+      title: 'NOMOR',
       key: 'index',
       render : (text, record, index) => tableDataWithKey.indexOf(record) + 1
     }]
@@ -206,7 +206,7 @@ export default class TableView extends React.Component {
       const isWithDropdown = data.dropdown !== null && data.dropdown !== undefined
         ? this.withDropdownFilter(data.dropdown[0], data.dropdown[1], data.dataIndex) : {};
       return {
-        title: data.title,
+        title: data.title.toUpperCase(),
         dataIndex: data.dataIndex,
         ...isSearchable,
         ...isSortable,
@@ -235,7 +235,7 @@ export default class TableView extends React.Component {
     let columns = column;
     if(!isAllNotAllowed){
       columns = columns.concat({
-        title: 'Action',
+        title: 'ACTION',
         key: 'action',
         sorter: true,
         filters: [],
@@ -332,7 +332,7 @@ export default class TableView extends React.Component {
           {...this.state}
           loading={this.props.isLoading}
           columns={tableColumns}
-          title={() => `BASIS DATA ${path.toUpperCase()}`}
+          title={() => `BASIS DATA ${this.props.title || path.toUpperCase()}`}
           dataSource={tableDataWithKey}
           scroll={scroll}
         />

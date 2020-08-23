@@ -9,8 +9,8 @@ import TableView from '../../../component/table/tableFilterable'
 const { Content } = Layout;
 const tableField = [
   {
-    title: 'No.LKN',
-    dataIndex: 'LKN',
+    title: 'Nama Tersangka',
+    dataIndex: 'nama_tersangka',
     sorter: true,
     search: true,
   },
@@ -20,12 +20,6 @@ const tableField = [
     sorter: true,
     search: true,
   },
-  {
-    title: 'Nama',
-    dataIndex: 'nama_tersangka',
-    sorter: true,
-    search: true,
-  }
 ]
 
 class TersangkaTable extends Component {

@@ -9,14 +9,14 @@ import TableView from '../../../component/table/tableFilterable'
 const { Content } = Layout;
 const tableField = [
   {
-    title: 'No.LKN',
-    dataIndex: 'LKN',
+    title: 'Nama Barang Bukti',
+    dataIndex: 'nama_barang',
     sorter: true,
     search: true,
   },
   {
-    title: 'SP KAP',
-    dataIndex: 'no_penangkapan',
+    title: 'Jenis Barang Bukti',
+    dataIndex: 'jenis_barang',
     sorter: true,
     search: true,
   },
@@ -27,17 +27,11 @@ const tableField = [
     search: true,
   },
   {
-    title: 'Nama BB',
-    dataIndex: 'nama_barang',
+    title: 'SP KAP',
+    dataIndex: 'no_penangkapan',
     sorter: true,
     search: true,
   },
-  {
-    title: 'Jenis BB',
-    dataIndex: 'jenis_barang',
-    sorter: true,
-    search: true,
-  }
 ]
 
 class BarangBuktiTable extends Component {
@@ -91,6 +85,7 @@ class BarangBuktiTable extends Component {
                   {this.renderBreadCrumb()}
                   <TableView
                     useId
+                    title="BARANG BUKTI"
                     path="barangbukti"
                     tableField={tableField}
                     tableData={dataBB}

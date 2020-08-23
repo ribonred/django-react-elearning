@@ -11,19 +11,19 @@ import SideMenu from '../../../component/sider';
 const { Content } = Layout;
 const tableField = [
   {
-    title: 'No.LKN',
+    title: 'LKN',
     dataIndex: 'LKN',
     sorter: true,
     search: true,
   },
   {
-    title: 'Nama Penyidik',
+    title: 'NAMA PENYIDIK',
     dataIndex: 'nama_penyidik',
-    sorter: true,
+    sorter: true, 
     search: true,
   },
   {
-    title: 'Dibuat Pada',
+    title: 'TANGGAL',
     dataIndex: 'tgl_dibuat',
     sorter: true,
   }
@@ -53,7 +53,7 @@ class LKNTable extends Component {
     renderAddButton = () => {
       return (
         <Button type="primary">
-          <Link to='/dashboard/LKN/buat'>Buat LKN Baru</Link>
+          <Link to='/dashboard/LKN/buat'>INPUT LKN</Link>
         </Button>
       )
     }

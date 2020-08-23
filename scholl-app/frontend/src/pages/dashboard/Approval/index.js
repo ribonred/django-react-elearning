@@ -93,6 +93,7 @@ class BarangBuktiTable extends Component {
                   <TableExpand
                     useId
                     path="status barangbukti approval"
+                    title="STATUS BARANG BUKTI APPROVAL"
                     isNotAllowTo={isNotAllow}
                     tableField={tableField1}
                     tableData={bbStatusApprove}
